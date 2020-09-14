@@ -8,38 +8,38 @@ inline void print_results( const char* str, int32_t vecsz, uint64_t cycles_count
 	return;
 }
 
-inline void print_results_epi8( const char* str, int32_t vecsz, int8_t *si, uint64_t cycles_count, double total_time ) {
-	sprintf( _str_, "%s\t{", str );
-	for ( int32_t i = 0; i < vecsz; i++ )
-		sprintf( _str_, "%s %+11d", _str_, si[i] );
-	sprintf( _str_, "%s }\n", _str_ );
-	print_results( str, vecsz, cycles_count, total_time );
-	return;
-}
+// inline void print_results_epi8( const char* str, int32_t vecsz, int8_t *si, uint64_t cycles_count, double total_time ) {
+// 	// sprintf( _str_, "%s\t{", str );
+// 	// for ( int32_t i = 0; i < vecsz; i++ )
+// 	// 	sprintf( _str_, "%s %+11d", _str_, si[i] );
+// 	// sprintf( _str_, "%s }\n", _str_ );
+// 	print_results( str, vecsz, cycles_count, total_time );
+// 	return;
+// }
 
-inline void print_results_epi16( const char* str, int32_t vecsz, int16_t *si, uint64_t cycles_count, double total_time ) {
-	sprintf( _str_, "%s\t{", str );
-	for ( int32_t i = 0; i < vecsz; i++ )
-		sprintf( _str_, "%s %+11d", _str_, si[i] );
-	sprintf( _str_, "%s }\n", _str_ );
-	print_results( str, vecsz, cycles_count, total_time );
-	return;
-}
+// inline void print_results_epi16( const char* str, int32_t vecsz, int16_t *si, uint64_t cycles_count, double total_time ) {
+// 	// sprintf( _str_, "%s\t{", str );
+// 	// for ( int32_t i = 0; i < vecsz; i++ )
+// 	// 	sprintf( _str_, "%s %+11d", _str_, si[i] );
+// 	// sprintf( _str_, "%s }\n", _str_ );
+// 	print_results( str, vecsz, cycles_count, total_time );
+// 	return;
+// }
 
-inline void print_results_epi32( const char* str, int32_t vecsz, int32_t *si, uint64_t cycles_count, double total_time ) {
-	sprintf( _str_, "%s\t{", str );
-	for ( int32_t i = 0; i < vecsz; i++ )
-		sprintf( _str_, "%s %+11i", _str_, si[i] );
-	sprintf( _str_, "%s }\n", _str_ );
-	print_results( str, vecsz, cycles_count, total_time );
-	return;
-}
+// inline void print_results_epi32( const char* str, int32_t vecsz, int32_t *si, uint64_t cycles_count, double total_time ) {
+// 	// sprintf( _str_, "%s\t{", str );
+// 	// for ( int32_t i = 0; i < vecsz; i++ )
+// 	// 	sprintf( _str_, "%s %+11i", _str_, si[i] );
+// 	// sprintf( _str_, "%s }\n", _str_ );
+// 	print_results( str, vecsz, cycles_count, total_time );
+// 	return;
+// }
 
-inline void print_results_epi64( const char* str, int32_t vecsz, int64_t *si, uint64_t cycles_count, double total_time ) {
-	sprintf( _str_, "%s\t{", str );
-	for ( int32_t i = 0; i < vecsz; i++ )
-		sprintf( _str_, "%s %+15li", _str_, si[i] );
-	sprintf( _str_, "%s }\n", _str_ );
-	print_results( str, vecsz, cycles_count, total_time );
-	return;
-}
+// inline void print_results_epi64( const char* str, int32_t vecsz, int64_t *si, uint64_t cycles_count, double total_time ) {
+// 	// sprintf( _str_, "%s\t{", str );
+// 	// for ( int32_t i = 0; i < vecsz; i++ )
+// 	// 	sprintf( _str_, "%s %+15li", _str_, si[i] );
+// 	// sprintf( _str_, "%s }\n", _str_ );
+// 	print_results( str, vecsz, cycles_count, total_time );
+// 	return;
+// }

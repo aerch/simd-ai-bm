@@ -4,7 +4,7 @@ inline void make_inits() {
 	size_t len = 0;
 	ssize_t nread;
 
-	printf( "\nSIMD Instructions Benchmark v0.1\n\n" );
+	printf( "\nSIMD Instructions Benchmark v0.2\n\n" );
 
 	// try to get current processor name to file
 	if ( system( "grep 'model name' /proc/cpuinfo | uniq | awk '/^model name/{$1=$2=$3=\"\";print $0}' > current_processor" ) != 0 )
@@ -26,6 +26,8 @@ inline void make_inits() {
 	free(line);
 	fclose(stream);
 	stream = NULL;
+
+	// removing no more needed file 'current_processor'
 	remove("current_processor");
 
 	// writing machine config and cpu info to resulting file
@@ -55,20 +57,11 @@ inline void make_inits() {
 		exit(EXIT_FAILURE);
 	}
 
-	fprintf( stream, "SIMD Arithmetic Instructions Benchmark start . . . \n\n" );
-	printf( "\nSIMD Arithmetic Instructions Benchmark start . . . \n\n");
-
-	fprintf( stream, "AVX2:\t   ASM INSTR\tINTRINSIC FUNC CALL\t TOTAL EVAL TIME\t PER 1 CYCLE\t OPERAT SPEED\n" );
-	printf( "AVX2:\t   ASM INSTR\tINTRINSIC FUNC CALL\t TOTAL EVAL TIME\t PER 1 CYCLE\t OPERAT SPEED\n" );
-
 	return;
 }
 
 inline void make_finits() {
-	fprintf( stream, "\nSIMD Arithmetic Instructions Benchmark value\t\t\t\t[ SIMD-AI-BM   ~%6.1lf GT/sec ]\n\n", total_tps );
-	printf("\nSIMD Arithmetic Instructions Benchmark value\t\t\t\t[ SIMD-AI-BM   ~%6.1lf GT/sec ]\n\n", total_tps);
-
+	// close resulting file
 	fclose(stream);
-
 	return;
 }

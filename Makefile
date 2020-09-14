@@ -2,7 +2,7 @@
 # Makefile for the linux SIMD Instructions Benchmark (simd-ibm) project
 
 TARGET          = simd-ibm
-VERSION         = 0.1
+VERSION         = 0.2
 PROJECT         = 'SIMD Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
 
@@ -20,7 +20,7 @@ MAKE            = make
 CXXFLAGS	= -O3 -MMD -march=native -mtune=native -mavx2 -ffast-math -std=c++11 -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
 
-LIBS            = -lm
+LIBS            = -lm -lpthread
 LIB_DIRS        = -L.
 
 INCLUDES	= -I.
