@@ -1,5 +1,9 @@
 
-	printf("\t   SIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6));
+inline void avx2_simd_ai_epx32_bm() {
+	uint64_t i;
+
+	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( "\n\tSIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
 
 	int32_t ALIGN si[ 8 ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
 	int32_t ALIGN sa[ 8 ] = { 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -91,3 +95,6 @@
 	}
 	_BMARK_OFF( total_time );
 	print_results_epi32( "vpsignd\t_mm256_sign_epi32()", 8, si, cycles_count, total_time );
+
+	return;
+}

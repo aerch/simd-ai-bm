@@ -1,5 +1,9 @@
 
-	printf("\t   SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6));
+inline void avx2_simd_ai_epx64_bm() {
+	uint64_t i;
+
+	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( "\n\tSIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
 
 	int64_t ALIGN di[ 4 ] = { 8, 7, 6, 5 };
 	int64_t ALIGN da[ 4 ] = { 1, 2, 3, 4 };
@@ -25,3 +29,6 @@
 	}
 	_BMARK_OFF( total_time );
 	print_results_epi64( "vpsubq\t_mm256_sub_epi64()", 4, di, cycles_count, total_time );
+
+	return;
+}

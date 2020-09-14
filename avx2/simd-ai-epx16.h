@@ -1,5 +1,9 @@
 
-	printf("\t   SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6));
+inline void avx2_simd_ai_epx16_bm() {
+	uint64_t i;
+
+	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( "\n\tSIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
 
 	int16_t ALIGN wi[ 16 ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
 	int16_t ALIGN wa[ 16 ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
@@ -190,3 +194,6 @@
 	}
 	_BMARK_OFF( total_time );
 	print_results_epi16( "vpsignw\t_mm256_sign_epi16()", 16, wi, cycles_count, total_time );
+
+	return;
+}

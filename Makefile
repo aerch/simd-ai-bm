@@ -17,7 +17,7 @@ ECHO            = /bin/echo
 PWD             := $(shell pwd)
 MAKE            = make
 
-CXXFLAGS	= -O3 -march=native -mtune=native -mavx2 -ffast-math -std=c++11 -Wall -faligned-new
+CXXFLAGS	= -O3 -MMD -march=native -mtune=native -mavx2 -ffast-math -std=c++11 -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
 
 LIBS            = -lm
@@ -47,7 +47,7 @@ OFF             = '\033[0m'
 
 .PHONY: $(TARGET) clean git-push-"update_commit" backup
 
-$(TARGET): $(OBJECTS)
+$(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' LD  '$(TARGET)$(OFF)'\n'
 	$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
