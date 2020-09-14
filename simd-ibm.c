@@ -144,6 +144,17 @@ int main( int argc, char const *argv[] ) {
 	_BMARK_OFF( total_time );
 	print_results_epi16( "vpaddsw\t_mm256_adds_epi16()", 16, wi, cycles_count, total_time );
 
+	// adds vectors of 16 16-bit unsigned integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_adds_epu16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpaddusw\t_mm256_adds_epu16()", 16, wi, cycles_count, total_time );
+
 	// hadd vectors of 16 16-bit signed integers at a cycle
 	_BMARK_ON_;
 	for ( i = 0; i < cycles_count; i++ ) {
@@ -165,6 +176,28 @@ int main( int argc, char const *argv[] ) {
 	}
 	_BMARK_OFF( total_time );
 	print_results_epi16( "vphaddsw\t_mm256_hadds_epi16()", 16, wi, cycles_count, total_time );
+
+	// madd vectors of 16 16-bit signed integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_madd_epi16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpmaddwd\t_mm256_madd_epi16()", 16, wi, cycles_count, total_time );
+
+	// maddubs vectors of 16 16-bit signed integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_maddubs_epi16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpmaddubsw\t_mm256_maddubs_epi16()", 16, wi, cycles_count, total_time );
 
 	// sub vectors of 16 16-bit signed integers at a cycle
 	_BMARK_ON_;
@@ -188,6 +221,17 @@ int main( int argc, char const *argv[] ) {
 	_BMARK_OFF( total_time );
 	print_results_epi16( "vpsubsw\t_mm256_subs_epi16()", 16, wi, cycles_count, total_time );
 
+	// subs vectors of 16 16-bit unsigned integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_subs_epu16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpsubusw\t_mm256_subs_epu16()", 16, wi, cycles_count, total_time );
+
 	// hsub vectors of 16 16-bit signed integers at a cycle
 	_BMARK_ON_;
 	for ( i = 0; i < cycles_count; i++ ) {
@@ -209,6 +253,61 @@ int main( int argc, char const *argv[] ) {
 	}
 	_BMARK_OFF( total_time );
 	print_results_epi16( "vphsubsw\t_mm256_hsubs_epi16()", 16, wi, cycles_count, total_time );
+
+	// mulhi vectors of 16 16-bit signed integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_mulhi_epi16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpmulhw\t_mm256_mulhi_epi16()", 16, wi, cycles_count, total_time );
+
+	// mullo vectors of 16 16-bit signed integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_mullo_epi16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpmullw\t_mm256_mullo_epi16()", 16, wi, cycles_count, total_time );
+
+	// mulhrs vectors of 16 16-bit signed integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_mulhrs_epi16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpmulhrsw\t_mm256_mulhrs_epi16()", 16, wi, cycles_count, total_time );
+
+	// mulhi vectors of 16 16-bit unsigned integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_mulhi_epu16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpmulhuw\t_mm256_mulhi_epu16()", 16, wi, cycles_count, total_time );
+
+	// sign vectors of 16 16-bit signed integers at a cycle
+	_BMARK_ON_;
+	for ( i = 0; i < cycles_count; i++ ) {
+		v = _mm256_load_si256( (const __m256i *)wi );
+		a = _mm256_load_si256( (const __m256i *)wa );
+		v = _mm256_sign_epi16( v, a );
+		_mm256_store_si256( (__m256i *)wi, v );
+	}
+	_BMARK_OFF( total_time );
+	print_results_epi16( "vpsignw\t_mm256_sign_epi16()", 16, wi, cycles_count, total_time );
 
 
 	printf("\t   SIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6));
