@@ -23,7 +23,7 @@ LDFLAGS         = $(CXXFLAGS)
 LIBS            = -lm
 LIB_DIRS        = -L.
 
-INCLUDES	= -I../inc -I../src/config -I../src/macros -I../src/gptool -I../src/logger  -I../src/fourier -I../src/netgateway -I../src/verbose
+INCLUDES	= -I.
 
 CXXOPTIONS      = $(LIBS) $(LIB_DIRS) $(INCLUDES)
 LDOPTIONS       = $(CXXOPTIONS)
@@ -48,8 +48,9 @@ OFF             = '\033[0m'
 .PHONY: $(TARGET) clean git-push-"update_commit" backup
 
 $(TARGET): $(OBJECTS)
-	@echo -en $(GREEN)' LD  '$(TARGET)$(OFF)'\n'
+	@$(ECHO) -en $(GREEN)' LD  '$(TARGET)$(OFF)'\n'
 	$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
+	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
 
 simd-ibm.o: simd-ibm.c
 	@echo -en $(WHITE)' CC  '$<$(OFF)'\n'
