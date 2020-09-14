@@ -1,2 +1,2 @@
 # simd-ibm
-SIMD instructions benchmark
+SIMD Instructions Benchmark
