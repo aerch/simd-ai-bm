@@ -12,7 +12,7 @@ int main( int argc, char const *argv[] ) {
 	double total_time = 0.0;
 	const uint64_t cycles_count = 1000000000;
 
-	printf( "SIMD INSTRUCTIONS BENCHMARK\n" );
+	printf( "SIMD Instructions Benchmark v0.1\n" );
 	if ( system( "grep 'model name' /proc/cpuinfo | uniq | awk '/^model name/{$1=$2=$3=\"\";print $0}' > proccessor" ) != 0 )
 		perror( "error due system call" );
 	if ( system( "inxi -CfMxx -c 23" ) != 0 )
@@ -332,6 +332,8 @@ int main( int argc, char const *argv[] ) {
 	_BMARK_OFF( total_time );
 	print_results_epi64( "vpsubq\t_mm256_sub_epi64()", 4, di, cycles_count, total_time );
 
+
+	printf("\t   SIMD Arithmetic Instructions Benchmark value (simd-aibm)\t~%5.1lf GT/sec\n", total_tps);
 
 	return 0;
 }
