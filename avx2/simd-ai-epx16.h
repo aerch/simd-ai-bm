@@ -1,3 +1,5 @@
+#ifndef __SIMD_AI_EPX16_BM_H__
+#define __SIMD_AI_EPX16_BM_H__
 
 inline void avx2_simd_ai_epx16_bm() {
 	uint64_t i;
@@ -214,3 +216,5 @@ inline void avx2_simd_ai_epx16_bm() {
 
 	return;
 }
+
+#endif // !__SIMD_AI_EPX16_BM_H__

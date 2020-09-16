@@ -1,3 +1,5 @@
+#ifndef __SIMD_AI_EPX32_BM_H__
+#define __SIMD_AI_EPX32_BM_H__
 
 inline void avx2_simd_ai_epx32_bm() {
 	uint64_t i;
@@ -106,3 +108,5 @@ inline void avx2_simd_ai_epx32_bm() {
 
 	return;
 }
+
+#endif // !__SIMD_AI_EPX32_BM_H__

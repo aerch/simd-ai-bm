@@ -1,10 +1,12 @@
+#ifndef __INIT_H__
+#define __INIT_H__
 
 inline void make_inits() {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
 
-	printf( "\n" BLUE "SIMD Instructions Benchmark v0.3a" OFF "\n\n" );
+	printf( "\n" BLUE "SIMD Instructions Benchmark v0.4a" OFF "\n\n" );
 
 	// try to get current processor name to file
 	if ( system( "grep 'model name' /proc/cpuinfo | uniq | awk '/^model name/{$1=$2=$3=\"\";print $0}' > current_processor" ) != 0 )
@@ -67,3 +69,5 @@ inline void make_finits() {
 	fclose(stream);
 	return;
 }
+
+#endif // !__INIT_H__
