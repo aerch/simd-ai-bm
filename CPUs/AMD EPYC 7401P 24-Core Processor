@@ -1,0 +1,105 @@
+Architecture:        x86_64
+CPU op-mode(s):      32-bit, 64-bit
+Byte Order:          Little Endian
+CPU(s):              48
+On-line CPU(s) list: 0-47
+Thread(s) per core:  2
+Core(s) per socket:  24
+Socket(s):           1
+NUMA node(s):        4
+Vendor ID:           AuthenticAMD
+CPU family:          23
+Model:               1
+Model name:          AMD EPYC 7401P 24-Core Processor
+Stepping:            2
+CPU MHz:             2787.020
+CPU max MHz:         2000,0000
+CPU min MHz:         1200,0000
+BogoMIPS:            3999.77
+Virtualization:      AMD-V
+L1d cache:           32K
+L1i cache:           64K
+L2 cache:            512K
+L3 cache:            8192K
+NUMA node0 CPU(s):   0-5,24-29
+NUMA node1 CPU(s):   6-11,30-35
+NUMA node2 CPU(s):   12-17,36-41
+NUMA node3 CPU(s):   18-23,42-47
+Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb hw_pstate ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xgetbv1 xsaves clzero irperf xsaveerptr arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif overflow_recov succor smca
+
+System:    Host: mod1 Kernel: 4.19.74 x86_64 bits: 64 compiler: gcc v: 7.4.0 Console: N/A dm: N/A Distro: Linux Mint 19.2 Tina 
+           base: Ubuntu 18.04 bionic 
+
+Machine:   Type: Server System: GIGABYTE product: MZ31-AR0-00 v: 0100 serial: 01234567890123456789AB Chassis: type: 23 
+           v: 01234567 serial: 01234567890123456789AB 
+           Mobo: GIGABYTE model: MZ31-AR0-00 v: 01010101 serial: IG1NA300353 UEFI: GIGABYTE v: F13 date: 04/15/2019 
+
+CPU:       Topology: 24-Core (4-Die) model: AMD EPYC 7401P bits: 64 type: MT MCP MCM arch: Zen rev: 2 L2 cache: 12.0 MiB bogomips: 191988 
+           Speed: 2794 MHz min/max: 1200/2000 MHz Core speeds (MHz): 1: 2803 2: 2788 3: 2805 4: 2795 5: 2805 6: 2805 7: 2815 8: 2771 9: 2813 10: 2804 11: 2801 12: 2793 13: 2628 14: 2791 15: 2799 
+           16: 2774 17: 2811 18: 2794 19: 2795 20: 2797 21: 2569 22: 2794 23: 2766 24: 2465 25: 2796 26: 2794 27: 2798 28: 2801 29: 2721 30: 2789 31: 2797 32: 2798 33: 2794 34: 2800 35: 2799 
+           36: 2797 37: 2794 38: 2796 39: 2720 40: 2791 41: 2796 42: 2796 43: 2628 44: 2762 45: 2793 46: 2805 47: 2799 48: 2796 
+           Flags: 3dnowprefetch abm adx aes amd_dcm aperfmperf apic arat avic avx avx2 bmi1 bmi2 bpext clflush clflushopt clzero cmov cmp_legacy constant_tsc cpb cpuid cr8_legacy cx16 cx8 de 
+           decodeassists extapic extd_apicid f16c flushbyasid fma fpu fsgsbase fxsr fxsr_opt ht hw_pstate ibpb irperf lahf_lm lbrv lm mca mce misalignsse mmx mmxext monitor movbe msr mtrr mwaitx 
+           nonstop_tsc nopl npt nrip_save nx osvw overflow_recov pae pat pausefilter pclmulqdq pdpe1gb perfctr_core perfctr_llc perfctr_nb pfthreshold pge pni popcnt pse pse36 rdrand rdseed rdtscp 
+           rep_good sep sha_ni skinit smap smca smep ssbd sse sse2 sse4_1 sse4_2 sse4a ssse3 succor svm svm_lock syscall tce topoext tsc tsc_scale v_vmsave_vmload vgif vmcb_clean vme vmmcall wdt 
+           xgetbv1 xsave xsavec xsaveerptr xsaveopt xsaves 
+
+SIMD Arithmetic Instructions Single-Threaded Benchmark start ...
+
+AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	OPERATE SPEED
+
+	SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by 1000 MCycles)
+	   vpaddb	_mm256_add_epi8()	 0.714801788330 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpaddsb	_mm256_adds_epi8()	 0.714813232422 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpaddusb	_mm256_adds_epu8()	 0.714732170105 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpsubb	_mm256_sub_epi8()	 0.714667797089 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpsubsb	_mm256_adds_epi8()	 0.714737176895 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpsubusb	_mm256_adds_epu8()	 0.714696884155 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpsignb	_mm256_sign_epi8()	 0.714748144150 sec	~7.15e-10 sec	~ 44.8 GT/sec
+	   vpsadbw	_mm256_sad_epu8()	 1.072050094604 sec	~1.07e-09 sec	~ 29.8 GT/sec
+
+	SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by 1000 MCycles)
+	   vpaddw	_mm256_add_epi16()	 0.714671134949 sec	~7.15e-10 sec	~ 22.4 GT/sec
+	   vpaddsw	_mm256_adds_epi16()	 0.714707374573 sec	~7.15e-10 sec	~ 22.4 GT/sec
+	   vpaddusw	_mm256_adds_epu16()	 0.714682340622 sec	~7.15e-10 sec	~ 22.4 GT/sec
+	   vphaddw	_mm256_hadd_epi16()	 1.072096109390 sec	~1.07e-09 sec	~ 14.9 GT/sec
+	   vphaddsw	_mm256_hadds_epi16()	 1.072032928467 sec	~1.07e-09 sec	~ 14.9 GT/sec
+	   vpmaddwd	_mm256_madd_epi16()	 1.429351806641 sec	~1.43e-09 sec	~ 11.2 GT/sec
+	   vpmaddubsw	_mm256_maddubs_epi16()	 1.786751747131 sec	~1.79e-09 sec	~  9.0 GT/sec
+	   vpsubw	_mm256_sub_epi16()	 0.714673995972 sec	~7.15e-10 sec	~ 22.4 GT/sec
+	   vpsubsw	_mm256_subs_epi16()	 0.714670181274 sec	~7.15e-10 sec	~ 22.4 GT/sec
+	   vpsubusw	_mm256_subs_epu16()	 0.714686155319 sec	~7.15e-10 sec	~ 22.4 GT/sec
+	   vphsubw	_mm256_hsub_epi16()	 1.072036504745 sec	~1.07e-09 sec	~ 14.9 GT/sec
+	   vphsubsw	_mm256_hsubs_epi16()	 1.072062015533 sec	~1.07e-09 sec	~ 14.9 GT/sec
+	   vpmulhw	_mm256_mulhi_epi16()	 1.429356575012 sec	~1.43e-09 sec	~ 11.2 GT/sec
+	   vpmullw	_mm256_mullo_epi16()	 1.429356813431 sec	~1.43e-09 sec	~ 11.2 GT/sec
+	   vpmulhrsw	_mm256_mulhrs_epi16()	 1.786785602570 sec	~1.79e-09 sec	~  9.0 GT/sec
+	   vpmulhuw	_mm256_mulhi_epu16()	 1.429338216782 sec	~1.43e-09 sec	~ 11.2 GT/sec
+	   vpsignw	_mm256_sign_epi16()	 0.714673042297 sec	~7.15e-10 sec	~ 22.4 GT/sec
+
+	SIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by 1000 MCycles)
+	   vpaddd	_mm256_add_epi32()	 0.714748620987 sec	~7.15e-10 sec	~ 11.2 GT/sec
+	   vphaddd	_mm256_hadd_epi32()	 1.072020530701 sec	~1.07e-09 sec	~  7.5 GT/sec
+	   vpsubd	_mm256_sub_epi32()	 0.714678287506 sec	~7.15e-10 sec	~ 11.2 GT/sec
+	   vphsubd	_mm256_hsub_epi32()	 1.072014570236 sec	~1.07e-09 sec	~  7.5 GT/sec
+	   vpmuldq	_mm256_mul_epi32()	 1.072094202042 sec	~1.07e-09 sec	~  7.5 GT/sec
+	   vpmuludq	_mm256_mul_epu32()	 1.072010517120 sec	~1.07e-09 sec	~  7.5 GT/sec
+	   vpmulld	_mm256_mullo_epi32()	 1.786719799042 sec	~1.79e-09 sec	~  4.5 GT/sec
+	   vpsignd	_mm256_sign_epi32()	 0.714759111404 sec	~7.15e-10 sec	~ 11.2 GT/sec
+
+	SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by 1000 MCycles)
+	   vpaddq	_mm256_add_epi64()	 0.446680545807 sec	~4.47e-10 sec	~  9.0 GT/sec
+	   vpsubq	_mm256_sub_epi64()	 0.446676492691 sec	~4.47e-10 sec	~  9.0 GT/sec
+
+SIMD Arithmetic Instructions Single-Threaded Benchmark value		 [ SIMD-AI-ST-BM        708 ]
+
+SIMD Arithmetic Instructions Multi-Threaded Benchmark start ...
+
+AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	OPERATE SPEED
+
+	SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by 1000 MCycles)
+	   vpaddq	_mm256_add_epi64()	 1.593721628189 sec	~1.66e-11 sec	~240.9 GT/sec
+	   vpsubq	_mm256_sub_epi64()	 1.030159473419 sec	~1.07e-11 sec	~372.8 GT/sec
+
+SIMD Arithmetic Instructions Multi-Threaded Benchmark value		[ SIMD-AI-MT-BM        614 ]
+
