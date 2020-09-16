@@ -12,7 +12,7 @@ CPU family:          6
 Model:               60
 Model name:          Intel(R) Core(TM) i7-4770K CPU @ 3.50GHz
 Stepping:            3
-CPU MHz:             3918.199
+CPU MHz:             3881.734
 CPU max MHz:         4000,0000
 CPU min MHz:         800,0000
 BogoMIPS:            6998.08
@@ -31,7 +31,7 @@ Machine:   Device: desktop Mobo: ASRock model: Z97 Extreme6 serial: E80-44031701
            BIOS: American Megatrends v: P1.30 date: 05/22/2014
 
 CPU:       Quad core Intel Core i7-4770K (-MT-MCP-) arch: Haswell rev.3 cache: 8192 KB bmips: 27992
-           clock speeds: max: 4000 MHz 1: 2569 MHz 2: 3189 MHz 3: 2997 MHz 4: 3081 MHz 5: 3044 MHz 6: 3127 MHz 7: 2840 MHz 8: 2716 MHz
+           clock speeds: max: 4000 MHz 1: 2873 MHz 2: 2340 MHz 3: 2745 MHz 4: 3117 MHz 5: 2806 MHz 6: 3144 MHz 7: 2659 MHz 8: 2662 MHz
            CPU Flags: abm acpi aes aperfmperf apic arat arch_perfmon avx avx2 bmi1 bmi2 bts clflush cmov constant_tsc cpuid cpuid_fault cx16 cx8 de ds_cpl dtes64 dtherm dts ept erms est f16c
            flexpriority fma fpu fsgsbase fxsr ht ibpb ibrs ida invpcid invpcid_single lahf_lm lm mca mce mmx monitor movbe msr mtrr nonstop_tsc nopl nx pae pat pbe pcid pclmulqdq pdcm pdpe1gb pebs pge
            pln pni popcnt pse pse36 pti pts rdrand rdtscp rep_good sdbg sep smep ss sse sse2 sse4_1 sse4_2 ssse3 stibp syscall tm tm2 tpr_shadow tsc tsc_adjust tsc_deadline_timer vme vmx vnmi vpid
@@ -42,57 +42,57 @@ SIMD Arithmetic Instructions Single-Threaded Benchmark start ...
 AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	OPERATE SPEED
 
 	SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by 1000 MCycles)
-	   vpaddb	_mm256_add_epi8()	 0.325860261917 sec	~3.26e-10 sec	~ 98.2 GT/sec
-	   vpaddsb	_mm256_adds_epi8()	 0.316046714783 sec	~3.16e-10 sec	~101.3 GT/sec
-	   vpaddusb	_mm256_adds_epu8()	 0.270833253860 sec	~2.71e-10 sec	~118.2 GT/sec
-	   vpsubb	_mm256_sub_epi8()	 0.500648260117 sec	~5.01e-10 sec	~ 63.9 GT/sec
-	   vpsubsb	_mm256_adds_epi8()	 0.500451326370 sec	~5.00e-10 sec	~ 63.9 GT/sec
-	   vpsubusb	_mm256_adds_epu8()	 0.500620365143 sec	~5.01e-10 sec	~ 63.9 GT/sec
-	   vpsignb	_mm256_sign_epi8()	 0.500711917877 sec	~5.01e-10 sec	~ 63.9 GT/sec
-	   vpsadbw	_mm256_sad_epu8()	 1.251284360886 sec	~1.25e-09 sec	~ 25.6 GT/sec
+	   vpaddb	_mm256_add_epi8()	 0.502499341965 sec	~5.02e-10 sec	~ 63.7 GT/sec
+	   vpaddsb	_mm256_adds_epi8()	 0.547920227051 sec	~5.48e-10 sec	~ 58.4 GT/sec
+	   vpaddusb	_mm256_adds_epu8()	 0.500950813293 sec	~5.01e-10 sec	~ 63.9 GT/sec
+	   vpsubb	_mm256_sub_epi8()	 0.500828742981 sec	~5.01e-10 sec	~ 63.9 GT/sec
+	   vpsubsb	_mm256_adds_epi8()	 0.500546932220 sec	~5.01e-10 sec	~ 63.9 GT/sec
+	   vpsubusb	_mm256_adds_epu8()	 0.256319999695 sec	~2.56e-10 sec	~124.8 GT/sec
+	   vpsignb	_mm256_sign_epi8()	 0.291468620300 sec	~2.91e-10 sec	~109.8 GT/sec
+	   vpsadbw	_mm256_sad_epu8()	 1.251445055008 sec	~1.25e-09 sec	~ 25.6 GT/sec
 
 	SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by 1000 MCycles)
-	   vpaddw	_mm256_add_epi16()	 0.562993526459 sec	~5.63e-10 sec	~ 28.4 GT/sec
-	   vpaddsw	_mm256_adds_epi16()	 0.250842332840 sec	~2.51e-10 sec	~ 63.8 GT/sec
-	   vpaddusw	_mm256_adds_epu16()	 0.500508308411 sec	~5.01e-10 sec	~ 32.0 GT/sec
-	   vphaddw	_mm256_hadd_epi16()	 0.750615119934 sec	~7.51e-10 sec	~ 21.3 GT/sec
-	   vphaddsw	_mm256_hadds_epi16()	 0.750895500183 sec	~7.51e-10 sec	~ 21.3 GT/sec
-	   vpmaddwd	_mm256_madd_epi16()	 1.251271247864 sec	~1.25e-09 sec	~ 12.8 GT/sec
-	   vpmaddubsw	_mm256_maddubs_epi16()	 1.251242399216 sec	~1.25e-09 sec	~ 12.8 GT/sec
-	   vpsubw	_mm256_sub_epi16()	 0.253938198090 sec	~2.54e-10 sec	~ 63.0 GT/sec
-	   vpsubsw	_mm256_subs_epi16()	 0.266741752625 sec	~2.67e-10 sec	~ 60.0 GT/sec
-	   vpsubusw	_mm256_subs_epu16()	 0.250503540039 sec	~2.51e-10 sec	~ 63.9 GT/sec
-	   vphsubw	_mm256_hsub_epi16()	 0.750699520111 sec	~7.51e-10 sec	~ 21.3 GT/sec
-	   vphsubsw	_mm256_hsubs_epi16()	 0.750630140305 sec	~7.51e-10 sec	~ 21.3 GT/sec
-	   vpmulhw	_mm256_mulhi_epi16()	 1.501455307007 sec	~1.50e-09 sec	~ 10.7 GT/sec
-	   vpmullw	_mm256_mullo_epi16()	 1.251301765442 sec	~1.25e-09 sec	~ 12.8 GT/sec
-	   vpmulhrsw	_mm256_mulhrs_epi16()	 1.251227617264 sec	~1.25e-09 sec	~ 12.8 GT/sec
-	   vpmulhuw	_mm256_mulhi_epu16()	 1.251285791397 sec	~1.25e-09 sec	~ 12.8 GT/sec
-	   vpsignw	_mm256_sign_epi16()	 0.500493049622 sec	~5.00e-10 sec	~ 32.0 GT/sec
+	   vpaddw	_mm256_add_epi16()	 0.313729286194 sec	~3.14e-10 sec	~ 51.0 GT/sec
+	   vpaddsw	_mm256_adds_epi16()	 0.250839471817 sec	~2.51e-10 sec	~ 63.8 GT/sec
+	   vpaddusw	_mm256_adds_epu16()	 0.274250507355 sec	~2.74e-10 sec	~ 58.3 GT/sec
+	   vphaddw	_mm256_hadd_epi16()	 0.750848293304 sec	~7.51e-10 sec	~ 21.3 GT/sec
+	   vphaddsw	_mm256_hadds_epi16()	 0.753119945526 sec	~7.53e-10 sec	~ 21.2 GT/sec
+	   vpmaddwd	_mm256_madd_epi16()	 1.501527547836 sec	~1.50e-09 sec	~ 10.7 GT/sec
+	   vpmaddubsw	_mm256_maddubs_epi16()	 1.314136505127 sec	~1.31e-09 sec	~ 12.2 GT/sec
+	   vpsubw	_mm256_sub_epi16()	 0.500469446182 sec	~5.00e-10 sec	~ 32.0 GT/sec
+	   vpsubsw	_mm256_subs_epi16()	 0.500380754471 sec	~5.00e-10 sec	~ 32.0 GT/sec
+	   vpsubusw	_mm256_subs_epu16()	 0.250833034515 sec	~2.51e-10 sec	~ 63.8 GT/sec
+	   vphsubw	_mm256_hsub_epi16()	 0.750680923462 sec	~7.51e-10 sec	~ 21.3 GT/sec
+	   vphsubsw	_mm256_hsubs_epi16()	 0.750913619995 sec	~7.51e-10 sec	~ 21.3 GT/sec
+	   vpmulhw	_mm256_mulhi_epi16()	 1.251229763031 sec	~1.25e-09 sec	~ 12.8 GT/sec
+	   vpmullw	_mm256_mullo_epi16()	 1.501926898956 sec	~1.50e-09 sec	~ 10.7 GT/sec
+	   vpmulhrsw	_mm256_mulhrs_epi16()	 1.501495122910 sec	~1.50e-09 sec	~ 10.7 GT/sec
+	   vpmulhuw	_mm256_mulhi_epu16()	 1.251517534256 sec	~1.25e-09 sec	~ 12.8 GT/sec
+	   vpsignw	_mm256_sign_epi16()	 0.280746936798 sec	~2.81e-10 sec	~ 57.0 GT/sec
 
 	SIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by 1000 MCycles)
-	   vpaddd	_mm256_add_epi32()	 0.563196897507 sec	~5.63e-10 sec	~ 14.2 GT/sec
-	   vphaddd	_mm256_hadd_epi32()	 0.754693984985 sec	~7.55e-10 sec	~ 10.6 GT/sec
-	   vpsubd	_mm256_sub_epi32()	 0.501286506653 sec	~5.01e-10 sec	~ 16.0 GT/sec
-	   vphsubd	_mm256_hsub_epi32()	 0.751963376999 sec	~7.52e-10 sec	~ 10.6 GT/sec
-	   vpmuldq	_mm256_mul_epi32()	 1.504513978958 sec	~1.50e-09 sec	~  5.3 GT/sec
-	   vpmuludq	_mm256_mul_epu32()	 1.502778053284 sec	~1.50e-09 sec	~  5.3 GT/sec
-	   vpmulld	_mm256_mullo_epi32()	 2.756680011749 sec	~2.76e-09 sec	~  2.9 GT/sec
-	   vpsignd	_mm256_sign_epi32()	 0.493976831436 sec	~4.94e-10 sec	~ 16.2 GT/sec
+	   vpaddd	_mm256_add_epi32()	 0.268908739090 sec	~2.69e-10 sec	~ 29.7 GT/sec
+	   vphaddd	_mm256_hadd_epi32()	 0.750824213028 sec	~7.51e-10 sec	~ 10.7 GT/sec
+	   vpsubd	_mm256_sub_epi32()	 0.260769605637 sec	~2.61e-10 sec	~ 30.7 GT/sec
+	   vphsubd	_mm256_hsub_epi32()	 0.754052639008 sec	~7.54e-10 sec	~ 10.6 GT/sec
+	   vpmuldq	_mm256_mul_epi32()	 1.501645326614 sec	~1.50e-09 sec	~  5.3 GT/sec
+	   vpmuludq	_mm256_mul_epu32()	 1.251426219940 sec	~1.25e-09 sec	~  6.4 GT/sec
+	   vpmulld	_mm256_mullo_epi32()	 2.502519369125 sec	~2.50e-09 sec	~  3.2 GT/sec
+	   vpsignd	_mm256_sign_epi32()	 0.500544309616 sec	~5.01e-10 sec	~ 16.0 GT/sec
 
 	SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by 1000 MCycles)
-	   vpaddq	_mm256_add_epi64()	 0.496124505997 sec	~4.96e-10 sec	~  8.1 GT/sec
-	   vpsubq	_mm256_sub_epi64()	 0.496731042862 sec	~4.97e-10 sec	~  8.1 GT/sec
+	   vpaddq	_mm256_add_epi64()	 0.312351465225 sec	~3.12e-10 sec	~ 12.8 GT/sec
+	   vpsubq	_mm256_sub_epi64()	 0.343116760254 sec	~3.43e-10 sec	~ 11.7 GT/sec
 
-SIMD Arithmetic Instructions Single-Threaded Benchmark value		 [ SIMD-AI-ST-BM       1199 ]
+SIMD Arithmetic Instructions Single-Threaded Benchmark value		 [ SIMD-AI-ST-BM       1224 ]
 
 SIMD Arithmetic Instructions Multi-Threaded Benchmark start ...
 
 AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	OPERATE SPEED
 
 	SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by 1000 MCycles)
-	   vpaddq	_mm256_add_epi64()	 4.090203762054 sec	~6.39e-11 sec	~ 62.6 GT/sec
-	   vpsubq	_mm256_sub_epi64()	 3.067516565323 sec	~4.79e-11 sec	~ 83.5 GT/sec
+	   vpaddq	_mm256_add_epi64()	 8.149474382401 sec	~6.37e-11 sec	~ 62.8 GT/sec
+	   vpsubq	_mm256_sub_epi64()	 5.329665899277 sec	~4.16e-11 sec	~ 96.1 GT/sec
 
-SIMD Arithmetic Instructions Multi-Threaded Benchmark value		[ SIMD-AI-MT-BM        146 ]
+SIMD Arithmetic Instructions Multi-Threaded Benchmark value		[ SIMD-AI-MT-BM        159 ]
 
