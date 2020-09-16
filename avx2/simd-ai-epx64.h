@@ -3,7 +3,7 @@ inline void avx2_simd_ai_epx64_bm() {
 	uint64_t i;
 
 	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( "\n\tSIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
 
 	int64_t ALIGN32 qi[ 4 ] = { 8, 7, 6, 5 };
 	int64_t ALIGN32 qa[ 4 ] = { 1, 2, 3, 4 };

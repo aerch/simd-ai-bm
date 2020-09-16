@@ -1,5 +1,5 @@
 
-inline void print_results( const char* str, int32_t vecsz, uint64_t cycles_count, double total_time ) {
+inline void print_results( const char* str, int8_t vecsz, uint64_t cycles_count, double total_time ) {
 	double tpc = total_time / (double)cycles_count;
 	double tps = (double)vecsz / (tpc * 1.0e9);
 	total_tps += tps;

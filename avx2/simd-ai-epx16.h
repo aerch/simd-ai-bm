@@ -3,7 +3,7 @@ inline void avx2_simd_ai_epx16_bm() {
 	uint64_t i;
 
 	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( "\n\tSIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
 
 	int16_t ALIGN32 wi[ 16 ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
 	int16_t ALIGN32 wa[ 16 ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
