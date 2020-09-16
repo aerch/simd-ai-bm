@@ -46,9 +46,9 @@ inline void make_inits() {
 
 	printf("\n");
 
-	sprintf( _str_, "inxi -Cfx -y 240 -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
+	sprintf( _str_, "inxi -Cfx -y 200 -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 3" );
-	if ( system( "inxi -Cfx -y 240 -c 2" ) != 0 ) perror( "error due system call 30" );
+	if ( system( "inxi -Cfx -y 200 -c 2" ) != 0 ) perror( "error due system call 30" );
 
 	printf("\n");
 
