@@ -17,14 +17,15 @@ FILE		*stream;
 char		_str_[ 1024 ];
 char		current_path[ PATH_MAX ];
 
-const uint64_t	cycles_count = CYCLES_COUNT;	// 1,000,000,000 - 10,000,000,000
+uint64_t	cycles_count;			// 1,000,000,000 - 10,000,000,000
 
 uint8_t 	threads_count;			// maximum value is 128 threads
 
-double		total_time = 0.0;
+double		total_time;
 double		total_tps;
 
 __m256i		a, v;
+
 __uint128_t	active_threads_flag;
 
 pthread_mutex_t	lock;

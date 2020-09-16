@@ -2,7 +2,7 @@
 # Makefile for the linux SIMD Instructions Benchmark (simd-ibm) project
 
 TARGET          = simd-ibm
-VERSION         = 0.4a
+VERSION         = 0.5a
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
@@ -50,15 +50,15 @@ OFF             = '\033[0m'
 
 $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' LD  '$(TARGET)$(OFF)'\n'
-	$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
+	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
 
 simd-ibm.o: simd-ibm.c
 	@echo -en $(WHITE)' CC  '$<$(OFF)'\n'
-	$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
+	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 
 clean:
-	$(RM) $(TARGET) *.o *.d *.~ gmon.out
+	@$(RM) $(TARGET) *.o *.d *.~ gmon.out
 
 git-push-%: clean
 	@$(ECHO) -en "\n > "

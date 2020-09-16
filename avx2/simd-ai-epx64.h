@@ -3,17 +3,18 @@
 
 const uint8_t avx2_ai_epx64_cnt = 2;
 
-char instructions[ avx2_ai_epx64_cnt + 1 ][ 100 ] = {
+char avx2_ai_epx64_instructions[ avx2_ai_epx64_cnt + 1 ][ 100 ] = {
 	"AVX2 64-bit Integer Arithmetic Instructions",
 	"vpaddq\t_mm256_add_epi64()",
 	"vpsubq\t_mm256_sub_epi64()"
 };
 
 void* avx2_ai_epx64_bm_thread( void *arg ) {
-	uint32_t i;
-	// uint32_t cx = 0;
 	thread_data_t *td = (thread_data_t*)arg;
 	// printf( "avx2_ai_epx64_bm_thread%u started\n", td->tid );
+
+	uint32_t i;
+	// uint32_t cx = 0;
 
 	char name[ 25 ];
 	sprintf( name, "avx2aiep64th%u", td->tid );
@@ -52,7 +53,7 @@ void* avx2_ai_epx64_bm_thread( void *arg ) {
 				break;
 
 			default:
-				// printf( "avx2_ai_epx64_bm_thread%u havn't instruction\n", td->tid );
+				printf( "avx2_ai_epx64_bm_thread%u havn't instruction\n", td->tid );
 				break;
 
 		}
@@ -75,10 +76,6 @@ inline void avx2_ai_epx64_bm_threads_init( int32_t th_cnt ) {
 	if ( threads_count > MAX_THR_CNT ) threads_count = MAX_THR_CNT;
 
 	uint32_t i;
-	total_tps = 0.0;
-
-	fprintf( stream, "AVX2:\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tOPERATE SPEED\n" );
-	printf( BLUE "AVX2:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tOPERATE SPEED\n" OFF );
 
 	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
 	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
@@ -137,7 +134,7 @@ inline void avx2_ai_epx64_bm_threads_start() {
 		_BMARK_ON_;
 		pthread_mutex_lock( &lock );
 		for ( i = 0; i < threads_count; i++ ) {
-			td[i].instruction = 1;
+			td[i].instruction = c;
 			SET_BIT( active_threads_flag, i, 1 );
 		}
 		pthread_cond_broadcast( &start );
@@ -145,7 +142,7 @@ inline void avx2_ai_epx64_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		pthread_mutex_unlock( &lock );
 		_BMARK_OFF( total_time );
-		print_results( instructions[ c ], 4, cycles_count*threads_count, total_time );
+		print_results( avx2_ai_epx64_instructions[ c ], 4, cycles_count*threads_count, total_time );
 	}
 
 	return;
@@ -172,14 +169,14 @@ inline void avx2_ai_epx64_bm_threads_finit() {
 	return;
 }
 
-inline void avx2_simd_ai_epx64_st_bm() {
+inline void avx2_ai_epx64_st_bm() {
 	avx2_ai_epx64_bm_threads_init( 1 );
 	avx2_ai_epx64_bm_threads_start();
 	avx2_ai_epx64_bm_threads_finit();
 	return;
 }
 
-inline void avx2_simd_ai_epx64_mt_bm( int32_t th_cnt ) {
+inline void avx2_ai_epx64_mt_bm( int32_t th_cnt ) {
 	avx2_ai_epx64_bm_threads_init( th_cnt );
 	avx2_ai_epx64_bm_threads_start();
 	avx2_ai_epx64_bm_threads_finit();

@@ -5,7 +5,7 @@
 
 #define MAX_THR_CNT	128			// maximum value is 128 threads
 
-#define CYCLES_COUNT	1000000000		// 1,000,000,000 - 10,000,000,000
+#define CYCLES_COUNT	2000000000		// 1,000,000,000 - 10,000,000,000
 
 #define _BMARK_ON_ clock_gettime(CLOCK_REALTIME, &t1);
 #define _BMARK_OFF(cycle) clock_gettime(CLOCK_REALTIME, &t2); \
