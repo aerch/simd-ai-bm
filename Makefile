@@ -3,6 +3,7 @@
 
 TARGET          = simd-ibm
 VERSION         = 0.3a
+DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
 
@@ -45,7 +46,7 @@ WHITE           = '\033[37;1m'
 GRAY		= '\033[30;1m'
 OFF             = '\033[0m'
 
-.PHONY: $(TARGET) clean git-push-"update_commit" backup
+.PHONY: $(TARGET) clean git-push-"update" backup
 
 $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' LD  '$(TARGET)$(OFF)'\n'
