@@ -132,7 +132,7 @@ int main( int argc, char const *argv[] ) {
 	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
 
 	uint32_t i, c;
-	const uint8_t threads_count = 64;
+	const uint8_t threads_count = 96;
 	thread_data_t td[ threads_count ];
 	active_threads_flag = 0;
 
