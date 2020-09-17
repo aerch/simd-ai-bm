@@ -30,8 +30,7 @@ inline void make_st_banchmarks() {
 
 inline void make_mt_banchmarks() {
 	total_tps = 0.0;
-	cycles_count = CYCLES_COUNT / 20;
-	const uint8_t threads = 128;
+	cycles_count = CYCLES_COUNT;
 
 	// multi-threaded benchmarks execution
 	fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded Benchmark start ...\n\n" );
@@ -40,10 +39,10 @@ inline void make_mt_banchmarks() {
 	fprintf( stream, "AVX2:\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tOPERATING SPEED\n" );
 	printf( BLUE "AVX2:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tOPERATING SPEED\n" OFF );
 
-	avx2_ai_epx8_mt_bm( threads );
-	avx2_ai_epx16_mt_bm( threads );
-	avx2_ai_epx32_mt_bm( threads );
-	avx2_ai_epx64_mt_bm( threads );
+	avx2_ai_epx8_mt_bm( available_processors );
+	avx2_ai_epx16_mt_bm( available_processors );
+	avx2_ai_epx32_mt_bm( available_processors );
+	avx2_ai_epx64_mt_bm( available_processors );
 
 	fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark value\t\t   [ SIMD-AI-MT-BM   %8i ]\n\n", (int32_t)round( total_tps ) );
 	printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark value                [ SIMD-AI-MT-BM   %8i ]" OFF "\n\n", (int32_t)round( total_tps ) );

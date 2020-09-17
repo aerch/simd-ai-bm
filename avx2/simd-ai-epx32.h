@@ -19,7 +19,7 @@ void* avx2_ai_epx32_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 	// printf( "avx2_ai_epx32_bm_thread%u started\n", td->tid );
 
-	uint32_t i;
+	uint64_t i;
 	// uint32_t cx = 0;
 
 	char name[ 25 ];

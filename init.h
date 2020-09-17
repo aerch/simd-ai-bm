@@ -28,13 +28,16 @@ inline void make_inits() {
 	}
 	sprintf( current_path, "CPUs/%s", &line[3] );
 	current_path[ strlen(current_path)-1 ] = 0;
-	printf( BLUE "Saving to:" OFF WHITE " %s" OFF "\n\n", current_path);
+	printf( BLUE "Saving to:" OFF WHITE " %s" OFF "\n\n", current_path );
 	free(line);
 	fclose(stream);
 	stream = NULL;
 
 	// removing no more needed file 'current_processor'
 	remove("current_processor");
+
+	available_processors = get_nprocs();
+	printf( BLUE "Threads:   " OFF WHITE "This system has " BLUE "%d" OFF WHITE " processors configured and " BLUE "%d" OFF WHITE " processors available" OFF "\n\n", get_nprocs_conf(), available_processors );
 
 	// writing machine config and cpu info to resulting file
 	sprintf( _str_, "lscpu > \"%s\"; echo '' >> \"%s\"", current_path, current_path );

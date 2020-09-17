@@ -49,12 +49,12 @@ OFF             = '\033[0m'
 .PHONY: $(TARGET) clean git-push-"update" backup
 
 $(TARGET): clean $(OBJECTS)
-	@$(ECHO) -en $(GREEN)' LD  '$(TARGET)$(OFF)'\n'
+	@$(ECHO) -en $(GREEN)' ld  '$(TARGET)$(OFF)'\n'
 	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
 
 simd-ibm.o: simd-ibm.c
-	@echo -en $(WHITE)' CC  '$<$(OFF)'\n'
+	@echo -en $(WHITE)' cc  '$<$(OFF)'\n'
 	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 
 clean:

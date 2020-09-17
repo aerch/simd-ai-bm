@@ -19,6 +19,7 @@ char		current_path[ PATH_MAX ];
 
 uint64_t	cycles_count;			// 1,000,000,000 - 10,000,000,000
 
+uint8_t 	available_processors;		// available processor threads in system
 uint8_t 	threads_count;			// maximum value is 128 threads
 
 double		total_time;

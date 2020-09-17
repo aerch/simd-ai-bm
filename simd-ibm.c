@@ -7,6 +7,7 @@
 #include <inttypes.h>
 #include <immintrin.h>
 #include <sys/prctl.h>
+#include <sys/sysinfo.h>
 #include <linux/limits.h>
 
 #include "init.h"
