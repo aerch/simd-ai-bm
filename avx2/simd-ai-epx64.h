@@ -77,8 +77,8 @@ inline void avx2_ai_epx64_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n\tSIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
 
 	active_threads_flag = 0;
 
@@ -131,17 +131,17 @@ inline void avx2_ai_epx64_bm_threads_start() {
 
 	// starting current threaded benchmark
 	for ( c = 1; c <= avx2_ai_epx64_cnt; c++ ) {
-		_BMARK_ON_;
 		pthread_mutex_lock( &lock );
 		for ( i = 0; i < threads_count; i++ ) {
 			td[i].instruction = c;
 			SET_BIT( active_threads_flag, i, 1 );
 		}
+		_BMARK_ON_;
 		pthread_cond_broadcast( &start );
 		while ( active_threads_flag )
 			pthread_cond_wait( &stop, &lock );
-		pthread_mutex_unlock( &lock );
 		_BMARK_OFF( total_time );
+		pthread_mutex_unlock( &lock );
 		print_results( avx2_ai_epx64_instructions[ c ], 4, cycles_count*threads_count, total_time );
 	}
 

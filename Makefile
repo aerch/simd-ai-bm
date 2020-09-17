@@ -58,6 +58,7 @@ simd-ibm.o: simd-ibm.c
 	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 
 clean:
+	@echo -en $(WHITE)' cleaning project folder ...'$<$(OFF)'\n'
 	@$(RM) $(TARGET) *.o *.d *.~ gmon.out
 
 git-push-%: clean
