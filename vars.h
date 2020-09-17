@@ -26,6 +26,8 @@ double		total_time;
 double		total_tps;
 
 __m256i		a, v;
+__m256d		ad, vd;
+__m256		as, vs;
 
 __uint128_t	active_threads_flag;
 
