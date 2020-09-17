@@ -115,7 +115,8 @@ void* avx2_ai_epx8_bm_thread( void *arg ) {
 		pthread_mutex_lock( &lock );
 		td->instruction = 0;
 		SET_BIT( active_threads_flag, td->tid, 0 );
-		pthread_cond_signal( &stop );
+		if ( !active_threads_flag )
+			pthread_cond_signal( &stop );
 		// printf( "avx2_ai_epx8_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
 		pthread_mutex_unlock( &lock );
 
