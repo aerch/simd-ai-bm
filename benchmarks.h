@@ -14,12 +14,6 @@
 #include "avx2/simd-ai-epx32.h"
 #include "avx2/simd-ai-epx64.h"
 
-inline void make_title( const char *title ) {
-	fprintf( stream, "\n%s:\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tOPERATING SPEED\n", title );
-	printf( BLUE "\n%s:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tOPERATING SPEED\n\n" OFF, title );
-	return;
-}
-
 inline void make_st_banchmarks() {
 	total_tps = 0.0;
 	cycles_count = CYCLES_COUNT;
