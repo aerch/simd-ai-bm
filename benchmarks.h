@@ -61,7 +61,7 @@ inline void make_st_banchmarks() {
 inline void make_mt_banchmarks() {
 	total_tps = 0.0;
 	cycles_count = CYCLES_COUNT / 10;
-	uint8_t threads = 128;
+	uint8_t threads = THREADSCOUNT;
 
 	// multi-threaded benchmarks execution
 	fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded Benchmark start ...\n" );
