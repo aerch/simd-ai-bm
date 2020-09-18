@@ -4,13 +4,14 @@
 #include "defs.h"
 #include "vars.h"
 #include "print.h"
+#include "benchmarks.h"
 
 inline void make_inits() {
 	char *line = NULL;
 	size_t len = 0;
 	ssize_t nread;
 
-	printf( "\n" BLUE "SIMD Instructions Benchmark v0.5a" OFF "\n\n" );
+	printf( "\n" BLUE "SIMD Instructions Benchmark v" VERSION OFF "\n\n" );
 
 	// try to get current processor name to file
 	if ( system( "grep 'model name' /proc/cpuinfo | uniq | awk '/^model name/{$1=$2=$3=\"\";print $0}' > current_processor" ) != 0 )
@@ -55,9 +56,9 @@ inline void make_inits() {
 
 	printf("\n");
 
-	sprintf( _str_, "inxi -Cfx -y 200 -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
+	sprintf( _str_, "inxi -Cfx -y 160 -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 3" );
-	if ( system( "inxi -Cfx -y 200 -c 2" ) != 0 ) perror( "error due system call 30" );
+	if ( system( "inxi -Cfx -y 160 -c 2" ) != 0 ) perror( "error due system call 30" );
 
 	printf("\n");
 

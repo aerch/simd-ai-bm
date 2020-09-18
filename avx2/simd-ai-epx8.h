@@ -4,7 +4,7 @@
 const uint8_t avx2_ai_epx8_cnt = 8;
 
 char avx2_ai_epx8_instructions[ avx2_ai_epx8_cnt + 1 ][ 100 ] = {
-	"AVX2 64-bit Integer Arithmetic Instructions",
+	"AVX2 8-bit Integer Arithmetic Instructions",
 	"vpaddb\t_mm256_add_epi8()",
 	"vpaddsb\t_mm256_adds_epi8()",
 	"vpaddusb\t_mm256_adds_epu8()",
@@ -38,71 +38,71 @@ void* avx2_ai_epx8_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		a = _mm256_load_si256( (const __m256i *)ba );
+		ai = _mm256_load_si256( (const __m256i *)ba );
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 32 8-bit signed integers at a cycle
+			case 1: // add vectors of 32 8-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_add_epi8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_add_epi8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 2: // adds vectors of 32 8-bit signed integers at a cycle
+			case 2: // adds vectors of 32 8-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_adds_epi8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_adds_epi8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 3: // adds vectors of 32 8-bit unsigned integers at a cycle
+			case 3: // adds vectors of 32 8-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_adds_epu8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_adds_epu8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 4: // sub vectors of 32 8-bit signed integers at a cycle
+			case 4: // sub vectors of 32 8-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_sub_epi8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_sub_epi8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 5: // subs vectors of 32 8-bit signed integers at a cycle
+			case 5: // subs vectors of 32 8-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_subs_epi8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_subs_epi8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 6: // subs vectors of 32 8-bit unsigned integers at a cycle
+			case 6: // subs vectors of 32 8-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_subs_epu8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_subs_epu8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 7: // sign vectors of 32 8-bit signed integers at a cycle
+			case 7: // sign vectors of 32 8-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_sign_epi8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_sign_epi8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 
-			case 8: // subs vectors of 32 8-bit unsigned integers at a cycle
+			case 8: // subs vectors of 32 8-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)bi );
-					v = _mm256_sad_epu8( v, a );
-					_mm256_store_si256( (__m256i *)bi, v );
+					vi = _mm256_load_si256( (const __m256i *)bi );
+					vi = _mm256_sad_epu8( vi, ai );
+					_mm256_store_si256( (__m256i *)bi, vi );
 				}
 				break;
 

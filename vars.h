@@ -25,9 +25,13 @@ uint8_t 	threads_count;			// maximum value is 128 threads
 double		total_time;
 double		total_tps;
 
-__m256i		a, v;
-__m256d		ad, vd;
 __m256		as, vs;
+__m256d		ad, vd;
+__m256i		ai, vi;
+
+__m128		bs, ws;
+__m128d		bd, wd;
+__m128i		bi, wi;
 
 __uint128_t	active_threads_flag;
 

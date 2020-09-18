@@ -47,143 +47,143 @@ void* avx2_ai_epx16_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		a = _mm256_load_si256( (const __m256i *)wa );
+		ai = _mm256_load_si256( (const __m256i *)wa );
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 16 16-bit signed integers at a cycle
+			case 1: // add vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_add_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_add_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 2: // adds vectors of 16 16-bit signed integers at a cycle
+			case 2: // adds vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_adds_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_adds_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 3: // adds vectors of 16 16-bit unsigned integers at a cycle
+			case 3: // adds vectors of 16 16-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_adds_epu16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_adds_epu16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 4: // hadd vectors of 16 16-bit signed integers at a cycle
+			case 4: // hadd vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_hadd_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_hadd_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 5: // hadds vectors of 16 16-bit signed integers at a cycle
+			case 5: // hadds vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_hadds_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_hadds_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 6: // madd vectors of 16 16-bit signed integers at a cycle
+			case 6: // madd vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_madd_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_madd_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 7: // maddubs vectors of 16 16-bit signed integers at a cycle
+			case 7: // maddubs vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_maddubs_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_maddubs_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 8: // sub vectors of 16 16-bit signed integers at a cycle
+			case 8: // sub vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_sub_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_sub_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 9: // subs vectors of 16 16-bit signed integers at a cycle
+			case 9: // subs vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_subs_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_subs_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 10:// subs vectors of 16 16-bit unsigned integers at a cycle
+			case 10:// subs vectors of 16 16-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_subs_epu16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_subs_epu16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 11:// hsub vectors of 16 16-bit signed integers at a cycle
+			case 11:// hsub vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_hsub_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_hsub_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 12:// hsubs vectors of 16 16-bit signed integers at a cycle
+			case 12:// hsubs vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_hsubs_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_hsubs_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 13:// mulhi vectors of 16 16-bit signed integers at a cycle
+			case 13:// mulhi vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_mulhi_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_mulhi_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 14:// mullo vectors of 16 16-bit signed integers at a cycle
+			case 14:// mullo vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_mullo_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_mullo_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 15:// mulhrs vectors of 16 16-bit signed integers at a cycle
+			case 15:// mulhrs vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_mulhrs_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_mulhrs_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 16:// mulhi vectors of 16 16-bit unsigned integers at a cycle
+			case 16:// mulhi vectors of 16 16-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_mulhi_epu16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_mulhi_epu16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 
-			case 17:// sign vectors of 16 16-bit signed integers at a cycle
+			case 17:// sign vectors of 16 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)wi );
-					v = _mm256_sign_epi16( v, a );
-					_mm256_store_si256( (__m256i *)wi, v );
+					vi = _mm256_load_si256( (const __m256i *)wi );
+					vi = _mm256_sign_epi16( vi, ai );
+					_mm256_store_si256( (__m256i *)wi, vi );
 				}
 				break;
 

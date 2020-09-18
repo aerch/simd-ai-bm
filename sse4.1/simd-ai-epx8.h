@@ -1,27 +1,26 @@
-#ifndef __SIMD_AI_EPX64_BM_H__
-#define __SIMD_AI_EPX64_BM_H__
+#ifndef __SIMD_SSE4_1_AI_EPX8_BM_H__
+#define __SIMD_SSE4_1_AI_EPX8_BM_H__
 
-const uint8_t avx2_ai_epx64_cnt = 2;
+const uint8_t sse4_1_ai_epx8_cnt = 1;
 
-char avx2_ai_epx64_instructions[ avx2_ai_epx64_cnt + 1 ][ 100 ] = {
-	"AVX2 64-bit Integer Arithmetic Instructions",
-	"vpaddq\t_mm256_add_epi64()",
-	"vpsubq\t_mm256_sub_epi64()"
+char sse4_1_ai_epx8_instructions[ sse4_1_ai_epx8_cnt + 1 ][ 100 ] = {
+	"SSE4.1 8-bit Integer Arithmetic Instructions",
+	"mpsadbw\t_mm_mpsadbw_epu8()"
 };
 
-void* avx2_ai_epx64_bm_thread( void *arg ) {
+void* sse4_1_ai_epx8_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
-	// printf( "avx2_ai_epx64_bm_thread%u started\n", td->tid );
+	// printf( "sse4_1_ai_epx8_bm_thread%u started\n", td->tid );
 
 	uint64_t i;
 	// uint32_t cx = 0;
 
 	char name[ 25 ];
-	sprintf( name, "avx2aiep64th%u", td->tid );
+	sprintf( name, "sse4.1aiep8th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	int64_t ALIGN32 qi[ 4 ] = { 8, 7, 6, 5 };
-	int64_t ALIGN32 qa[ 4 ] = { 1, 2, 3, 4 };
+	int8_t ALIGN16 bbi[ 16 ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int8_t ALIGN16 bba[ 16 ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	while ( td->thread_active ) {
 
@@ -32,28 +31,20 @@ void* avx2_ai_epx64_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		ai = _mm256_load_si256( (const __m256i *)qa );
+		bi = _mm_load_si128( (const __m128i *)bba );
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 4 64-bit signed integers at cycle
+			case 1: // mpsadbw vectors of 16 8-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm256_load_si256( (const __m256i *)qi );
-					vi = _mm256_add_epi64( vi, ai );
-					_mm256_store_si256( (__m256i *)qi, vi );
-				}
-				break;
-
-			case 2: // sub vectors of 4 64-bit signed integers at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm256_load_si256( (const __m256i *)qi );
-					vi = _mm256_sub_epi64( vi, ai );
-					_mm256_store_si256( (__m256i *)qi, vi );
+					wi = _mm_load_si128( (const __m128i *)bbi );
+					wi = _mm_mpsadbw_epu8( wi, bi, 0x0f );
+					_mm_store_si128( (__m128i *)bbi, wi );
 				}
 				break;
 
 			default:
-				printf( "avx2_ai_epx64_bm_thread%u havn't instruction\n", td->tid );
+				printf( "sse4_1_ai_epx8_bm_thread%u havn't instruction\n", td->tid );
 				break;
 
 		}
@@ -63,23 +54,23 @@ void* avx2_ai_epx64_bm_thread( void *arg ) {
 		SET_BIT( active_threads_flag, td->tid, 0 );
 		if ( !active_threads_flag )
 			pthread_cond_signal( &stop );
-		// printf( "avx2_ai_epx64_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
+		// printf( "sse4_1_ai_epx8_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
 		pthread_mutex_unlock( &lock );
 
 	}
 
-	// printf( "avx2_ai_epx64_bm_thread%u stopped\n", td->tid );
+	// printf( "sse4_1_ai_epx8_bm_thread%u stopped\n", td->tid );
 	return NULL;
 }
 
-inline void avx2_ai_epx64_bm_threads_init( int32_t th_cnt ) {
+inline void sse4_1_ai_epx8_bm_threads_init( int32_t th_cnt ) {
 	threads_count = th_cnt;
 	if ( threads_count > MAX_THR_CNT ) threads_count = MAX_THR_CNT;
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
 
 	active_threads_flag = 0;
 
@@ -116,7 +107,7 @@ inline void avx2_ai_epx64_bm_threads_init( int32_t th_cnt ) {
 
 	// create threads
 	for ( i = 0; i < threads_count; i++ ) {
-		result = pthread_create( &td[i].th, &attr, avx2_ai_epx64_bm_thread, &td[i] );
+		result = pthread_create( &td[i].th, &attr, sse4_1_ai_epx8_bm_thread, &td[i] );
 		if ( result != 0 ) perror( "pthread_create() error" );
 	}
 
@@ -127,11 +118,11 @@ inline void avx2_ai_epx64_bm_threads_init( int32_t th_cnt ) {
 	return;
 }
 
-inline void avx2_ai_epx64_bm_threads_start() {
+inline void sse4_1_ai_epx8_bm_threads_start() {
 	uint32_t i, c;
 
 	// starting current threaded benchmark
-	for ( c = 1; c <= avx2_ai_epx64_cnt; c++ ) {
+	for ( c = 1; c <= sse4_1_ai_epx8_cnt; c++ ) {
 		pthread_mutex_lock( &lock );
 		for ( i = 0; i < threads_count; i++ ) {
 			td[i].instruction = c;
@@ -143,13 +134,13 @@ inline void avx2_ai_epx64_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx2_ai_epx64_instructions[ c ], 4, cycles_count*threads_count, total_time );
+		print_results( sse4_1_ai_epx8_instructions[ c ], 32, cycles_count*threads_count, total_time );
 	}
 
 	return;
 }
 
-inline void avx2_ai_epx64_bm_threads_finit() {
+inline void sse4_1_ai_epx8_bm_threads_finit() {
 	uint32_t i;
 
 	// finish threads
@@ -170,18 +161,18 @@ inline void avx2_ai_epx64_bm_threads_finit() {
 	return;
 }
 
-inline void avx2_ai_epx64_st_bm() {
-	avx2_ai_epx64_bm_threads_init( 1 );
-	avx2_ai_epx64_bm_threads_start();
-	avx2_ai_epx64_bm_threads_finit();
+inline void sse4_1_ai_epx8_st_bm() {
+	sse4_1_ai_epx8_bm_threads_init( 1 );
+	sse4_1_ai_epx8_bm_threads_start();
+	sse4_1_ai_epx8_bm_threads_finit();
 	return;
 }
 
-inline void avx2_ai_epx64_mt_bm( int32_t th_cnt ) {
-	avx2_ai_epx64_bm_threads_init( th_cnt );
-	avx2_ai_epx64_bm_threads_start();
-	avx2_ai_epx64_bm_threads_finit();
+inline void sse4_1_ai_epx8_mt_bm( int32_t th_cnt ) {
+	sse4_1_ai_epx8_bm_threads_init( th_cnt );
+	sse4_1_ai_epx8_bm_threads_start();
+	sse4_1_ai_epx8_bm_threads_finit();
 	return;
 }
 
-#endif // !__SIMD_AI_EPX64_BM_H__
+#endif // !__SIMD_SSE4_1_AI_EPX8_BM_H__

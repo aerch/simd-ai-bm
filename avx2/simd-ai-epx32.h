@@ -38,71 +38,71 @@ void* avx2_ai_epx32_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		a = _mm256_load_si256( (const __m256i *)da );
+		ai = _mm256_load_si256( (const __m256i *)da );
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 8 32-bit signed integers at a cycle
+			case 1: // add vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_add_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_add_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 2: // hadd vectors of 8 32-bit signed integers at a cycle
+			case 2: // hadd vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_hadd_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_hadd_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 3: // sub vectors of 8 32-bit signed integers at a cycle
+			case 3: // sub vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_sub_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_sub_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 4: // hsub vectors of 8 32-bit signed integers at a cycle
+			case 4: // hsub vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_hsub_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_hsub_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 5: // mul vectors of 8 32-bit signed integers at a cycle
+			case 5: // mul vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_mul_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_mul_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 6: // mul vectors of 8 32-bit unsigned integers at a cycle
+			case 6: // mul vectors of 8 32-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_mul_epu32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_mul_epu32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 7: // mullo vectors of 8 32-bit signed integers at a cycle
+			case 7: // mullo vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_mullo_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_mullo_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 
-			case 8: // sign vectors of 8 32-bit signed integers at a cycle
+			case 8: // sign vectors of 8 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					v = _mm256_load_si256( (const __m256i *)di );
-					v = _mm256_sign_epi32( v, a );
-					_mm256_store_si256( (__m256i *)di, v );
+					vi = _mm256_load_si256( (const __m256i *)di );
+					vi = _mm256_sign_epi32( vi, ai );
+					_mm256_store_si256( (__m256i *)di, vi );
 				}
 				break;
 

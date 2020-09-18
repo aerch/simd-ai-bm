@@ -1,10 +1,10 @@
-#ifndef __SIMD_AI_PS32_BM_H__
-#define __SIMD_AI_PS32_BM_H__
+#ifndef __SIMD_AVX_AI_PS32_BM_H__
+#define __SIMD_AVX_AI_PS32_BM_H__
 
-const uint8_t avx2_ai_ps32_cnt = 8;
+const uint8_t avx_ai_ps32_cnt = 8;
 
-char avx2_ai_ps32_instructions[ avx2_ai_ps32_cnt + 1 ][ 100 ] = {
-	"AVX2 32-bit Single-Precision Arithmetic Instructions",
+char avx_ai_ps32_instructions[ avx_ai_ps32_cnt + 1 ][ 100 ] = {
+	"AVX 32-bit Single-Precision Arithmetic Instructions",
 	"vaddps\t_mm256_add_ps()      ",
 	"vaddsubps\t_mm256_addsub_ps()",
 	"vdivps\t_mm256_div_ps()      ",
@@ -15,15 +15,15 @@ char avx2_ai_ps32_instructions[ avx2_ai_ps32_cnt + 1 ][ 100 ] = {
 	"vsubps\t_mm256_sub_ps()      "
 };
 
-void* avx2_ai_ps32_bm_thread( void *arg ) {
+void* avx_ai_ps32_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
-	// printf( "avx2_ai_ps32_bm_thread%u started\n", td->tid );
+	// printf( "avx_ai_ps32_bm_thread%u started\n", td->tid );
 
 	uint64_t i;
 	// uint32_t cx = 0;
 
 	char name[ 25 ];
-	sprintf( name, "avx2aips32th%u", td->tid );
+	sprintf( name, "avx_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	float ALIGN32 si[ 8 ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
@@ -42,7 +42,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 4 64-bit singles at a cycle
+			case 1: // add vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_add_ps( vs, as );
@@ -50,7 +50,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				}
 				break;
 
-			case 2: // addsub vectors of 4 64-bit singles at a cycle
+			case 2: // addsub vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_addsub_ps( vs, as );
@@ -58,7 +58,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				}
 				break;
 
-			case 3: // div vectors of 4 64-bit singles at a cycle
+			case 3: // div vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_div_ps( vs, as );
@@ -66,15 +66,15 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				}
 				break;
 
-			case 4: // dp vectors of 4 64-bit singles at a cycle
+			case 4: // dp vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
-					vs = _mm256_dp_ps( vs, as, 0xff );
+					vs = _mm256_dp_ps( vs, as, 0x0f );
 					_mm256_store_ps( (float *)si, vs );
 				}
 				break;
 
-			case 5: // hadd vectors of 4 64-bit singles at a cycle
+			case 5: // hadd vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_hadd_ps( vs, as );
@@ -82,7 +82,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				}
 				break;
 
-			case 6: // hsub vectors of 4 64-bit singles at a cycle
+			case 6: // hsub vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_hsub_ps( vs, as );
@@ -90,7 +90,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				}
 				break;
 
-			case 7: // mul vectors of 4 64-bit singles at a cycle
+			case 7: // mul vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_mul_ps( vs, as );
@@ -98,7 +98,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				}
 				break;
 
-			case 8: // sub vectors of 4 64-bit singles at a cycle
+			case 8: // sub vectors of 8 32-bit singles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vs = _mm256_load_ps( (const float *)si );
 					vs = _mm256_sub_ps( vs, as );
@@ -107,7 +107,7 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 				break;
 
 			default:
-				printf( "avx2_ai_ps32_bm_thread%u havn't instruction\n", td->tid );
+				printf( "avx_ai_ps32_bm_thread%u havn't instruction\n", td->tid );
 				break;
 
 		}
@@ -117,23 +117,23 @@ void* avx2_ai_ps32_bm_thread( void *arg ) {
 		SET_BIT( active_threads_flag, td->tid, 0 );
 		if ( !active_threads_flag )
 			pthread_cond_signal( &stop );
-		// printf( "avx2_ai_ps32_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
+		// printf( "avx_ai_ps32_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
 		pthread_mutex_unlock( &lock );
 
 	}
 
-	// printf( "avx2_ai_ps32_bm_thread%u stopped\n", td->tid );
+	// printf( "avx_ai_ps32_bm_thread%u stopped\n", td->tid );
 	return NULL;
 }
 
-inline void avx2_ai_ps32_bm_threads_init( int32_t th_cnt ) {
+inline void avx_ai_ps32_bm_threads_init( int32_t th_cnt ) {
 	threads_count = th_cnt;
 	if ( threads_count > MAX_THR_CNT ) threads_count = MAX_THR_CNT;
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 32-bit single-precision (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 32-bit single-precision (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of single-precision (measured by %5i MCycles)\n", (int32_t)(cycles_count/1e6) );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of single-precision (measured by %5i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
 
 	active_threads_flag = 0;
 
@@ -170,7 +170,7 @@ inline void avx2_ai_ps32_bm_threads_init( int32_t th_cnt ) {
 
 	// create threads
 	for ( i = 0; i < threads_count; i++ ) {
-		result = pthread_create( &td[i].th, &attr, avx2_ai_ps32_bm_thread, &td[i] );
+		result = pthread_create( &td[i].th, &attr, avx_ai_ps32_bm_thread, &td[i] );
 		if ( result != 0 ) perror( "pthread_create() error" );
 	}
 
@@ -181,11 +181,11 @@ inline void avx2_ai_ps32_bm_threads_init( int32_t th_cnt ) {
 	return;
 }
 
-inline void avx2_ai_ps32_bm_threads_start() {
+inline void avx_ai_ps32_bm_threads_start() {
 	uint32_t i, c;
 
 	// starting current threaded benchmark
-	for ( c = 1; c <= avx2_ai_ps32_cnt; c++ ) {
+	for ( c = 1; c <= avx_ai_ps32_cnt; c++ ) {
 		pthread_mutex_lock( &lock );
 		for ( i = 0; i < threads_count; i++ ) {
 			td[i].instruction = c;
@@ -197,13 +197,13 @@ inline void avx2_ai_ps32_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx2_ai_ps32_instructions[ c ], 8, cycles_count*threads_count, total_time );
+		print_results( avx_ai_ps32_instructions[ c ], 8, cycles_count*threads_count, total_time );
 	}
 
 	return;
 }
 
-inline void avx2_ai_ps32_bm_threads_finit() {
+inline void avx_ai_ps32_bm_threads_finit() {
 	uint32_t i;
 
 	// finish threads
@@ -224,18 +224,18 @@ inline void avx2_ai_ps32_bm_threads_finit() {
 	return;
 }
 
-inline void avx2_ai_ps32_st_bm() {
-	avx2_ai_ps32_bm_threads_init( 1 );
-	avx2_ai_ps32_bm_threads_start();
-	avx2_ai_ps32_bm_threads_finit();
+inline void avx_ai_ps32_st_bm() {
+	avx_ai_ps32_bm_threads_init( 1 );
+	avx_ai_ps32_bm_threads_start();
+	avx_ai_ps32_bm_threads_finit();
 	return;
 }
 
-inline void avx2_ai_ps32_mt_bm( int32_t th_cnt ) {
-	avx2_ai_ps32_bm_threads_init( th_cnt );
-	avx2_ai_ps32_bm_threads_start();
-	avx2_ai_ps32_bm_threads_finit();
+inline void avx_ai_ps32_mt_bm( int32_t th_cnt ) {
+	avx_ai_ps32_bm_threads_init( th_cnt );
+	avx_ai_ps32_bm_threads_start();
+	avx_ai_ps32_bm_threads_finit();
 	return;
 }
 
-#endif // !__SIMD_AI_PS32_BM_H__
+#endif // !__SIMD_AVX_AI_PS32_BM_H__
