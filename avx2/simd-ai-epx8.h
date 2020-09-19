@@ -1,5 +1,5 @@
-#ifndef __SIMD_AI_EPX8_BM_H__
-#define __SIMD_AI_EPX8_BM_H__
+#ifndef __SIMD_AVX2_AI_EPX8_BM_H__
+#define __SIMD_AVX2_AI_EPX8_BM_H__
 
 const uint8_t avx2_ai_epx8_cnt = 8;
 
@@ -26,8 +26,9 @@ void* avx2_ai_epx8_bm_thread( void *arg ) {
 	sprintf( name, "avx2aiep8th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	int8_t ALIGN32 bi[ 32 ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
-	int8_t ALIGN32 ba[ 32 ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
+	vector_capacity = 32;
+	int8_t ALIGN32 bi[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int8_t ALIGN32 ba[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	while ( td->thread_active ) {
 
@@ -108,7 +109,6 @@ void* avx2_ai_epx8_bm_thread( void *arg ) {
 
 			default:
 				printf( "avx2_ai_epx8_bm_thread%u havn't instruction\n", td->tid );
-				break;
 
 		}
 
@@ -132,8 +132,8 @@ inline void avx2_ai_epx8_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 8-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 8-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -197,7 +197,7 @@ inline void avx2_ai_epx8_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx2_ai_epx8_instructions[ c ], 32, cycles_count*threads_count, total_time );
+		print_results( avx2_ai_epx8_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;
@@ -238,4 +238,4 @@ inline void avx2_ai_epx8_mt_bm( int32_t th_cnt ) {
 	return;
 }
 
-#endif // !__SIMD_AI_EPX8_BM_H__
+#endif // !__SIMD_AVX2_AI_EPX8_BM_H__

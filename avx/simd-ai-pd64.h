@@ -25,8 +25,9 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 	sprintf( name, "avx_aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	double ALIGN32 di[ 4 ] = { 8, 7, 6, 5 };
-	double ALIGN32 da[ 4 ] = { 1, 2, 3, 4 };
+	vector_capacity = 4;
+	double ALIGN32 di[ vector_capacity ] = { 8, 7, 6, 5 };
+	double ALIGN32 da[ vector_capacity ] = { 1, 2, 3, 4 };
 
 	while ( td->thread_active ) {
 
@@ -73,7 +74,6 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 				}
 				break;
 
-
 			case 5: // hsub vectors of 4 64-bit doubles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vd = _mm256_load_pd( (const double *)di );
@@ -82,7 +82,6 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 				}
 				break;
 
-
 			case 6: // mul vectors of 4 64-bit doubles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
 					vd = _mm256_load_pd( (const double *)di );
@@ -90,7 +89,6 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 					_mm256_store_pd( (double *)di, vd );
 				}
 				break;
-
 
 			case 7: // sub vectors of 4 64-bit doubles at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
@@ -102,7 +100,6 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 
 			default:
 				printf( "avx_ai_pd64_bm_thread%u havn't instruction\n", td->tid );
-				break;
 
 		}
 
@@ -126,8 +123,8 @@ inline void avx_ai_pd64_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of double-precision (measured by %5i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of double-precision (measured by %5i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of double-precision\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of double-precision\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -191,7 +188,7 @@ inline void avx_ai_pd64_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx_ai_pd64_instructions[ c ], 4, cycles_count*threads_count, total_time );
+		print_results( avx_ai_pd64_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;

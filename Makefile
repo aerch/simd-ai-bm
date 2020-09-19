@@ -18,9 +18,10 @@ ECHO            = /bin/echo
 PWD             := $(shell pwd)
 MAKE            = make
 
+CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2
 DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=100000000 -D THREADSCOUNT=128
 
-CXXFLAGS	= -O3 -MMD -march=native -mtune=native -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -ffast-math -std=c++11 -Wall -faligned-new $(DFLAGS)
+CXXFLAGS	= -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) -Wall -faligned-new $(DFLAGS)
 LDFLAGS         = $(CXXFLAGS)
 
 LIBS            = -lm -lpthread

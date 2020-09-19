@@ -26,8 +26,9 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 	sprintf( name, "avx_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	float ALIGN32 si[ 8 ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
-	float ALIGN32 sa[ 8 ] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	vector_capacity = 8;
+	float ALIGN32 si[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
+	float ALIGN32 sa[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	while ( td->thread_active ) {
 
@@ -108,7 +109,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			default:
 				printf( "avx_ai_ps32_bm_thread%u havn't instruction\n", td->tid );
-				break;
 
 		}
 
@@ -132,8 +132,8 @@ inline void avx_ai_ps32_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of single-precision (measured by %5i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of single-precision (measured by %5i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of single-precision\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of single-precision\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -197,7 +197,7 @@ inline void avx_ai_ps32_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx_ai_ps32_instructions[ c ], 8, cycles_count*threads_count, total_time );
+		print_results( avx_ai_ps32_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;

@@ -21,6 +21,7 @@ uint64_t	cycles_count;			// 1,000,000,000 - 10,000,000,000
 
 uint8_t 	available_processors;		// available processor threads in system
 uint8_t 	threads_count;			// maximum value is 128 threads
+uint8_t 	vector_capacity;		// simd vector's capacity
 
 double		total_time;
 double		total_tps;
@@ -32,6 +33,8 @@ __m256i		ai, vi;
 __m128		bs, ws;
 __m128d		bd, wd;
 __m128i		bi, wi;
+
+__m64		ci, xi;
 
 __uint128_t	active_threads_flag;
 

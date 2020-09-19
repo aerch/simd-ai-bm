@@ -20,8 +20,9 @@ void* sse4_1_ai_epx32_bm_thread( void *arg ) {
 	sprintf( name, "sse4.1aiep32th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	int32_t ALIGN16 di[ 4 ] = { 8, 7, 6, 5 };
-	int32_t ALIGN16 da[ 4 ] = { 1, 2, 3, 4 };
+	vector_capacity = 4;
+	int32_t ALIGN16 di[ vector_capacity ] = { 8, 7, 6, 5 };
+	int32_t ALIGN16 da[ vector_capacity ] = { 1, 2, 3, 4 };
 
 	while ( td->thread_active ) {
 
@@ -54,7 +55,6 @@ void* sse4_1_ai_epx32_bm_thread( void *arg ) {
 
 			default:
 				printf( "sse4_1_ai_epx32_bm_thread%u havn't instruction\n", td->tid );
-				break;
 
 		}
 
@@ -78,8 +78,8 @@ inline void sse4_1_ai_epx32_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 32-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 128-bit vectors of 32-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 128-bit vectors of 32-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -143,7 +143,7 @@ inline void sse4_1_ai_epx32_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( sse4_1_ai_epx32_instructions[ c ], 8, cycles_count*threads_count, total_time );
+		print_results( sse4_1_ai_epx32_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;

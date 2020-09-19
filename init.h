@@ -73,8 +73,10 @@ inline void make_inits() {
 }
 
 inline void make_finits() {
+
 	// close resulting file
 	fclose(stream);
+
 	return;
 }
 

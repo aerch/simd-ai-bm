@@ -41,7 +41,7 @@ SIMD Arithmetic Instructions Single-Threaded Benchmark start ...
 
 AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	OPERATING SPEED
 
-      SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by   2000 MCycles)
+      SIMD Arithmetic instructions with 256-bit vectors of 8-bit integers (measured by   2000 MCycles)
 	   vpaddb	_mm256_add_epi8()	 0.671286821365 sec	 3.36e-10 sec	    95.3 GT/sec
 	   vpaddsb	_mm256_adds_epi8()	 1.001064300537 sec	 5.01e-10 sec	    63.9 GT/sec
 	   vpaddusb	_mm256_adds_epu8()	 1.001105070114 sec	 5.01e-10 sec	    63.9 GT/sec
@@ -90,7 +90,7 @@ SIMD Arithmetic Instructions Multi-Threaded Benchmark start ...
 
 AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	OPERATING SPEED
 
-      SIMD Arithmetic instructions with 256-bit vectors of  8-bit integers (measured by    100 MCycles)
+      SIMD Arithmetic instructions with 256-bit vectors of 8-bit integers (measured by    100 MCycles)
 	   vpaddb	_mm256_add_epi8()	 1.080272197723 sec	 8.44e-11 sec	   379.2 GT/sec
 	   vpaddsb	_mm256_adds_epi8()	 0.721583604813 sec	 5.64e-11 sec	   567.6 GT/sec
 	   vpaddusb	_mm256_adds_epu8()	 0.698310375214 sec	 5.46e-11 sec	   586.6 GT/sec

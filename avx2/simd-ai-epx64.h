@@ -1,5 +1,5 @@
-#ifndef __SIMD_AI_EPX64_BM_H__
-#define __SIMD_AI_EPX64_BM_H__
+#ifndef __SIMD_AVX2_AI_EPX64_BM_H__
+#define __SIMD_AVX2_AI_EPX64_BM_H__
 
 const uint8_t avx2_ai_epx64_cnt = 2;
 
@@ -20,8 +20,9 @@ void* avx2_ai_epx64_bm_thread( void *arg ) {
 	sprintf( name, "avx2aiep64th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	int64_t ALIGN32 qi[ 4 ] = { 8, 7, 6, 5 };
-	int64_t ALIGN32 qa[ 4 ] = { 1, 2, 3, 4 };
+	vector_capacity = 4;
+	int64_t ALIGN32 qi[ vector_capacity ] = { 8, 7, 6, 5 };
+	int64_t ALIGN32 qa[ vector_capacity ] = { 1, 2, 3, 4 };
 
 	while ( td->thread_active ) {
 
@@ -54,7 +55,6 @@ void* avx2_ai_epx64_bm_thread( void *arg ) {
 
 			default:
 				printf( "avx2_ai_epx64_bm_thread%u havn't instruction\n", td->tid );
-				break;
 
 		}
 
@@ -78,8 +78,8 @@ inline void avx2_ai_epx64_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 64-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -143,7 +143,7 @@ inline void avx2_ai_epx64_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx2_ai_epx64_instructions[ c ], 4, cycles_count*threads_count, total_time );
+		print_results( avx2_ai_epx64_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;
@@ -184,4 +184,4 @@ inline void avx2_ai_epx64_mt_bm( int32_t th_cnt ) {
 	return;
 }
 
-#endif // !__SIMD_AI_EPX64_BM_H__
+#endif // !__SIMD_AVX2_AI_EPX64_BM_H__

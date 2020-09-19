@@ -1,5 +1,5 @@
-#ifndef __SIMD_AI_EPX16_BM_H__
-#define __SIMD_AI_EPX16_BM_H__
+#ifndef __SIMD_AVX2_AI_EPX16_BM_H__
+#define __SIMD_AVX2_AI_EPX16_BM_H__
 
 const uint8_t avx2_ai_epx16_cnt = 17;
 
@@ -35,8 +35,9 @@ void* avx2_ai_epx16_bm_thread( void *arg ) {
 	sprintf( name, "avx2aiep16th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	int16_t ALIGN32 wi[ 16 ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
-	int16_t ALIGN32 wa[ 16 ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
+	vector_capacity = 16;
+	int16_t ALIGN32 wi[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int16_t ALIGN32 wa[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	while ( td->thread_active ) {
 
@@ -189,7 +190,6 @@ void* avx2_ai_epx16_bm_thread( void *arg ) {
 
 			default:
 				printf( "avx2_ai_epx16_bm_thread%u havn't instruction\n", td->tid );
-				break;
 
 		}
 
@@ -213,8 +213,8 @@ inline void avx2_ai_epx16_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %6i MCycles)\n", (int32_t)(cycles_count/1e6) );
-	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers (measured by %6i MCycles)\n" OFF, (int32_t)(cycles_count/1e6) );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 256-bit vectors of 16-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -278,7 +278,7 @@ inline void avx2_ai_epx16_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( avx2_ai_epx16_instructions[ c ], 16, cycles_count*threads_count, total_time );
+		print_results( avx2_ai_epx16_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;
@@ -319,4 +319,4 @@ inline void avx2_ai_epx16_mt_bm( int32_t th_cnt ) {
 	return;
 }
 
-#endif // !__SIMD_AI_EPX16_BM_H__
+#endif // !__SIMD_AVX2_AI_EPX16_BM_H__
