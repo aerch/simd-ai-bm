@@ -47,7 +47,15 @@ inline void make_title( const char *title ) {
 	return;
 }
 
-inline void print_results( const char* str, int8_t vecsz, uint64_t cycles_count, double total_time ) {
+inline void make_simd_title( const char *simd_title ) {
+
+	fprintf( stream, "\n      %s\n", simd_title );
+	printf( BLUE "      %s\n" OFF, simd_title );
+
+	return;
+}
+
+inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count, double total_time ) {
 	const double gigacycle = 1.0e+9;
 	double time_per_cycle = total_time / (double)cycles_count;
 	double time_per_gigacycle = time_per_cycle * gigacycle;

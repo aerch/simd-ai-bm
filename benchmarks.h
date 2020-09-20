@@ -1,7 +1,7 @@
 #ifndef __BENCHMARKS_H__
 #define __BENCHMARKS_H__
 
-#include "bmuthread.h"
+#include "bmuthreads.h"
 
 #include "sse/simd-ai-epx8.h"
 #include "sse/simd-ai-epx16.h"
@@ -37,36 +37,36 @@ inline void make_st_banchmarks() {
 	make_title( "MMX" );
 
 	make_title( "SSE" );
-	sse_ai_epx8_st_bm();
-	sse_ai_epx16_st_bm();
-	sse_ai_ps32_st_bm();
+	bmu_threads( SINGLE_THREAD, sse_ai_epx8_cnt, (char**)sse_ai_epx8_instructions, &sse_ai_epx8_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse_ai_epx16_cnt, (char**)sse_ai_epx16_instructions, &sse_ai_epx16_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse_ai_ps32_cnt, (char**)sse_ai_ps32_instructions, &sse_ai_ps32_bm_thread );
 
 	make_title( "SSE2" );
 
 	make_title( "SSE3" );
-	sse3_ai_ps32_st_bm();
-	sse3_ai_pd64_st_bm();
+	bmu_threads( SINGLE_THREAD, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread );
 
 	make_title( "SSSE3" );
-	ssse3_ai_epx8_st_bm();
-	ssse3_ai_epx16_st_bm();
-	ssse3_ai_epx32_st_bm();
+	bmu_threads( SINGLE_THREAD, ssse3_ai_epx8_cnt, (char**)ssse3_ai_epx8_instructions, &ssse3_ai_epx8_bm_thread );
+	bmu_threads( SINGLE_THREAD, ssse3_ai_epx16_cnt, (char**)ssse3_ai_epx16_instructions, &ssse3_ai_epx16_bm_thread );
+	bmu_threads( SINGLE_THREAD, ssse3_ai_epx32_cnt, (char**)ssse3_ai_epx32_instructions, &ssse3_ai_epx32_bm_thread );
 
 	make_title( "SSE4.1" );
-	sse4_1_ai_epx8_st_bm();
-	sse4_1_ai_epx32_st_bm();
-	sse4_1_ai_ps32_st_bm();
-	sse4_1_ai_pd64_st_bm();
+	bmu_threads( SINGLE_THREAD, sse4_1_ai_epx8_cnt, (char**)sse4_1_ai_epx8_instructions, &sse4_1_ai_epx8_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse4_1_ai_epx32_cnt, (char**)sse4_1_ai_epx32_instructions, &sse4_1_ai_epx32_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse4_1_ai_ps32_cnt, (char**)sse4_1_ai_ps32_instructions, &sse4_1_ai_ps32_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse4_1_ai_pd64_cnt, (char**)sse4_1_ai_pd64_instructions, &sse4_1_ai_pd64_bm_thread );
 
 	make_title( "AVX" );
-	avx_ai_ps32_st_bm();
-	avx_ai_pd64_st_bm();
+	bmu_threads( SINGLE_THREAD, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
+	bmu_threads( SINGLE_THREAD, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread );
 
 	make_title( "AVX2" );
-	avx2_ai_epx8_st_bm();
-	avx2_ai_epx16_st_bm();
-	avx2_ai_epx32_st_bm();
-	avx2_ai_epx64_st_bm();
+	bmu_threads( SINGLE_THREAD, avx2_ai_epx8_cnt, (char**)avx2_ai_epx8_instructions, &avx2_ai_epx8_bm_thread );
+	bmu_threads( SINGLE_THREAD, avx2_ai_epx16_cnt, (char**)avx2_ai_epx16_instructions, &avx2_ai_epx16_bm_thread );
+	bmu_threads( SINGLE_THREAD, avx2_ai_epx32_cnt, (char**)avx2_ai_epx32_instructions, &avx2_ai_epx32_bm_thread );
+	bmu_threads( SINGLE_THREAD, avx2_ai_epx64_cnt, (char**)avx2_ai_epx64_instructions, &avx2_ai_epx64_bm_thread );
 
 	make_title( "FMA" );
 
@@ -85,36 +85,36 @@ inline void make_mt_banchmarks() {
 	make_title( "MMX" );
 
 	make_title( "SSE" );
-	sse_ai_epx8_mt_bm( THREADS_COUNT );
-	sse_ai_epx16_mt_bm( THREADS_COUNT );
-	sse_ai_ps32_mt_bm( THREADS_COUNT );
+	bmu_threads( MULTIPLE_THREADS, sse_ai_epx8_cnt, (char**)sse_ai_epx8_instructions, &sse_ai_epx8_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse_ai_epx16_cnt, (char**)sse_ai_epx16_instructions, &sse_ai_epx16_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse_ai_ps32_cnt, (char**)sse_ai_ps32_instructions, &sse_ai_ps32_bm_thread );
 
 	make_title( "SSE2" );
 
 	make_title( "SSE3" );
-	sse3_ai_ps32_mt_bm( THREADS_COUNT );
-	sse3_ai_pd64_mt_bm( THREADS_COUNT );
+	bmu_threads( MULTIPLE_THREADS, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread );
 
 	make_title( "SSSE3" );
-	ssse3_ai_epx8_mt_bm( THREADS_COUNT );
-	ssse3_ai_epx16_mt_bm( THREADS_COUNT );
-	ssse3_ai_epx32_mt_bm( THREADS_COUNT );
+	bmu_threads( MULTIPLE_THREADS, ssse3_ai_epx8_cnt, (char**)ssse3_ai_epx8_instructions, &ssse3_ai_epx8_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, ssse3_ai_epx16_cnt, (char**)ssse3_ai_epx16_instructions, &ssse3_ai_epx16_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, ssse3_ai_epx32_cnt, (char**)ssse3_ai_epx32_instructions, &ssse3_ai_epx32_bm_thread );
 
 	make_title( "SSE4.1" );
-	sse4_1_ai_epx8_mt_bm( THREADS_COUNT );
-	sse4_1_ai_epx32_mt_bm( THREADS_COUNT );
-	sse4_1_ai_ps32_mt_bm( THREADS_COUNT );
-	sse4_1_ai_pd64_mt_bm( THREADS_COUNT );
+	bmu_threads( MULTIPLE_THREADS, sse4_1_ai_epx8_cnt, (char**)sse4_1_ai_epx8_instructions, &sse4_1_ai_epx8_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse4_1_ai_epx32_cnt, (char**)sse4_1_ai_epx32_instructions, &sse4_1_ai_epx32_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse4_1_ai_ps32_cnt, (char**)sse4_1_ai_ps32_instructions, &sse4_1_ai_ps32_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse4_1_ai_pd64_cnt, (char**)sse4_1_ai_pd64_instructions, &sse4_1_ai_pd64_bm_thread );
 
 	make_title( "AVX" );
-	avx_ai_ps32_mt_bm( THREADS_COUNT );
-	avx_ai_pd64_mt_bm( THREADS_COUNT );
+	bmu_threads( MULTIPLE_THREADS, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread );
 
 	make_title( "AVX2" );
-	avx2_ai_epx8_mt_bm( THREADS_COUNT );
-	avx2_ai_epx16_mt_bm( THREADS_COUNT );
-	avx2_ai_epx32_mt_bm( THREADS_COUNT );
-	avx2_ai_epx64_mt_bm( THREADS_COUNT );
+	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx8_cnt, (char**)avx2_ai_epx8_instructions, &avx2_ai_epx8_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx16_cnt, (char**)avx2_ai_epx16_instructions, &avx2_ai_epx16_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx32_cnt, (char**)avx2_ai_epx32_instructions, &avx2_ai_epx32_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx64_cnt, (char**)avx2_ai_epx64_instructions, &avx2_ai_epx64_bm_thread );
 
 	make_title( "FMA" );
 
