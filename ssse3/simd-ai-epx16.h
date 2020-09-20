@@ -1,27 +1,24 @@
 #ifndef __SIMD_SSSE3_AI_EPX16_BM_H__
 #define __SIMD_SSSE3_AI_EPX16_BM_H__
 
-const uint8_t ssse3_ai_epx16_cnt = 17;
+const uint8_t ssse3_ai_epx16_cnt = 14;
 
 char ssse3_ai_epx16_instructions[ ssse3_ai_epx16_cnt + 1 ][ 100 ] = {
 	"SSSE3 16-bit Integer Arithmetic Instructions",
-	"vpaddw\t_mm_add_epi16()",
-	"vpaddsw\t_mm_adds_epi16()",
-	"vpaddusw\t_mm_adds_epu16()",
-	"vphaddw\t_mm_hadd_epi16()",
-	"vphaddsw\t_mm_hadds_epi16()",
-	"vpmaddwd\t_mm_madd_epi16()",
-	"vpmaddubsw\t_mm_maddubs_epi16()",
-	"vpsubw\t_mm_sub_epi16()",
-	"vpsubsw\t_mm_subs_epi16()",
-	"vpsubusw\t_mm_subs_epu16()",
-	"vphsubw\t_mm_hsub_epi16()",
-	"vphsubsw\t_mm_hsubs_epi16()",
-	"vpmulhw\t_mm_mulhi_epi16()",
-	"vpmullw\t_mm_mullo_epi16()",
-	"vpmulhrsw\t_mm_mulhrs_epi16()",
-	"vpmulhuw\t_mm_mulhi_epu16()",
-	"vpsignw\t_mm_sign_epi16()"
+	"phaddw\t_mm_hadd_epi16()      ",
+	"phaddsw\t_mm_hadds_epi16()    ",
+	"phsubw\t_mm_hsub_epi16()      ",
+	"phsubsw\t_mm_hsubs_epi16()    ",
+	"pmaddubsw\t_mm_maddubs_epi16()",
+	"pmulhrsw\t_mm_mulhrs_epi16()  ",
+	"psignw\t_mm_sign_epi16()      ",
+	"phaddw\t_mm_hadd_pi16()       ",
+	"phaddsw\t_mm_hadds_pi16()     ",
+	"phsubw\t_mm_hsub_pi16()       ",
+	"phsubsw\t_mm_hsubs_pi16()     ",
+	"pmaddubsw\t_mm_maddubs_pi16() ",
+	"pmulhrsw\t_mm_mulhrs_pi16()   ",
+	"psignw\t_mm_sign_pi16()       "
 };
 
 void* ssse3_ai_epx16_bm_thread( void *arg ) {
@@ -36,8 +33,8 @@ void* ssse3_ai_epx16_bm_thread( void *arg ) {
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 8;
-	int16_t ALIGN32 wi[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
-	int16_t ALIGN32 wa[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	int16_t ALIGN16 _wi[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
+	int16_t ALIGN16 _wa[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	while ( td->thread_active ) {
 
@@ -48,143 +45,127 @@ void* ssse3_ai_epx16_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		ai = _mm_load_si128( (const __m128i *)wa );
+		bi = _mm_load_si128( (const __m128i *)_wa );
+		ci = _mm_load_si64( (const __m64 *)_wa );
 
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 8 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_add_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_hadd_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
 			case 2: // adds vectors of 8 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_adds_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_hadds_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
 			case 3: // adds vectors of 8 16-bit unsigned integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_adds_epu16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_hsub_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
 			case 4: // hadd vectors of 8 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_hadd_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_hsubs_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
 			case 5: // hadds vectors of 8 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_hadds_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_maddubs_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
 			case 6: // madd vectors of 8 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_madd_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_mulhrs_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
 			case 7: // maddubs vectors of 8 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_maddubs_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					wi = _mm_load_si128( (const __m128i *)_wi );
+					wi = _mm_sign_epi16( wi, bi );
+					_mm_store_si128( (__m128i *)_wi, wi );
 				}
 				break;
 
-			case 8: // sub vectors of 8 16-bit signed integers at cycle
+			case 8: // add vectors of 4 16-bit signed integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_sub_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_hadd_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 9: // subs vectors of 8 16-bit signed integers at cycle
+			case 9: // adds vectors of 4 16-bit signed integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_subs_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_hadds_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 10:// subs vectors of 8 16-bit unsigned integers at cycle
+			case 10:// adds vectors of 4 16-bit unsigned integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_subs_epu16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_hsub_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 11:// hsub vectors of 8 16-bit signed integers at cycle
+			case 11:// hadd vectors of 4 16-bit signed integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_hsub_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_hsubs_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 12:// hsubs vectors of 8 16-bit signed integers at cycle
+			case 12:// hadds vectors of 4 16-bit signed integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_hsubs_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_maddubs_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 13:// mulhi vectors of 8 16-bit signed integers at cycle
+			case 13:// madd vectors of 4 16-bit signed integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_mulhi_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_mulhrs_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 14:// mullo vectors of 8 16-bit signed integers at cycle
+			case 14:// maddubs vectors of 4 16-bit signed integers at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_mullo_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
-				}
-				break;
-
-			case 15:// mulhrs vectors of 8 16-bit signed integers at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_mulhrs_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
-				}
-				break;
-
-			case 16:// mulhi vectors of 8 16-bit unsigned integers at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_mulhi_epu16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
-				}
-				break;
-
-			case 17:// sign vectors of 8 16-bit signed integers at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)wi );
-					vi = _mm_sign_epi16( vi, ai );
-					_mm_store_si128( (__m128i *)wi, vi );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_sign_pi16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
@@ -213,8 +194,8 @@ inline void ssse3_ai_epx16_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 128-bit vectors of 16-bit integers\n" );
-	printf( BLUE "      SIMD Arithmetic instructions with 128-bit vectors of 16-bit integers\n" OFF );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 64-bit & 128-bit vectors of 16-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 64-bit & 128-bit vectors of 16-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -296,7 +277,7 @@ inline void ssse3_ai_epx16_bm_threads_finit() {
 	pthread_cond_broadcast( &start );
 	pthread_mutex_unlock( &lock );
 
-	// wait for thread finish
+	// wcit for thread finish
 	for ( i = 0; i < threads_count; i++ ) {
 		result = pthread_join( td[i].th, NULL );
 		if ( result != 0 ) perror( "pthread_join() error" );

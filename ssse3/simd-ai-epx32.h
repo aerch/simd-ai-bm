@@ -1,18 +1,16 @@
 #ifndef __SIMD_SSSE3_AI_EPX32_BM_H__
 #define __SIMD_SSSE3_AI_EPX32_BM_H__
 
-const uint8_t ssse3_ai_epx32_cnt = 8;
+const uint8_t ssse3_ai_epx32_cnt = 6;
 
 char ssse3_ai_epx32_instructions[ ssse3_ai_epx32_cnt + 1 ][ 100 ] = {
 	"SSSE3 32-bit Integer Arithmetic Instructions",
-	"vpaddd\t_mm_add_epi32()",
-	"vphaddd\t_mm_hadd_epi32()",
-	"vpsubd\t_mm_sub_epi32()",
-	"vphsubd\t_mm_hsub_epi32()",
-	"vpmuldq\t_mm_mul_epi32()",
-	"vpmuludq\t_mm_mul_epu32()",
-	"vpmulld\t_mm_mullo_epi32()",
-	"vpsignd\t_mm_sign_epi32()"
+	"phaddd\t_mm_hadd_epi32()",
+	"phsubd\t_mm_hsub_epi32()",
+	"psignd\t_mm_sign_epi32()",
+	"phaddw\t_mm_hadd_pi32() ",
+	"phsubd\t_mm_hsub_pi32() ",
+	"psignd\t_mm_sign_pi32() "
 };
 
 void* ssse3_ai_epx32_bm_thread( void *arg ) {
@@ -27,8 +25,8 @@ void* ssse3_ai_epx32_bm_thread( void *arg ) {
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
-	int32_t ALIGN32 di[ vector_capacity ] = { 8, 7, 6, 5 };
-	int32_t ALIGN32 da[ vector_capacity ] = { 1, 2, 3, 4 };
+	int32_t ALIGN16 di[ vector_capacity ] = { 8, 7, 6, 5 };
+	int32_t ALIGN16 da[ vector_capacity ] = { 1, 2, 3, 4 };
 
 	while ( td->thread_active ) {
 
@@ -39,71 +37,59 @@ void* ssse3_ai_epx32_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		ai = _mm_load_si128( (const __m128i *)da );
+		bi = _mm_load_si128( (const __m128i *)da );
+		ci = _mm_load_si64( (const __m64 *)da );
 
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_add_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
+					wi = _mm_load_si128( (const __m128i *)di );
+					wi = _mm_hadd_epi32( wi, bi );
+					_mm_store_si128( (__m128i *)di, wi );
 				}
 				break;
 
 			case 2: // hadd vectors of 4 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_hadd_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
+					wi = _mm_load_si128( (const __m128i *)di );
+					wi = _mm_hsub_epi32( wi, bi );
+					_mm_store_si128( (__m128i *)di, wi );
 				}
 				break;
 
 			case 3: // sub vectors of 4 32-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_sub_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
+					wi = _mm_load_si128( (const __m128i *)di );
+					wi = _mm_sign_epi32( wi, bi );
+					_mm_store_si128( (__m128i *)di, wi );
 				}
 				break;
 
-			case 4: // hsub vectors of 4 32-bit signed integers at cycle
+			case 4: // hsub vectors of 2 32-bit signed integers at cycle
+				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_hsub_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
+					xi = _mm_load_si64( (const __m64 *)di );
+					xi = _mm_hadd_pi32( xi, ci );
+					_mm_store_si64( (__m64 *)di, xi );
 				}
 				break;
 
-			case 5: // mul vectors of 4 32-bit signed integers at cycle
+			case 5: // mul vectors of 2 32-bit signed integers at cycle
+				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_mul_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
+					xi = _mm_load_si64( (const __m64 *)di );
+					xi = _mm_hsub_pi32( xi, ci );
+					_mm_store_si64( (__m64 *)di, xi );
 				}
 				break;
 
-			case 6: // mul vectors of 4 32-bit unsigned integers at cycle
+			case 6: // mul vectors of 2 32-bit unsigned integers at cycle
+				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_mul_epu32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
-				}
-				break;
-
-			case 7: // mullo vectors of 4 32-bit signed integers at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_mullo_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
-				}
-				break;
-
-			case 8: // sign vectors of 4 32-bit signed integers at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vi = _mm_load_si128( (const __m128i *)di );
-					vi = _mm_sign_epi32( vi, ai );
-					_mm_store_si128( (__m128i *)di, vi );
+					xi = _mm_load_si64( (const __m64 *)di );
+					xi = _mm_sign_pi32( xi, ci );
+					_mm_store_si64( (__m64 *)di, xi );
 				}
 				break;
 
@@ -132,8 +118,8 @@ inline void ssse3_ai_epx32_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 128-bit vectors of 32-bit integers\n" );
-	printf( BLUE "      SIMD Arithmetic instructions with 128-bit vectors of 32-bit integers\n" OFF );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 64-bit & 128-bit vectors of 32-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 64-bit & 128-bit vectors of 32-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -215,7 +201,7 @@ inline void ssse3_ai_epx32_bm_threads_finit() {
 	pthread_cond_broadcast( &start );
 	pthread_mutex_unlock( &lock );
 
-	// wait for thread finish
+	// wbit for thread finish
 	for ( i = 0; i < threads_count; i++ ) {
 		result = pthread_join( td[i].th, NULL );
 		if ( result != 0 ) perror( "pthread_join() error" );

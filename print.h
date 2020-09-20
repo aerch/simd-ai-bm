@@ -1,28 +1,34 @@
 #ifndef __PRINT_H__
 #define __PRINT_H__
 
+#define _ST_BM_START_MSG_ 0
+#define _ST_BM_FINAL_MSG_ 1
+
+#define _MT_BM_START_MSG_ 2
+#define _MT_BM_FINAL_MSG_ 3
+
 inline void make_message( uint8_t id ) {
 
 	switch ( id ) {
 
-		case 0:
+		case _ST_BM_START_MSG_:
 			fprintf( stream, "SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by %i MCycles) ...\n", (int32_t)(cycles_count/1e6) );
 			printf( BLUE "SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by %i MCycles) ..." OFF "\n", (int32_t)(cycles_count/1e6) );
 			break;
 
-		case 1:
-			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Threaded Benchmark value\t\t[ SIMD-AI-ST-BM      %8i ]\n\n", (int32_t)round( total_tps ) );
-			printf( BLUE "SIMD Arithmetic Instructions Single-Threaded Benchmark finished         [" WHITE " SIMD-AI-ST-BM      %8i " OFF BLUE "]" OFF "\n\n", (int32_t)round( total_tps ) );
+		case _ST_BM_FINAL_MSG_:
+			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-ST-BM      %8i ]\n\n", (int32_t)round( total_tps ) );
+			printf( BLUE "SIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-ST-BM      %8i " OFF BLUE "]" OFF "\n\n", (int32_t)round( total_tps ) );
 			break;
 
-		case 2:
+		case _MT_BM_START_MSG_:
 			fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded Benchmark start (measure by %i MCycles) ...\n", (int32_t)(cycles_count/1e6) );
 			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark start (measure by %i MCycles) ..." OFF "\n", (int32_t)(cycles_count/1e6) );
 			break;
 
-		case 3:
-			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark value\t\t[ SIMD-AI-MT-BM      %8i ]\n\n", (int32_t)round( total_tps ) );
-			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark finished          [" WHITE " SIMD-AI-MT-BM      %8i " OFF BLUE "]" OFF "\n\n", (int32_t)round( total_tps ) );
+		case _MT_BM_FINAL_MSG_:
+			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-MT-BM      %8i ]\n\n", (int32_t)round( total_tps ) );
+			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-BM      %8i " OFF BLUE "]" OFF "\n\n", (int32_t)round( total_tps ) );
 			break;
 
 		default:

@@ -21,9 +21,9 @@ void* sse3_ai_pd64_bm_thread( void *arg ) {
 	sprintf( name, "sse3aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
-	vector_capacity = 4;
-	double ALIGN32 di[ vector_capacity ] = { 8, 7, 6, 5 };
-	double ALIGN32 da[ vector_capacity ] = { 1, 2, 3, 4 };
+	vector_capacity = 2;
+	double ALIGN16 di[ vector_capacity ] = { 8, 7 };
+	double ALIGN16 da[ vector_capacity ] = { 1, 2 };
 
 	while ( td->thread_active ) {
 

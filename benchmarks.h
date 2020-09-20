@@ -1,12 +1,18 @@
 #ifndef __BENCHMARKS_H__
 #define __BENCHMARKS_H__
 
+#include "bmuthread.h"
+
+#include "sse/simd-ai-epx8.h"
+#include "sse/simd-ai-epx16.h"
+#include "sse/simd-ai-ps32.h"
+
 #include "sse3/simd-ai-ps32.h"
 #include "sse3/simd-ai-pd64.h"
 
 #include "ssse3/simd-ai-epx8.h"
-// #include "ssse3/simd-ai-epx16.h"
-// #include "ssse3/simd-ai-epx32.h"
+#include "ssse3/simd-ai-epx16.h"
+#include "ssse3/simd-ai-epx32.h"
 
 #include "sse4.1/simd-ai-epx8.h"
 #include "sse4.1/simd-ai-epx32.h"
@@ -26,10 +32,15 @@ inline void make_st_banchmarks() {
 	cycles_count = CYCLES_COUNT;
 
 	// single thread benchmarks execution
-	make_message( 0 );
+	make_message( _ST_BM_START_MSG_ );
 
 	make_title( "MMX" );
+
 	make_title( "SSE" );
+	sse_ai_epx8_st_bm();
+	sse_ai_epx16_st_bm();
+	sse_ai_ps32_st_bm();
+
 	make_title( "SSE2" );
 
 	make_title( "SSE3" );
@@ -38,8 +49,8 @@ inline void make_st_banchmarks() {
 
 	make_title( "SSSE3" );
 	ssse3_ai_epx8_st_bm();
-	// ssse3_ai_epx16_st_bm();
-	// ssse3_ai_epx32_st_bm();
+	ssse3_ai_epx16_st_bm();
+	ssse3_ai_epx32_st_bm();
 
 	make_title( "SSE4.1" );
 	sse4_1_ai_epx8_st_bm();
@@ -59,7 +70,7 @@ inline void make_st_banchmarks() {
 
 	make_title( "FMA" );
 
-	make_message( 1 );
+	make_message( _ST_BM_FINAL_MSG_ );
 
 	return;
 }
@@ -69,10 +80,15 @@ inline void make_mt_banchmarks() {
 	cycles_count = CYCLES_COUNT / 10;
 
 	// multi-threaded benchmarks execution
-	make_message( 2 );
+	make_message( _MT_BM_START_MSG_ );
 
 	make_title( "MMX" );
+
 	make_title( "SSE" );
+	sse_ai_epx8_mt_bm( THREADS_COUNT );
+	sse_ai_epx16_mt_bm( THREADS_COUNT );
+	sse_ai_ps32_mt_bm( THREADS_COUNT );
+
 	make_title( "SSE2" );
 
 	make_title( "SSE3" );
@@ -81,8 +97,8 @@ inline void make_mt_banchmarks() {
 
 	make_title( "SSSE3" );
 	ssse3_ai_epx8_mt_bm( THREADS_COUNT );
-	// ssse3_ai_epx16_mt_bm( THREADS_COUNT );
-	// ssse3_ai_epx32_mt_bm( THREADS_COUNT );
+	ssse3_ai_epx16_mt_bm( THREADS_COUNT );
+	ssse3_ai_epx32_mt_bm( THREADS_COUNT );
 
 	make_title( "SSE4.1" );
 	sse4_1_ai_epx8_mt_bm( THREADS_COUNT );
@@ -102,7 +118,7 @@ inline void make_mt_banchmarks() {
 
 	make_title( "FMA" );
 
-	make_message( 3 );
+	make_message( _MT_BM_FINAL_MSG_ );
 
 	return;
 }

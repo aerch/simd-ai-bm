@@ -3,6 +3,7 @@
 
 #include "defs.h"
 #include "vars.h"
+#include "funcs.h"
 #include "print.h"
 #include "benchmarks.h"
 

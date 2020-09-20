@@ -1,29 +1,28 @@
-#ifndef __SIMD_SSE3_AI_PS32_BM_H__
-#define __SIMD_SSE3_AI_PS32_BM_H__
+#ifndef __SIMD_SSE_AI_EPX16_BM_H__
+#define __SIMD_SSE_AI_EPX16_BM_H__
 
-const uint8_t sse3_ai_ps32_cnt = 3;
+const uint8_t sse_ai_epx16_cnt = 2;
 
-char sse3_ai_ps32_instructions[ sse3_ai_ps32_cnt + 1 ][ 100 ] = {
-	"SSE3 32-bit Single-Precision Arithmetic Instructions",
-	"addsubps\t_mm_addsub_ps()  ",
-	"haddps  \t_mm_hadd_ps()    ",
-	"hsubps  \t_mm_hsub_ps()    "
+char sse_ai_epx16_instructions[ sse_ai_epx16_cnt + 1 ][ 100 ] = {
+	"SSE 16-bit Integer Arithmetic Instructions",
+	"pmulhuw\t_m_pmulhuw()      ",
+	"pmulhuw\t_mm_mulhi_pu16()  "
 };
 
-void* sse3_ai_ps32_bm_thread( void *arg ) {
+void* sse_ai_epx16_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
-	// printf( "sse3_ai_ps32_bm_thread%u started\n", td->tid );
+	// printf( "sse_ai_epx16_bm_thread%u started\n", td->tid );
 
 	uint64_t i;
 	// uint32_t cx = 0;
 
 	char name[ 25 ];
-	sprintf( name, "sse3aips32th%u", td->tid );
+	sprintf( name, "sse_aiep16th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
-	float ALIGN16 si[ vector_capacity ] = { 8, 7, 6, 5 };
-	float ALIGN16 sa[ vector_capacity ] = { 1, 2, 3, 4 };
+	int16_t ALIGN16 _wi[ vector_capacity ] = { 8, 7, 6, 5 };
+	int16_t ALIGN16 _wa[ vector_capacity ] = { 1, 2, 3, 4 };
 
 	while ( td->thread_active ) {
 
@@ -34,36 +33,28 @@ void* sse3_ai_ps32_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		bs = _mm_load_ps( (const float *)sa );
+		ci = _mm_load_si64( (const __m64 *)_wa );
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 4 32-bit singles at cycle
+			case 1: // pmulhuw vectors of 4 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					ws = _mm_load_ps( (const float *)si );
-					ws = _mm_addsub_ps( ws, bs );
-					_mm_store_ps( (float *)si, ws );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _m_pmulhuw( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
-			case 2: // hadd vectors of 4 32-bit singles at cycle
+			case 2: // mulhi vectors of 4 16-bit signed integers at cycle
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					ws = _mm_load_ps( (const float *)si );
-					ws = _mm_hadd_ps( ws, bs );
-					_mm_store_ps( (float *)si, ws );
-				}
-				break;
-
-			case 3: // hsub vectors of 4 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					ws = _mm_load_ps( (const float *)si );
-					ws = _mm_hsub_ps( ws, bs );
-					_mm_store_ps( (float *)si, ws );
+					xi = _mm_load_si64( (const __m64 *)_wi );
+					xi = _mm_mulhi_pu16( xi, ci );
+					_mm_store_si64( (__m64 *)_wi, xi );
 				}
 				break;
 
 			default:
-				printf( "sse3_ai_ps32_bm_thread%u havn't instruction\n", td->tid );
+				printf( "sse_ai_epx16_bm_thread%u havn't instruction\n", td->tid );
 
 		}
 
@@ -72,23 +63,23 @@ void* sse3_ai_ps32_bm_thread( void *arg ) {
 		SET_BIT( active_threads_flag, td->tid, 0 );
 		if ( !active_threads_flag )
 			pthread_cond_signal( &stop );
-		// printf( "sse3_ai_ps32_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
+		// printf( "sse_ai_epx16_bm_thread%u finish cycle #%u\n", td->tid, ++cx );
 		pthread_mutex_unlock( &lock );
 
 	}
 
-	// printf( "sse3_ai_ps32_bm_thread%u stopped\n", td->tid );
+	// printf( "sse_ai_epx16_bm_thread%u stopped\n", td->tid );
 	return NULL;
 }
 
-inline void sse3_ai_ps32_bm_threads_init( int32_t th_cnt ) {
+inline void sse_ai_epx16_bm_threads_init( int32_t th_cnt ) {
 	threads_count = th_cnt;
 	if ( threads_count > MAX_THR_CNT ) threads_count = MAX_THR_CNT;
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 128-bit vectors of single-precision\n" );
-	printf( BLUE "      SIMD Arithmetic instructions with 128-bit vectors of single-precision\n" OFF );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 64-bit vectors of 16-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 64-bit vectors of 16-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
@@ -125,7 +116,7 @@ inline void sse3_ai_ps32_bm_threads_init( int32_t th_cnt ) {
 
 	// create threads
 	for ( i = 0; i < threads_count; i++ ) {
-		result = pthread_create( &td[i].th, &attr, sse3_ai_ps32_bm_thread, &td[i] );
+		result = pthread_create( &td[i].th, &attr, sse_ai_epx16_bm_thread, &td[i] );
 		if ( result != 0 ) perror( "pthread_create() error" );
 	}
 
@@ -136,11 +127,11 @@ inline void sse3_ai_ps32_bm_threads_init( int32_t th_cnt ) {
 	return;
 }
 
-inline void sse3_ai_ps32_bm_threads_start() {
+inline void sse_ai_epx16_bm_threads_start() {
 	uint32_t i, c;
 
 	// starting current threaded benchmark
-	for ( c = 1; c <= sse3_ai_ps32_cnt; c++ ) {
+	for ( c = 1; c <= sse_ai_epx16_cnt; c++ ) {
 		pthread_mutex_lock( &lock );
 		for ( i = 0; i < threads_count; i++ ) {
 			td[i].instruction = c;
@@ -152,13 +143,13 @@ inline void sse3_ai_ps32_bm_threads_start() {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( sse3_ai_ps32_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
+		print_results( sse_ai_epx16_instructions[ c ], vector_capacity, cycles_count*threads_count, total_time );
 	}
 
 	return;
 }
 
-inline void sse3_ai_ps32_bm_threads_finit() {
+inline void sse_ai_epx16_bm_threads_finit() {
 	uint32_t i;
 
 	// finish threads
@@ -170,7 +161,7 @@ inline void sse3_ai_ps32_bm_threads_finit() {
 	pthread_cond_broadcast( &start );
 	pthread_mutex_unlock( &lock );
 
-	// wait for thread finish
+	// wcit for thread finish
 	for ( i = 0; i < threads_count; i++ ) {
 		result = pthread_join( td[i].th, NULL );
 		if ( result != 0 ) perror( "pthread_join() error" );
@@ -179,18 +170,18 @@ inline void sse3_ai_ps32_bm_threads_finit() {
 	return;
 }
 
-inline void sse3_ai_ps32_st_bm() {
-	sse3_ai_ps32_bm_threads_init( 1 );
-	sse3_ai_ps32_bm_threads_start();
-	sse3_ai_ps32_bm_threads_finit();
+inline void sse_ai_epx16_st_bm() {
+	sse_ai_epx16_bm_threads_init( 1 );
+	sse_ai_epx16_bm_threads_start();
+	sse_ai_epx16_bm_threads_finit();
 	return;
 }
 
-inline void sse3_ai_ps32_mt_bm( int32_t th_cnt ) {
-	sse3_ai_ps32_bm_threads_init( th_cnt );
-	sse3_ai_ps32_bm_threads_start();
-	sse3_ai_ps32_bm_threads_finit();
+inline void sse_ai_epx16_mt_bm( int32_t th_cnt ) {
+	sse_ai_epx16_bm_threads_init( th_cnt );
+	sse_ai_epx16_bm_threads_start();
+	sse_ai_epx16_bm_threads_finit();
 	return;
 }
 
-#endif // !__SIMD_SSE3_AI_PS32_BM_H__
+#endif // !__SIMD_SSE_AI_EPX16_BM_H__

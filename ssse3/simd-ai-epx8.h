@@ -21,8 +21,8 @@ void* ssse3_ai_epx8_bm_thread( void *arg ) {
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 16;
-	int8_t ALIGN32 _bi[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
-	int8_t ALIGN32 _ba[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
+	int8_t ALIGN16 _bi[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int8_t ALIGN16 _ba[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8 };
 
 	while ( td->thread_active ) {
 
@@ -34,8 +34,7 @@ void* ssse3_ai_epx8_bm_thread( void *arg ) {
 		if ( !td->thread_active ) break;
 
 		bi = _mm_load_si128( (const __m128i *)_ba );
-		// ci = _mm_load_si( (const __m64 *)_ba );
-		memcpy( &ci, _ba, sizeof(ci) );
+		ci = _mm_load_si64( (const __m64 *)_ba );
 
 		switch ( td->instruction ) {
 
@@ -50,11 +49,9 @@ void* ssse3_ai_epx8_bm_thread( void *arg ) {
 			case 2: // adds vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++ ) {
-					memcpy( &xi, _bi, sizeof(xi) );
-					// xi = _mm_load_si( (const __m64 *)_bi );
+					xi = _mm_load_si64( (const __m64 *)_bi );
 					xi = _mm_sign_pi8( xi, ci );
-					// _mm_store_si( (__m64 *)_bi, xi );
-					memcpy( _bi, &xi, sizeof(xi) );
+					_mm_store_si64( (__m64 *)_bi, xi );
 				}
 				break;
 
@@ -83,8 +80,8 @@ inline void ssse3_ai_epx8_bm_threads_init( int32_t th_cnt ) {
 
 	uint32_t i;
 
-	fprintf( stream, "\n      SIMD Arithmetic instructions with 64,128-bit vectors of 8-bit integers\n" );
-	printf( BLUE "      SIMD Arithmetic instructions with 64,128-bit vectors of 8-bit integers\n" OFF );
+	fprintf( stream, "\n      SIMD Arithmetic instructions with 64-bit & 128-bit vectors of 8-bit integers\n" );
+	printf( BLUE "      SIMD Arithmetic instructions with 64-bit & 128-bit vectors of 8-bit integers\n" OFF );
 
 	active_threads_flag = 0;
 
