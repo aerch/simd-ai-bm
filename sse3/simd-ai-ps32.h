@@ -15,7 +15,7 @@ void* sse3_ai_ps32_bm_thread( void *arg ) {
 	char name[ 25 ];
 	uint64_t i;
 
-	sprintf( name, "sse3aips32th%u", td->tid );
+	sprintf( name, "sse3_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
