@@ -37,7 +37,7 @@ inline void bmu_threads_init( uint8_t th_cnt, void *(*bm_thread)(void *) ) {
 
 	// init threads data
 	memset( td, 0x00, threads_count * sizeof(thread_data_t) );
-	for ( i = 0; i < threads_count; i++ )	{
+	for ( i = 0; i < threads_count; i++ ) {
 		td[i].tid = i;
 		td[i].instruction = 0;
 		td[i].thread_active = true;
@@ -70,8 +70,8 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 			td[i].instruction = c;
 			SET_BIT( active_threads_flag, i, 1 );
 		}
-		_BMARK_ON_;
 		pthread_cond_broadcast( &start );
+		_BMARK_ON_;
 		while ( active_threads_flag )
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
@@ -116,13 +116,15 @@ void* cpu_warmup_thread( void *arg ) {
 	char name[ 25 ];
 	uint64_t i;
 
-	sprintf( name, "_ai_warmup_th%u", td->tid );
+	sprintf( name, "cpu_warmup%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
-	double ALIGN32 pd64[ vector_capacity ] = { 8.0, 7.0, 0.1e-100, 0.7e+38 };
-	__m256d pd64_1;
-	__m256d pd64_2 = _mm256_set_pd( 1.0f, 2.0f, 3.0f, 4.0f );
+	int64_t alloc_size = td->cycles_count * vector_capacity * sizeof( double );
+	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
+	if ( !pd64 ) perror( "aligned_alloc() error" );
+
+	ad = _mm256_set_pd( 1.0f, 2.0f, 3.0f, 4.0f );
 
 	while ( td->thread_active ) {
 
@@ -133,10 +135,10 @@ void* cpu_warmup_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		for ( i = 0; i < CYCLES_COUNT * 10; i++ ) {
-			pd64_1 = _mm256_load_pd( (const double *)pd64 );
-			pd64_1 = _mm256_add_pd( pd64_1, pd64_2 );
-			_mm256_store_pd( (double *)pd64, pd64_1 );
+		for ( i = 0; i < td->cycles_count * 100; i++ ) {
+			vd = _mm256_load_pd( (const double *)pd64 );
+			vd = _mm256_add_pd( vd, ad );
+			_mm256_store_pd( (double *)pd64, vd );
 		}
 
 		pthread_mutex_lock( &lock );
@@ -147,6 +149,9 @@ void* cpu_warmup_thread( void *arg ) {
 		pthread_mutex_unlock( &lock );
 
 	}
+
+	if ( pd64 )
+		free( pd64 );
 
 	return NULL;
 }

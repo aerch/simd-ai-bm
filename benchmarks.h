@@ -30,8 +30,6 @@
 // single thread benchmarks execution
 inline void make_st_banchmarks() {
 
-	make_cpu_warmup( SINGLE_THREAD );
-
 	make_message( _ST_BM_START_MSG_ );
 
 	// make_title( "MMX" );
@@ -77,8 +75,6 @@ inline void make_st_banchmarks() {
 
 // multi-threaded benchmarks execution
 inline void make_mt_banchmarks() {
-
-	make_cpu_warmup( MULTIPLE_THREADS );
 
 	make_message( _MT_BM_START_MSG_ );
 
