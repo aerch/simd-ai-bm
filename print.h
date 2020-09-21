@@ -22,8 +22,8 @@ inline void make_message( uint8_t id ) {
 			break;
 
 		case _MT_BM_START_MSG_:
-			fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded Benchmark start (measure by %i MCycles) ...\n", (int32_t)(cycles_count/1e6) );
-			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark start (measure by %i MCycles) ..." OFF "\n", (int32_t)(cycles_count/1e6) );
+			fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded (%d-threads) Benchmark start (measure by %i MCycles) ...\n", MULTIPLE_THREADS, (int32_t)(cycles_count/1e6) );
+			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded (%d-threads) Benchmark start (measure by %i MCycles) ..." OFF "\n", MULTIPLE_THREADS, (int32_t)(cycles_count/1e6) );
 			break;
 
 		case _MT_BM_FINAL_MSG_:

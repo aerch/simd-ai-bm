@@ -26,10 +26,10 @@
 	diff = (double)((double)t2.tv_sec + (double)t2.tv_nsec/1.0e9) - ((double)t1.tv_sec + (double)t1.tv_nsec/1.0e9); \
 	cycle = (double)diff;
 
-#define _BIT(b) (1<<(b))					///< битовый сдвиг влево на b позиций
-#define TEST(n,b) (((n)&_BIT(b))!=0)				///< проверка, что b-ый бит числа n - ненулевой
-#define SET_BIT(n,b,value) (n) ^= ((-value)^(n)) & (_BIT(b))	///< установка бита из позиции n в позицию b числа value
-#define CHECK(n,b) (((n)&_BIT(b))!=0)				///< проверка, что b-ый бит числа n - ненулевой
+#define BIT(b) (1<<(b))						///< битовый сдвиг влево на b позиций
+#define TEST(n,b) (((n)&BIT(b))!=0)				///< проверка, что b-ый бит числа n - ненулевой
+#define SET_BIT(n,b,value) (n) ^= ((-value)^(n)) & (BIT(b))	///< установка бита из позиции n в позицию b числа value
+#define CHECK(n,b) (((n)&BIT(b))!=0)				///< проверка, что b-ый бит числа n - ненулевой
 
 #define BLACK		"\033[30;1m"
 #define BGBLACK		"\033[37;1;40m"

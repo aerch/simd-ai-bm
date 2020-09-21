@@ -24,7 +24,7 @@ inline void bmu_threads_init( uint8_t th_cnt, void *(*bm_thread)(void *) ) {
 	pthread_attr_setschedparam( &attr, &param );
 	#endif
 
-	#ifdef PTHREAD_SCHED_FIFO
+	#ifdef PTHREAD_STACK_SIZE
 	// size_t stack_size = 0;
 	// pthread_attr_getstacksize( &attr, &stack_size );
 	// pthread_attr_setstacksize( &attr, stack_size * 4 );

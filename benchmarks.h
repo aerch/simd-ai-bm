@@ -77,7 +77,7 @@ inline void make_st_banchmarks() {
 
 inline void make_mt_banchmarks() {
 	total_tps = 0.0;
-	cycles_count = CYCLES_COUNT / 10;
+	cycles_count = CYCLES_COUNT / 20;
 
 	// multi-threaded benchmarks execution
 	make_message( _MT_BM_START_MSG_ );
