@@ -16,15 +16,18 @@ const char *avx_ai_pd64_instructions[ avx_ai_pd64_cnt + 1 ] = {
 
 void* avx_ai_pd64_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	uint64_t i, _vi_;
 	char name[ 25 ];
-	uint64_t i;
 
 	sprintf( name, "avx_aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
-	double ALIGN32 di[ vector_capacity ] = { 8, 7, 6, 5 };
-	double ALIGN32 da[ vector_capacity ] = { 1, 2, 3, 4 };
+	int64_t alloc_size = td->cycles_count * vector_capacity * sizeof( double );
+	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
+	if ( !pd64 ) perror( "aligned_alloc() error" );
+
+	ad = _mm256_set_pd( 1.0f, 2.0f, 3.0f, 4.0f );
 
 	while ( td->thread_active ) {
 
@@ -35,63 +38,61 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		ad = _mm256_load_pd( (const double *)da );
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_add_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
 			case 2: // addsub vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_addsub_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
 			case 3: // div vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_div_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
 			case 4: // hadd vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_hadd_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
 			case 5: // hsub vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_hsub_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
 			case 6: // mul vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_mul_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
 			case 7: // sub vectors of 4 64-bit doubles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vd = _mm256_load_pd( (const double *)di );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
 					vd = _mm256_sub_pd( vd, ad );
-					_mm256_store_pd( (double *)di, vd );
+					_mm256_store_pd( (double *)&pd64[_vi_], vd );
 				}
 				break;
 
@@ -108,6 +109,9 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 		pthread_mutex_unlock( &lock );
 
 	}
+
+	if ( pd64 )
+		free( pd64 );
 
 	return NULL;
 }

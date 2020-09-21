@@ -4,8 +4,8 @@
 typedef struct thread_data {
 	pthread_t	th;
 	uint32_t	tid;
+	uint8_t		instruction;
 	bool		thread_active;
-	uint32_t	instruction;
 	uint64_t	cycles_count;
 } thread_data_t;
 
@@ -13,7 +13,7 @@ double 		diff;
 struct timespec t1, t2;
 
 int32_t		result;
-FILE		*stream;
+FILE		*stream = NULL;
 char		_str_[ 1024 ];
 char		current_path[ PATH_MAX ];
 

@@ -17,15 +17,18 @@ const char *avx_ai_ps32_instructions[ avx_ai_ps32_cnt + 1 ] = {
 
 void* avx_ai_ps32_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	uint64_t i, _vi_;
 	char name[ 25 ];
-	uint64_t i;
 
 	sprintf( name, "avx_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 8;
-	float ALIGN32 si[ vector_capacity ] = { 8, 7, 6, 5, 4, 3, 2, 1 };
-	float ALIGN32 sa[ vector_capacity ] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	int64_t alloc_size = td->cycles_count * vector_capacity * sizeof( float );
+	float *ps32 __attribute__((aligned(32))) = (float*)aligned_alloc( 32, alloc_size );
+	if ( !ps32 ) perror( "aligned_alloc() error" );
+
+	as = _mm256_set_ps( 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f );
 
 	while ( td->thread_active ) {
 
@@ -36,71 +39,69 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 		if ( !td->thread_active ) break;
 
-		as = _mm256_load_ps( (const float *)sa );
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_add_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 2: // addsub vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_addsub_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 3: // div vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_div_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 4: // dp vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_dp_ps( vs, as, 0x0f );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 5: // hadd vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_hadd_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 6: // hsub vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_hsub_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 7: // mul vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_mul_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
 			case 8: // sub vectors of 8 32-bit singles at cycle
-				for ( i = 0; i < td->cycles_count; i++ ) {
-					vs = _mm256_load_ps( (const float *)si );
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_sub_ps( vs, as );
-					_mm256_store_ps( (float *)si, vs );
+					_mm256_store_ps( (float *)&ps32[_vi_], vs );
 				}
 				break;
 
@@ -117,6 +118,9 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 		pthread_mutex_unlock( &lock );
 
 	}
+
+	if ( ps32 )
+		free( ps32 );
 
 	return NULL;
 }

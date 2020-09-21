@@ -39,9 +39,9 @@ inline void bmu_threads_init( uint8_t th_cnt, void *(*bm_thread)(void *) ) {
 	memset( td, 0x00, threads_count * sizeof(thread_data_t) );
 	for ( i = 0; i < threads_count; i++ )	{
 		td[i].tid = i;
-		td[i].cycles_count = cycles_count;
-		td[i].thread_active = true;
 		td[i].instruction = 0;
+		td[i].thread_active = true;
+		td[i].cycles_count = cycles_count / threads_count;
 	}
 
 	// create threads
@@ -60,7 +60,8 @@ inline void bmu_threads_init( uint8_t th_cnt, void *(*bm_thread)(void *) ) {
 inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 	uint8_t i, c;
 
-	make_simd_title( simd_ai[ 0 ] );
+	if ( simd_ai )
+		make_simd_title( simd_ai[ 0 ] );
 
 	// starting current threaded benchmark
 	for ( c = 1; c <= simd_ai_count; c++ ) {
@@ -75,7 +76,8 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 			pthread_cond_wait( &stop, &lock );
 		_BMARK_OFF( total_time );
 		pthread_mutex_unlock( &lock );
-		print_results( simd_ai[ c ], vector_capacity, cycles_count*threads_count, total_time );
+		if ( simd_ai )
+			print_results( simd_ai[ c ], vector_capacity, cycles_count, total_time );
 	}
 
 	return;
@@ -106,6 +108,52 @@ inline void bmu_threads( uint8_t th_cnt, uint8_t simd_ai_count, char **simd_ai, 
 	bmu_threads_init( th_cnt, bm_thread );
 	bmu_threads_start( simd_ai_count, simd_ai );
 	bmu_threads_finit();
+	return;
+}
+
+void* cpu_warmup_thread( void *arg ) {
+	thread_data_t *td = (thread_data_t*)arg;
+	char name[ 25 ];
+	uint64_t i;
+
+	sprintf( name, "_ai_warmup_th%u", td->tid );
+	prctl( PR_SET_NAME, name );
+
+	vector_capacity = 4;
+	double ALIGN32 pd64[ vector_capacity ] = { 8.0, 7.0, 0.1e-100, 0.7e+38 };
+	__m256d pd64_1;
+	__m256d pd64_2 = _mm256_set_pd( 1.0f, 2.0f, 3.0f, 4.0f );
+
+	while ( td->thread_active ) {
+
+		pthread_mutex_lock( &lock );
+		while ( (td->instruction == 0) && td->thread_active )
+			pthread_cond_wait( &start, &lock );
+		pthread_mutex_unlock( &lock );
+
+		if ( !td->thread_active ) break;
+
+		for ( i = 0; i < CYCLES_COUNT * 10; i++ ) {
+			pd64_1 = _mm256_load_pd( (const double *)pd64 );
+			pd64_1 = _mm256_add_pd( pd64_1, pd64_2 );
+			_mm256_store_pd( (double *)pd64, pd64_1 );
+		}
+
+		pthread_mutex_lock( &lock );
+		td->instruction = 0;
+		SET_BIT( active_threads_flag, td->tid, 0 );
+		if ( !active_threads_flag )
+			pthread_cond_signal( &stop );
+		pthread_mutex_unlock( &lock );
+
+	}
+
+	return NULL;
+}
+inline void make_cpu_warmup( uint8_t th_cnt ) {
+	fprintf( stdout, BLUE "Central Processing Unit Warm Up (in %d thread(s)) ..." OFF, th_cnt ); fflush( stdout );
+	bmu_threads( th_cnt, 1, NULL, &cpu_warmup_thread );
+	printf( BLUE " Done." OFF "\n\n" );
 	return;
 }
 

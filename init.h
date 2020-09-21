@@ -70,6 +70,8 @@ inline void make_inits() {
 		exit(EXIT_FAILURE);
 	}
 
+	cycles_count = CYCLES_COUNT;
+
 	return;
 }
 
