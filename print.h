@@ -13,6 +13,7 @@ inline void make_message( uint8_t id ) {
 
 		case _ST_BM_START_MSG_:
 			total_tps = 0.0;
+			cycles_count = CYCLES_COUNT / available_processors;
 			fprintf( stream, "SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by %i MCycles) ...\n", (int32_t)(cycles_count/1e6) );
 
 			printf( BLUE "SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by %i MCycles) ..." OFF "\n", (int32_t)(cycles_count/1e6) );
@@ -25,6 +26,7 @@ inline void make_message( uint8_t id ) {
 
 		case _MT_BM_START_MSG_:
 			total_tps = 0.0;
+			cycles_count = CYCLES_COUNT;
 			fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded (%d-threads) Benchmark start (measure by %i MCycles) ...\n", MULTIPLE_THREADS, (int32_t)(cycles_count/1e6) );
 			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded (%d-threads) Benchmark start (measure by %i MCycles) ..." OFF "\n", MULTIPLE_THREADS, (int32_t)(cycles_count/1e6) );
 			break;

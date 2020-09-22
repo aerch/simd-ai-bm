@@ -1,18 +1,18 @@
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 
-#define ALIGN8  __attribute__((aligned(8)))	// to simplify the alignment declaration on variables on a 8-byte boundary
-#define ALIGN16 __attribute__((aligned(16)))	// to simplify the alignment declaration on variables on a 16-byte boundary
-#define ALIGN32 __attribute__((aligned(32)))	// to simplify the alignment declaration on variables on a 32-byte boundary
+#define ALIGN8  __attribute__((aligned(8)))		// to simplify the alignment declaration on variables on a 8-byte boundary
+#define ALIGN16 __attribute__((aligned(16)))		// to simplify the alignment declaration on variables on a 16-byte boundary
+#define ALIGN32 __attribute__((aligned(32)))		// to simplify the alignment declaration on variables on a 32-byte boundary
 
 #define MAX_THR_CNT		8192			// maximum value is 8192 threads
 
-#define BM_CYCLES_PER_TIME	10000000
+#define BM_CYCLES_PER_TIME	2048
 
 #define SINGLE_THREAD		1
 
 #ifdef THREADSCOUNT
-#define MULTIPLE_THREADS	THREADSCOUNT		// 2 - 8192
+#define MULTIPLE_THREADS	2 * THREADSCOUNT	// 2 - 8192
 #else
 #define MULTIPLE_THREADS	MAX_THR_CNT
 #endif

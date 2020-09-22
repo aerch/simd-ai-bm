@@ -24,20 +24,21 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 8;
-	// int64_t alloc_size = td->cycles_count * vector_capacity * sizeof( float );
-	int64_t alloc_length = td->cycles_count * vector_capacity;
-	int64_t alloc_size = (alloc_length < BM_CYCLES_PER_TIME ? alloc_length : BM_CYCLES_PER_TIME ) * sizeof( float );
+	uint64_t alloc_length = BM_CYCLES_PER_TIME * vector_capacity;
+	int64_t alloc_size = alloc_length * sizeof( float );
 	float *ps32 __attribute__((aligned(32))) = (float*)aligned_alloc( 32, alloc_size );
 	if ( !ps32 ) perror( "aligned_alloc() error" );
 
-	as = _mm256_set_ps( 1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f );
+	as = _mm256_set_ps( 1.11111f, 2.22222f, 3.33333f, 4.44444f, 5.55555f, 6.66666f, 7.77777f, 8.88888f );
+
+	pthread_mutex_lock( &lock );
+	while ( (td->instruction == 0) && td->thread_active )
+		pthread_cond_wait( &start, &lock );
+	pthread_mutex_unlock( &lock );
 
 	while ( td->thread_active ) {
 
-		pthread_mutex_lock( &lock );
-		while ( (td->instruction == 0) && td->thread_active )
-			pthread_cond_wait( &start, &lock );
-		pthread_mutex_unlock( &lock );
+		pc->read( td->cycles_count );
 
 		if ( !td->thread_active ) break;
 
@@ -45,7 +46,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 1: // add vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_add_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -54,7 +54,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 2: // addsub vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_addsub_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -63,7 +62,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 3: // div vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_div_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -72,7 +70,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 4: // dp vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_dp_ps( vs, as, 0x0f );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -81,7 +78,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 5: // hadd vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_hadd_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -90,7 +86,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 6: // hsub vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_hsub_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -99,7 +94,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 7: // mul vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_mul_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -108,7 +102,6 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 			case 8: // sub vectors of 8 32-bit singles at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					if ( _vi_ >= BM_CYCLES_PER_TIME ) _vi_ = 0;
 					vs = _mm256_load_ps( (const float *)&ps32[_vi_] );
 					vs = _mm256_sub_ps( vs, as );
 					_mm256_store_ps( (float *)&ps32[_vi_], vs );
@@ -121,13 +114,15 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 		}
 
 		pthread_mutex_lock( &lock );
-		td->instruction = 0;
-		SET_BIT( active_threads, td->tid, 0 );
-		if ( !active_threads )
-			pthread_cond_signal( &stop );
+		pthread_cond_signal( &stop );
 		pthread_mutex_unlock( &lock );
 
 	}
+
+	pthread_mutex_lock( &lock );
+	active_threads--;
+	pthread_cond_signal( &finish );
+	pthread_mutex_unlock( &lock );
 
 	if ( ps32 )
 		free( ps32 );

@@ -28,11 +28,12 @@ inline void bmu_threads_init( uint16_t th_cnt, void *(*bm_thread)(void *) ) {
 	pthread_attr_setstacksize( &attr, PTHREAD_STACK_SIZE );
 	#endif
 
-	pc = new prodcons( 64 );
+	pc = new prodcons( 4096 );
 
 	pthread_mutex_init( &lock, NULL );
 	pthread_cond_init( &start, NULL );
 	pthread_cond_init( &stop, NULL );
+	pthread_cond_init( &finish, NULL );
 
 	// init threads data
 	memset( td, 0x00, threads_count * sizeof(thread_data_t) );
@@ -41,8 +42,8 @@ inline void bmu_threads_init( uint16_t th_cnt, void *(*bm_thread)(void *) ) {
 		td[i].tid = i;
 		td[i].instruction = 0;
 		td[i].thread_active = true;
-		active_threads++;
 	}
+	active_threads = threads_count;
 	pthread_mutex_unlock( &lock );
 
 	// create threads
@@ -109,11 +110,13 @@ inline void bmu_threads_finit() {
 		td[i].instruction = 0;
 	}
 	pthread_cond_broadcast( &start );
+	pthread_mutex_unlock( &lock );
 
 	pc->stop();
 
+	pthread_mutex_lock( &lock );
 	while ( active_threads )
-		pthread_cond_wait( &stop, &lock );
+		pthread_cond_wait( &finish, &lock );
 	pthread_mutex_unlock( &lock );
 
 	delete pc;
@@ -154,12 +157,12 @@ void* cpu_warmup_thread( void *arg ) {
 
 	ad = _mm256_set_pd( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
-	while ( td->thread_active ) {
+	pthread_mutex_lock( &lock );
+	while ( (td->instruction == 0) && td->thread_active )
+		pthread_cond_wait( &start, &lock );
+	pthread_mutex_unlock( &lock );
 
-		pthread_mutex_lock( &lock );
-		while ( (td->instruction == 0) && td->thread_active )
-			pthread_cond_wait( &start, &lock );
-		pthread_mutex_unlock( &lock );
+	while ( td->thread_active ) {
 
 		pc->read( td->cycles_count );
 
@@ -179,7 +182,7 @@ void* cpu_warmup_thread( void *arg ) {
 
 	pthread_mutex_lock( &lock );
 	active_threads--;
-	pthread_cond_signal( &stop );
+	pthread_cond_signal( &finish );
 	pthread_mutex_unlock( &lock );
 
 	if ( pd64 )

@@ -12,7 +12,7 @@ CPU family:          6
 Model:               78
 Model name:          Intel(R) Core(TM) i5-6200U CPU @ 2.30GHz
 Stepping:            3
-CPU MHz:             800.002
+CPU MHz:             1059.175
 CPU max MHz:         2800,0000
 CPU min MHz:         400,0000
 BogoMIPS:            4800.00
@@ -33,60 +33,60 @@ Machine:   Type: Laptop System: SAMSUNG product: 900X3L v: P08AFN serial: 0Q6D91
            UEFI: American Megatrends v: P08AFN.041.170315.KS date: 03/15/2017 
 
 CPU:       Topology: Dual Core model: Intel Core i5-6200U bits: 64 type: MT MCP arch: Skylake rev: 3 L2 cache: 3072 KiB bogomips: 19200 
-           Speed: 800 MHz min/max: 400/2800 MHz Core speeds (MHz): 1: 800 2: 800 3: 801 4: 800 
+           Speed: 712 MHz min/max: 400/2800 MHz Core speeds (MHz): 1: 701 2: 758 3: 676 4: 705 
            Flags: 3dnowprefetch abm acpi adx aes aperfmperf apic arat arch_perfmon art avx avx2 bmi1 bmi2 bts clflush clflushopt cmov constant_tsc cpuid 
            cpuid_fault cx16 cx8 de ds_cpl dtes64 dtherm dts epb ept erms est f16c flexpriority fma fpu fsgsbase fxsr ht hwp hwp_act_window hwp_epp hwp_notify 
            ida intel_pt invpcid invpcid_single lahf_lm lm mca mce mmx monitor movbe mpx msr mtrr nonstop_tsc nopl nx pae pat pbe pcid pclmulqdq pdcm pdpe1gb 
            pebs pge pln pni popcnt pse pse36 pti pts rdrand rdseed rdtscp rep_good sdbg sep smap smep ss sse sse2 sse4_1 sse4_2 ssse3 syscall tm tm2 
            tpr_shadow tsc tsc_adjust tsc_known_freq vme vmx vnmi vpid x2apic xgetbv1 xsave xsavec xsaveopt xsaves xtopology xtpr 
 
-SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by 100 MCycles) ...
+SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by 2500 MCycles) ...
 
 AVX:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
 
       SIMD AVX 32-bit Single-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddps	_mm256_add_ps()      	 1.908546447754 sec	 1.91e-08 sec	19.085464 sec	    8 values	     0.4 GT/sec
-	   vaddsubps	_mm256_addsub_ps()	 0.286052942276 sec	 2.86e-09 sec	 2.860529 sec	    8 values	     2.8 GT/sec
-	   vdivps	_mm256_div_ps()      	 0.291526079178 sec	 2.92e-09 sec	 2.915261 sec	    8 values	     2.7 GT/sec
-	   vdpps	_mm256_dp_ps()        	 0.308598041534 sec	 3.09e-09 sec	 3.085980 sec	    8 values	     2.6 GT/sec
-	   vhaddps	_mm256_hadd_ps()    	 0.309589862823 sec	 3.10e-09 sec	 3.095899 sec	    8 values	     2.6 GT/sec
-	   vhsubps	_mm256_hsub_ps()    	 0.298066377640 sec	 2.98e-09 sec	 2.980664 sec	    8 values	     2.7 GT/sec
-	   vmulps	_mm256_mul_ps()      	 0.288254976273 sec	 2.88e-09 sec	 2.882550 sec	    8 values	     2.8 GT/sec
-	   vsubps	_mm256_sub_ps()      	 0.287486314774 sec	 2.87e-09 sec	 2.874863 sec	    8 values	     2.8 GT/sec
+	   vaddps	_mm256_add_ps()      	 2.907941579819 sec	 1.16e-09 sec	 1.163177 sec	    8 values	     6.9 GT/sec
+	   vaddsubps	_mm256_addsub_ps()	 2.818320512772 sec	 1.13e-09 sec	 1.127328 sec	    8 values	     7.1 GT/sec
+	   vdivps	_mm256_div_ps()      	 2.909484386444 sec	 1.16e-09 sec	 1.163794 sec	    8 values	     6.9 GT/sec
+	   vdpps	_mm256_dp_ps()        	 6.608162641525 sec	 2.64e-09 sec	 2.643265 sec	    8 values	     3.0 GT/sec
+	   vhaddps	_mm256_hadd_ps()    	 3.373858213425 sec	 1.35e-09 sec	 1.349543 sec	    8 values	     5.9 GT/sec
+	   vhsubps	_mm256_hsub_ps()    	 3.617927312851 sec	 1.45e-09 sec	 1.447171 sec	    8 values	     5.5 GT/sec
+	   vmulps	_mm256_mul_ps()      	 3.443231105804 sec	 1.38e-09 sec	 1.377292 sec	    8 values	     5.8 GT/sec
+	   vsubps	_mm256_sub_ps()      	 3.047179460526 sec	 1.22e-09 sec	 1.218872 sec	    8 values	     6.6 GT/sec
 
       SIMD AVX 64-bit Double-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddpd	_mm256_add_pd()      	 1.962492465973 sec	 1.96e-08 sec	19.624925 sec	    4 values	     0.2 GT/sec
-	   vaddsubpd	_mm256_addsub_pd()	 0.288798093796 sec	 2.89e-09 sec	 2.887981 sec	    4 values	     1.4 GT/sec
-	   vdivpd	_mm256_div_pd()      	 0.287798881531 sec	 2.88e-09 sec	 2.877989 sec	    4 values	     1.4 GT/sec
-	   vhaddpd	_mm256_hadd_pd()    	 0.296982765198 sec	 2.97e-09 sec	 2.969828 sec	    4 values	     1.3 GT/sec
-	   vhsubpd	_mm256_hsub_pd()    	 0.295421123505 sec	 2.95e-09 sec	 2.954211 sec	    4 values	     1.4 GT/sec
-	   vmulpd	_mm256_mul_pd()      	 0.289632558823 sec	 2.90e-09 sec	 2.896326 sec	    4 values	     1.4 GT/sec
-	   vsubpd	_mm256_sub_pd()      	 0.297851324081 sec	 2.98e-09 sec	 2.978513 sec	    4 values	     1.3 GT/sec
+	   vaddpd	_mm256_add_pd()      	 2.680767536163 sec	 1.07e-09 sec	 1.072307 sec	    4 values	     3.7 GT/sec
+	   vaddsubpd	_mm256_addsub_pd()	 3.407798767090 sec	 1.36e-09 sec	 1.363120 sec	    4 values	     2.9 GT/sec
+	   vdivpd	_mm256_div_pd()      	 3.281560897827 sec	 1.31e-09 sec	 1.312624 sec	    4 values	     3.0 GT/sec
+	   vhaddpd	_mm256_hadd_pd()    	 3.342939853668 sec	 1.34e-09 sec	 1.337176 sec	    4 values	     3.0 GT/sec
+	   vhsubpd	_mm256_hsub_pd()    	 3.414970397949 sec	 1.37e-09 sec	 1.365988 sec	    4 values	     2.9 GT/sec
+	   vmulpd	_mm256_mul_pd()      	 2.754067897797 sec	 1.10e-09 sec	 1.101627 sec	    4 values	     3.6 GT/sec
+	   vsubpd	_mm256_sub_pd()      	 3.288316726685 sec	 1.32e-09 sec	 1.315327 sec	    4 values	     3.0 GT/sec
 
-SIMD Arithmetic Instructions Single-Threaded Benchmark finished						[ SIMD-AI-ST-BM            28 ]
+SIMD Arithmetic Instructions Single-Threaded Benchmark finished						[ SIMD-AI-ST-BM            70 ]
 
-SIMD Arithmetic Instructions Multi-Threaded (4-threads) Benchmark start (measure by 100 MCycles) ...
+SIMD Arithmetic Instructions Multi-Threaded (8-threads) Benchmark start (measure by 10000 MCycles) ...
 
 AVX:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
 
       SIMD AVX 32-bit Single-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddps	_mm256_add_ps()      	 1.282585859299 sec	 1.28e-08 sec	12.825859 sec	    8 values	     0.6 GT/sec
-	   vaddsubps	_mm256_addsub_ps()	 0.283695220947 sec	 2.84e-09 sec	 2.836952 sec	    8 values	     2.8 GT/sec
-	   vdivps	_mm256_div_ps()      	 0.285720825195 sec	 2.86e-09 sec	 2.857208 sec	    8 values	     2.8 GT/sec
-	   vdpps	_mm256_dp_ps()        	 0.287103652954 sec	 2.87e-09 sec	 2.871037 sec	    8 values	     2.8 GT/sec
-	   vhaddps	_mm256_hadd_ps()    	 0.299371480942 sec	 2.99e-09 sec	 2.993715 sec	    8 values	     2.7 GT/sec
-	   vhsubps	_mm256_hsub_ps()    	 0.282948493958 sec	 2.83e-09 sec	 2.829485 sec	    8 values	     2.8 GT/sec
-	   vmulps	_mm256_mul_ps()      	 0.301146745682 sec	 3.01e-09 sec	 3.011467 sec	    8 values	     2.7 GT/sec
-	   vsubps	_mm256_sub_ps()      	 0.298771142960 sec	 2.99e-09 sec	 2.987711 sec	    8 values	     2.7 GT/sec
+	   vaddps	_mm256_add_ps()      	 4.146737337112 sec	 4.15e-10 sec	 0.414674 sec	    8 values	    19.3 GT/sec
+	   vaddsubps	_mm256_addsub_ps()	 4.293256998062 sec	 4.29e-10 sec	 0.429326 sec	    8 values	    18.6 GT/sec
+	   vdivps	_mm256_div_ps()      	 4.155399560928 sec	 4.16e-10 sec	 0.415540 sec	    8 values	    19.3 GT/sec
+	   vdpps	_mm256_dp_ps()        	 8.413709402084 sec	 8.41e-10 sec	 0.841371 sec	    8 values	     9.5 GT/sec
+	   vhaddps	_mm256_hadd_ps()    	 6.376360177994 sec	 6.38e-10 sec	 0.637636 sec	    8 values	    12.5 GT/sec
+	   vhsubps	_mm256_hsub_ps()    	 7.119048833847 sec	 7.12e-10 sec	 0.711905 sec	    8 values	    11.2 GT/sec
+	   vmulps	_mm256_mul_ps()      	 4.351175308228 sec	 4.35e-10 sec	 0.435118 sec	    8 values	    18.4 GT/sec
+	   vsubps	_mm256_sub_ps()      	 4.700382947922 sec	 4.70e-10 sec	 0.470038 sec	    8 values	    17.0 GT/sec
 
       SIMD AVX 64-bit Double-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddpd	_mm256_add_pd()      	 1.318465709686 sec	 1.32e-08 sec	13.184657 sec	    4 values	     0.3 GT/sec
-	   vaddsubpd	_mm256_addsub_pd()	 0.290050745010 sec	 2.90e-09 sec	 2.900507 sec	    4 values	     1.4 GT/sec
-	   vdivpd	_mm256_div_pd()      	 0.285813093185 sec	 2.86e-09 sec	 2.858131 sec	    4 values	     1.4 GT/sec
-	   vhaddpd	_mm256_hadd_pd()    	 0.281853437424 sec	 2.82e-09 sec	 2.818534 sec	    4 values	     1.4 GT/sec
-	   vhsubpd	_mm256_hsub_pd()    	 0.280739545822 sec	 2.81e-09 sec	 2.807395 sec	    4 values	     1.4 GT/sec
-	   vmulpd	_mm256_mul_pd()      	 0.290378093719 sec	 2.90e-09 sec	 2.903781 sec	    4 values	     1.4 GT/sec
-	   vsubpd	_mm256_sub_pd()      	 0.288123846054 sec	 2.88e-09 sec	 2.881238 sec	    4 values	     1.4 GT/sec
+	   vaddpd	_mm256_add_pd()      	 4.251693964005 sec	 4.25e-10 sec	 0.425169 sec	    4 values	     9.4 GT/sec
+	   vaddsubpd	_mm256_addsub_pd()	 4.472917556763 sec	 4.47e-10 sec	 0.447292 sec	    4 values	     8.9 GT/sec
+	   vdivpd	_mm256_div_pd()      	 4.128225803375 sec	 4.13e-10 sec	 0.412823 sec	    4 values	     9.7 GT/sec
+	   vhaddpd	_mm256_hadd_pd()    	 5.481893777847 sec	 5.48e-10 sec	 0.548189 sec	    4 values	     7.3 GT/sec
+	   vhsubpd	_mm256_hsub_pd()    	 5.310229778290 sec	 5.31e-10 sec	 0.531023 sec	    4 values	     7.5 GT/sec
+	   vmulpd	_mm256_mul_pd()      	 4.203766584396 sec	 4.20e-10 sec	 0.420377 sec	    4 values	     9.5 GT/sec
+	   vsubpd	_mm256_sub_pd()      	 4.423695564270 sec	 4.42e-10 sec	 0.442370 sec	    4 values	     9.0 GT/sec
 
-SIMD Arithmetic Instructions Multi-Threaded Benchmark finished						[ SIMD-AI-MT-BM            29 ]
+SIMD Arithmetic Instructions Multi-Threaded Benchmark finished						[ SIMD-AI-MT-BM           187 ]
 

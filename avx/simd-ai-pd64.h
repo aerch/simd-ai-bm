@@ -30,12 +30,12 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 
 	ad = _mm256_set_pd( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
-	while ( td->thread_active ) {
+	pthread_mutex_lock( &lock );
+	while ( (td->instruction == 0) && td->thread_active )
+		pthread_cond_wait( &start, &lock );
+	pthread_mutex_unlock( &lock );
 
-		pthread_mutex_lock( &lock );
-		while ( (td->instruction == 0) && td->thread_active )
-			pthread_cond_wait( &start, &lock );
-		pthread_mutex_unlock( &lock );
+	while ( td->thread_active ) {
 
 		pc->read( td->cycles_count );
 
@@ -112,7 +112,7 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 
 	pthread_mutex_lock( &lock );
 	active_threads--;
-	pthread_cond_signal( &stop );
+	pthread_cond_signal( &finish );
 	pthread_mutex_unlock( &lock );
 
 	if ( pd64 )
