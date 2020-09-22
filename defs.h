@@ -5,12 +5,14 @@
 #define ALIGN16 __attribute__((aligned(16)))	// to simplify the alignment declaration on variables on a 16-byte boundary
 #define ALIGN32 __attribute__((aligned(32)))	// to simplify the alignment declaration on variables on a 32-byte boundary
 
-#define MAX_THR_CNT		128			// maximum value is 128 threads
+#define MAX_THR_CNT		8192			// maximum value is 8192 threads
+
+#define BM_CYCLES_PER_TIME	10000000
 
 #define SINGLE_THREAD		1
 
 #ifdef THREADSCOUNT
-#define MULTIPLE_THREADS	THREADSCOUNT		// 2 - 128
+#define MULTIPLE_THREADS	THREADSCOUNT		// 2 - 8192
 #else
 #define MULTIPLE_THREADS	MAX_THR_CNT
 #endif
@@ -21,10 +23,8 @@
 #define CYCLES_COUNT		1000000000
 #endif
 
-#define _BMARK_ON_ clock_gettime(CLOCK_REALTIME, &t1);
-#define _BMARK_OFF(cycle) clock_gettime(CLOCK_REALTIME, &t2); \
-	diff = (double)((double)t2.tv_sec + (double)t2.tv_nsec/1.0e9) - ((double)t1.tv_sec + (double)t1.tv_nsec/1.0e9); \
-	cycle = (double)diff;
+#define _BMARK_ON_ struct timespec t1, t2; clock_gettime(CLOCK_REALTIME, &t1);
+#define _BMARK_OFF( cycle ) clock_gettime(CLOCK_REALTIME, &t2); cycle = (double)((double)t2.tv_sec + (double)t2.tv_nsec/1.0e9) - ((double)t1.tv_sec + (double)t1.tv_nsec/1.0e9);
 
 #define BIT(b) (1<<(b))						///< битовый сдвиг влево на b позиций
 #define TEST(n,b) (((n)&BIT(b))!=0)				///< проверка, что b-ый бит числа n - ненулевой

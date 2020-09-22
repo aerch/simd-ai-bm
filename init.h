@@ -1,6 +1,7 @@
 #ifndef __INIT_H__
 #define __INIT_H__
 
+#include "pc.h"
 #include "defs.h"
 #include "vars.h"
 #include "funcs.h"

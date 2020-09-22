@@ -30,6 +30,8 @@
 // single thread benchmarks execution
 inline void make_st_banchmarks() {
 
+	make_cpu_warmup();
+
 	make_message( _ST_BM_START_MSG_ );
 
 	// make_title( "MMX" );
@@ -57,7 +59,7 @@ inline void make_st_banchmarks() {
 	// bmu_threads( SINGLE_THREAD, sse4_1_ai_pd64_cnt, (char**)sse4_1_ai_pd64_instructions, &sse4_1_ai_pd64_bm_thread );
 
 	make_title( "AVX" );
-	bmu_threads( SINGLE_THREAD, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
+	// bmu_threads( SINGLE_THREAD, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
 	bmu_threads( SINGLE_THREAD, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread );
 
 	// make_title( "AVX2" );
@@ -75,6 +77,8 @@ inline void make_st_banchmarks() {
 
 // multi-threaded benchmarks execution
 inline void make_mt_banchmarks() {
+
+	make_cpu_warmup();
 
 	make_message( _MT_BM_START_MSG_ );
 
@@ -103,7 +107,7 @@ inline void make_mt_banchmarks() {
 	// bmu_threads( MULTIPLE_THREADS, sse4_1_ai_pd64_cnt, (char**)sse4_1_ai_pd64_instructions, &sse4_1_ai_pd64_bm_thread );
 
 	make_title( "AVX" );
-	bmu_threads( MULTIPLE_THREADS, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
+	// bmu_threads( MULTIPLE_THREADS, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
 	bmu_threads( MULTIPLE_THREADS, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread );
 
 	// make_title( "AVX2" );

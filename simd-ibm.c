@@ -25,8 +25,6 @@ int main( int argc, char const *argv[] ) {
 
 	make_inits();
 
-	make_cpu_warmup( MULTIPLE_THREADS );
-
 	make_st_banchmarks();
 	make_mt_banchmarks();
 

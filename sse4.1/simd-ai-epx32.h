@@ -57,8 +57,8 @@ void* sse4_1_ai_epx32_bm_thread( void *arg ) {
 
 		pthread_mutex_lock( &lock );
 		td->instruction = 0;
-		SET_BIT( active_threads_flag, td->tid, 0 );
-		if ( !active_threads_flag )
+		SET_BIT( active_threads, td->tid, 0 );
+		if ( !active_threads )
 			pthread_cond_signal( &stop );
 		pthread_mutex_unlock( &lock );
 

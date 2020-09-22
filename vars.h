@@ -3,14 +3,11 @@
 
 typedef struct thread_data {
 	pthread_t	th;
-	uint32_t	tid;
+	uint16_t	tid;
 	uint8_t		instruction;
-	bool		thread_active;
 	uint64_t	cycles_count;
+	bool		thread_active;
 } thread_data_t;
-
-double 		diff;
-struct timespec t1, t2;
 
 int32_t		result;
 FILE		*stream = NULL;
@@ -20,8 +17,9 @@ char		current_path[ PATH_MAX ];
 uint64_t	cycles_count = CYCLES_COUNT;	// 1,000,000,000 - 10,000,000,000
 
 uint8_t 	available_processors;		// available processor threads in system
-uint8_t 	threads_count;			// maximum value is 128 threads
 uint8_t 	vector_capacity;		// simd vector's capacity
+uint16_t 	threads_count;			// current threads number
+uint16_t	active_threads;
 
 double		total_time;
 double		total_tps;
@@ -36,12 +34,12 @@ __m128i		bi, wi;
 
 __m64		ci, xi;
 
-__uint128_t	active_threads_flag;
 
 pthread_mutex_t	lock;
 pthread_cond_t	start;
 pthread_cond_t	stop;
 
 thread_data_t	td[ MAX_THR_CNT ];
+prodcons	*pc;
 
 #endif // !__VARS_H__

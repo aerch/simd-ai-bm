@@ -12,10 +12,10 @@ CPU family:          6
 Model:               60
 Model name:          Intel(R) Core(TM) i7-4770K CPU @ 3.50GHz
 Stepping:            3
-CPU MHz:             3149.693
+CPU MHz:             3541.843
 CPU max MHz:         4000,0000
 CPU min MHz:         800,0000
-BogoMIPS:            6997.74
+BogoMIPS:            6998.35
 Virtualization:      VT-x
 L1d cache:           32K
 L1i cache:           32K
@@ -30,60 +30,10 @@ System:    Host: lmint Kernel: 4.15.0-20-generic x86_64 bits: 64 gcc: 7.3.0
 Machine:   Device: desktop Mobo: ASRock model: Z97 Extreme6 serial: E80-44031701163
            BIOS: American Megatrends v: P1.30 date: 05/22/2014
 
-CPU:       Quad core Intel Core i7-4770K (-MT-MCP-) arch: Haswell rev.3 cache: 8192 KB bmips: 27991
-           clock speeds: max: 4000 MHz 1: 2883 MHz 2: 3326 MHz 3: 2951 MHz 4: 3164 MHz 5: 3030 MHz 6: 3212 MHz 7: 3201 MHz 8: 3092 MHz
+CPU:       Quad core Intel Core i7-4770K (-MT-MCP-) arch: Haswell rev.3 cache: 8192 KB bmips: 27993
+           clock speeds: max: 4000 MHz 1: 3276 MHz 2: 3449 MHz 3: 3360 MHz 4: 2878 MHz 5: 2852 MHz 6: 2890 MHz 7: 2791 MHz 8: 3030 MHz
            CPU Flags: abm acpi aes aperfmperf apic arat arch_perfmon avx avx2 bmi1 bmi2 bts clflush cmov constant_tsc cpuid cpuid_fault cx16 cx8 de ds_cpl
            dtes64 dtherm dts ept erms est f16c flexpriority fma fpu fsgsbase fxsr ht ibpb ibrs ida invpcid invpcid_single lahf_lm lm mca mce mmx monitor movbe
            msr mtrr nonstop_tsc nopl nx pae pat pbe pcid pclmulqdq pdcm pdpe1gb pebs pge pln pni popcnt pse pse36 pti pts rdrand rdtscp rep_good sdbg sep smep
            ss sse sse2 sse4_1 sse4_2 ssse3 stibp syscall tm tm2 tpr_shadow tsc tsc_adjust tsc_deadline_timer vme vmx vnmi vpid xsave xsaveopt xtopology xtpr
-
-SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by 100 MCycles) ...
-
-AVX:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
-
-      SIMD AVX 32-bit Single-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddps	_mm256_add_ps()      	 1.220035791397 sec	 1.22e-08 sec	12.200358 sec	    8 values	     0.7 GT/sec
-	   vaddsubps	_mm256_addsub_ps()	 0.285184383392 sec	 2.85e-09 sec	 2.851844 sec	    8 values	     2.8 GT/sec
-	   vdivps	_mm256_div_ps()      	 0.285223007202 sec	 2.85e-09 sec	 2.852230 sec	    8 values	     2.8 GT/sec
-	   vdpps	_mm256_dp_ps()        	 0.273499250412 sec	 2.73e-09 sec	 2.734993 sec	    8 values	     2.9 GT/sec
-	   vhaddps	_mm256_hadd_ps()    	 0.282603979111 sec	 2.83e-09 sec	 2.826040 sec	    8 values	     2.8 GT/sec
-	   vhsubps	_mm256_hsub_ps()    	 0.280419349670 sec	 2.80e-09 sec	 2.804193 sec	    8 values	     2.9 GT/sec
-	   vmulps	_mm256_mul_ps()      	 0.285076379776 sec	 2.85e-09 sec	 2.850764 sec	    8 values	     2.8 GT/sec
-	   vsubps	_mm256_sub_ps()      	 0.285643339157 sec	 2.86e-09 sec	 2.856433 sec	    8 values	     2.8 GT/sec
-
-      SIMD AVX 64-bit Double-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddpd	_mm256_add_pd()      	 1.209608793259 sec	 1.21e-08 sec	12.096088 sec	    4 values	     0.3 GT/sec
-	   vaddsubpd	_mm256_addsub_pd()	 0.270167827606 sec	 2.70e-09 sec	 2.701678 sec	    4 values	     1.5 GT/sec
-	   vdivpd	_mm256_div_pd()      	 0.269720792770 sec	 2.70e-09 sec	 2.697208 sec	    4 values	     1.5 GT/sec
-	   vhaddpd	_mm256_hadd_pd()    	 0.273829936981 sec	 2.74e-09 sec	 2.738299 sec	    4 values	     1.5 GT/sec
-	   vhsubpd	_mm256_hsub_pd()    	 0.269237756729 sec	 2.69e-09 sec	 2.692378 sec	    4 values	     1.5 GT/sec
-	   vmulpd	_mm256_mul_pd()      	 0.276981592178 sec	 2.77e-09 sec	 2.769816 sec	    4 values	     1.4 GT/sec
-	   vsubpd	_mm256_sub_pd()      	 0.270441293716 sec	 2.70e-09 sec	 2.704413 sec	    4 values	     1.5 GT/sec
-
-SIMD Arithmetic Instructions Single-Threaded Benchmark finished						[ SIMD-AI-ST-BM            30 ]
-
-SIMD Arithmetic Instructions Multi-Threaded (8-threads) Benchmark start (measure by 100 MCycles) ...
-
-AVX:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
-
-      SIMD AVX 32-bit Single-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddps	_mm256_add_ps()      	 0.569011449814 sec	 5.69e-09 sec	 5.690114 sec	    8 values	     1.4 GT/sec
-	   vaddsubps	_mm256_addsub_ps()	 0.282370328903 sec	 2.82e-09 sec	 2.823703 sec	    8 values	     2.8 GT/sec
-	   vdivps	_mm256_div_ps()      	 0.282899379730 sec	 2.83e-09 sec	 2.828994 sec	    8 values	     2.8 GT/sec
-	   vdpps	_mm256_dp_ps()        	 0.284202337265 sec	 2.84e-09 sec	 2.842023 sec	    8 values	     2.8 GT/sec
-	   vhaddps	_mm256_hadd_ps()    	 0.283554553986 sec	 2.84e-09 sec	 2.835546 sec	    8 values	     2.8 GT/sec
-	   vhsubps	_mm256_hsub_ps()    	 0.283997535706 sec	 2.84e-09 sec	 2.839975 sec	    8 values	     2.8 GT/sec
-	   vmulps	_mm256_mul_ps()      	 0.283720254898 sec	 2.84e-09 sec	 2.837203 sec	    8 values	     2.8 GT/sec
-	   vsubps	_mm256_sub_ps()      	 0.283522605896 sec	 2.84e-09 sec	 2.835226 sec	    8 values	     2.8 GT/sec
-
-      SIMD AVX 64-bit Double-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddpd	_mm256_add_pd()      	 0.570187568665 sec	 5.70e-09 sec	 5.701876 sec	    4 values	     0.7 GT/sec
-	   vaddsubpd	_mm256_addsub_pd()	 0.282598257065 sec	 2.83e-09 sec	 2.825983 sec	    4 values	     1.4 GT/sec
-	   vdivpd	_mm256_div_pd()      	 0.285326480865 sec	 2.85e-09 sec	 2.853265 sec	    4 values	     1.4 GT/sec
-	   vhaddpd	_mm256_hadd_pd()    	 0.284088850021 sec	 2.84e-09 sec	 2.840889 sec	    4 values	     1.4 GT/sec
-	   vhsubpd	_mm256_hsub_pd()    	 0.282736063004 sec	 2.83e-09 sec	 2.827361 sec	    4 values	     1.4 GT/sec
-	   vmulpd	_mm256_mul_pd()      	 0.282970190048 sec	 2.83e-09 sec	 2.829702 sec	    4 values	     1.4 GT/sec
-	   vsubpd	_mm256_sub_pd()      	 0.282147884369 sec	 2.82e-09 sec	 2.821479 sec	    4 values	     1.4 GT/sec
-
-SIMD Arithmetic Instructions Multi-Threaded Benchmark finished						[ SIMD-AI-MT-BM            30 ]
 

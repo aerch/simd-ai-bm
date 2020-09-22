@@ -23,11 +23,12 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
-	int64_t alloc_size = td->cycles_count * vector_capacity * sizeof( double );
+	uint64_t alloc_length = BM_CYCLES_PER_TIME * vector_capacity;
+	uint64_t alloc_size = alloc_length * sizeof( double );
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	ad = _mm256_set_pd( 1.0f, 2.0f, 3.0f, 4.0f );
+	ad = _mm256_set_pd( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
 	while ( td->thread_active ) {
 
@@ -35,6 +36,8 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 		while ( (td->instruction == 0) && td->thread_active )
 			pthread_cond_wait( &start, &lock );
 		pthread_mutex_unlock( &lock );
+
+		pc->read( td->cycles_count );
 
 		if ( !td->thread_active ) break;
 
@@ -102,13 +105,15 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 		}
 
 		pthread_mutex_lock( &lock );
-		td->instruction = 0;
-		SET_BIT( active_threads_flag, td->tid, 0 );
-		if ( !active_threads_flag )
-			pthread_cond_signal( &stop );
+		pthread_cond_signal( &stop );
 		pthread_mutex_unlock( &lock );
 
 	}
+
+	pthread_mutex_lock( &lock );
+	active_threads--;
+	pthread_cond_signal( &stop );
+	pthread_mutex_unlock( &lock );
 
 	if ( pd64 )
 		free( pd64 );
