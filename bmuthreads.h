@@ -28,7 +28,7 @@ inline void bmu_threads_init( uint16_t th_cnt, void *(*bm_thread)(void *) ) {
 	pthread_attr_setstacksize( &attr, PTHREAD_STACK_SIZE );
 	#endif
 
-	pc = new prodcons( 4096 );
+	pc_init( 8192 );
 
 	pthread_mutex_init( &lock, NULL );
 	pthread_cond_init( &start, NULL );
@@ -61,7 +61,7 @@ inline void bmu_threads_init( uint16_t th_cnt, void *(*bm_thread)(void *) ) {
 
 inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 	uint16_t i, c;
-	uint64_t cc, len;
+	uint64_t cc, portion, len;
 
 	if ( simd_ai )
 		make_simd_title( simd_ai[ 0 ] );
@@ -75,18 +75,21 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 		pthread_cond_broadcast( &start );
 		pthread_mutex_unlock( &lock );
 
+		if ( threads_count > 1 ) portion = MT_BM_CYCLES_PER_TIME;
+		else portion = ST_BM_CYCLES_PER_TIME;
+		cc = cycles_count;
+
 		_BMARK_ON_;
 
-		cc = cycles_count;
 		while ( cc ) {
-			if ( cc < BM_CYCLES_PER_TIME ) len = cc;
-			else len = BM_CYCLES_PER_TIME;
-			pc->write( len );
+			if ( cc < portion ) len = cc;
+			else len = portion;
+			pc_put( len );
 			cc -= len;
 		}
 
 		pthread_mutex_lock( &lock );
-		while ( pc->count() )
+		while ( pc_count() )
 			pthread_cond_wait( &stop, &lock );
 		pthread_mutex_unlock( &lock );
 
@@ -112,14 +115,14 @@ inline void bmu_threads_finit() {
 	pthread_cond_broadcast( &start );
 	pthread_mutex_unlock( &lock );
 
-	pc->stop();
+	pc_stop();
 
 	pthread_mutex_lock( &lock );
 	while ( active_threads )
 		pthread_cond_wait( &finish, &lock );
 	pthread_mutex_unlock( &lock );
 
-	delete pc;
+	pc_finit();
 
 	// wait for thread finish
 	for ( i = 0; i < threads_count; i++ ) {
@@ -144,13 +147,13 @@ inline void bmu_threads( uint16_t th_cnt, uint8_t simd_ai_count, char **simd_ai,
 void* cpu_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 	char name[ 25 ];
-	uint64_t i, _vi_;
+	uint64_t i, j, _vi_;
 
 	sprintf( name, "_aibm_warmup%u", td->tid );
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 4;
-	uint64_t alloc_length = BM_CYCLES_PER_TIME * vector_capacity;
+	uint64_t alloc_length = MT_BM_CYCLES_PER_TIME * vector_capacity;
 	uint64_t alloc_size = alloc_length * sizeof( double );
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
@@ -164,14 +167,18 @@ void* cpu_warmup_thread( void *arg ) {
 
 	while ( td->thread_active ) {
 
-		pc->read( td->cycles_count );
+		pc_get( td->cycles_count );
 
 		if ( !td->thread_active ) break;
 
-		for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-			vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
-			vd = _mm256_add_pd( vd, ad );
-			_mm256_store_pd( (double *)&pd64[_vi_], vd );
+		for ( j = 0; j < 2; j++ ) {
+
+			for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+				vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
+				vd = _mm256_add_pd( vd, ad );
+				_mm256_store_pd( (double *)&pd64[_vi_], vd );
+			}
+
 		}
 
 		pthread_mutex_lock( &lock );
@@ -193,7 +200,7 @@ void* cpu_warmup_thread( void *arg ) {
 
 inline void make_cpu_warmup() {
 
-	fprintf( stdout, BLUE "Central Processing Unit Warm Up (in %d thread(s)) ..." OFF, MULTIPLE_THREADS ); fflush( stdout );
+	fprintf( stdout, BLUE "Central Processing Unit & Memory Units Warm Up (in %d thread(s)) ..." OFF, MULTIPLE_THREADS ); fflush( stdout );
 
 	bmu_threads( MULTIPLE_THREADS, 1, NULL, &cpu_warmup_thread );
 

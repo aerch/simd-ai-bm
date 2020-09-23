@@ -1,146 +1,88 @@
 #ifndef __PRODUCER_CONSUMER_H__
 #define __PRODUCER_CONSUMER_H__
 
-/// Структура данных продконс-буфера
-// typedef struct th_data {
-// 	uint64_t	xlen;		///< длина буфера x
-// } th_data_t;
-
 #define PC_STATE_ACTIVE 0
 #define PC_STATE_STOP   1
 
-/// Класс буфера по классической схеме "поставщик-потребитель"
-class prodcons {
-private:
-	pthread_mutex_t	lock;		///< мутекс обеспечивающий ексклюзивный доступ к буферу
-	pthread_cond_t	notempty;	///< сигнал состояния - буфер непуст
-	pthread_cond_t	notfull;	///< сигнал состояния - буфер неполон
-	int32_t 	readpos;	///< индекс чтения из буфера
-	int32_t 	writepos;	///< индекс запсиси в буфер
-	int32_t 	num;		///< колличество блоков буфера
-	int32_t		state;		///< текущее состояние буфера
-	int32_t		r_state;	///< текущее состояние чтения из буфера
-	int32_t		w_state;	///< текущее состояние записи в буфер
+// Буфер по классической схеме "поставщик-потребитель"
+pthread_mutex_t	pc_lock;	// мутекс обеспечивающий ексклюзивный доступ к буферу
+pthread_cond_t	pc_notempty;	// сигнал состояния - буфер непуст
+pthread_cond_t	pc_notfull;	// сигнал состояния - буфер неполон
+int32_t 	pc_readpos;	// индекс чтения из буфера
+int32_t 	pc_writepos;	// индекс запсиси в буфер
+int32_t 	pc_num;		// колличество блоков буфера
+int32_t		pc_state;	// текущее состояние буфера
+int32_t		pc_r_state;	// текущее состояние чтения из буфера
+int32_t		pc_w_state;	// текущее состояние записи в буфер
+uint64_t 	*cycles;	// массив из продконс-буферов
 
-public:
-	// th_data_t **td;			///< массив из продконс-буферов
-	uint64_t 	*cycles;	///< массив из продконс-буферов
+// Конструктор класса
+inline void pc_init( int32_t n ) {
+	if ( n <= 0 ) perror("pc_init(): error, buffer's number less or equal 0\n");
+	pthread_mutex_init( &pc_lock, NULL );
+	pthread_cond_init( &pc_notempty, NULL );
+	pthread_cond_init( &pc_notfull, NULL );
+	pc_readpos = 0;
+	pc_writepos = 0;
+	pc_num = n;
+	cycles = (uint64_t*)malloc( pc_num * sizeof(uint64_t) );
+	if ( !cycles ) perror("pc_init(): malloc() error\n");
+	pc_state = PC_STATE_ACTIVE;
+	pc_r_state = PC_STATE_ACTIVE;
+	pc_w_state = PC_STATE_ACTIVE;
+	return;
+}
 
-	/// Конструктор класса
-	prodcons( int32_t n ) {
-		if ( n <= 0 ) printf("ProdCons ERROR: class has incorrect input values at %s:%i\n", __FILE__, __LINE__);
-		pthread_mutex_init( &lock, NULL );
-		pthread_cond_init( &notempty, NULL );
-		pthread_cond_init( &notfull, NULL );
-		readpos = 0;
-		writepos = 0;
-		num = n;
-		cycles = (uint64_t*)malloc( num * sizeof(uint64_t) );
-		// td = (th_data_t**)malloc( num * sizeof(th_data_t*) );
-		// if ( !td ) printf("ProdCons ERROR: dynamic memory allocation ( %lu bytes ) error: at %s:%i\n", num * sizeof(th_data_t*), __FILE__, __LINE__);
-		// for ( int32_t i = 0; i < num; i++ ) {
-		// 	td[ i ] = (th_data_t*)malloc( sizeof(th_data_t) );
-		// 	if ( !td[ i ] ) printf("ProdCons ERROR: dynamic memory allocation ( %lu bytes ) error: at %s:%i\n", sizeof(th_data_t), __FILE__, __LINE__);
-		// 	td[ i ]->xlen = 0;
-		// }
-		state = PC_STATE_ACTIVE;
-		r_state = PC_STATE_ACTIVE;
-		w_state = PC_STATE_ACTIVE;
-		return;
-	};
+// Функция останова буфера
+inline void pc_stop() {
+	pc_state = PC_STATE_STOP;
+	pthread_cond_broadcast(&pc_notempty);
+	pthread_cond_broadcast(&pc_notfull);
+	return;
+}
 
-	/// Функция останова буфера
-	void stop() {
-		// printf("ProdCons: stopping ...\n");
-		state = PC_STATE_STOP;
-		pthread_cond_broadcast(&notempty);
-		pthread_cond_broadcast(&notfull);
-		return;
-	};
+// Деструктор класса
+inline void pc_finit() {
+	pc_stop();
+	free( cycles );
+	return;
+}
 
-	/// Деструктор класса
-	~prodcons() {
-		stop();
-		// for ( int32_t i = 0; i < num; i++ )
-		// 	free( td[ i ] );
-		// free( td ); td = NULL;
-		free( cycles );
-		// printf("ProdCons: stopped.\n");
-		return;
-	};
+// Функция записи нового буфера
+inline void pc_put( uint64_t _cycles_ ) {
+	if (pc_w_state == PC_STATE_STOP) return;
+	pthread_mutex_lock(&pc_lock);
+	while (((pc_writepos + 1) % pc_num == pc_readpos) && (pc_state != PC_STATE_STOP))
+		pthread_cond_wait(&pc_notfull, &pc_lock);
+	if (pc_state == PC_STATE_STOP)
+		pc_w_state = PC_STATE_STOP;
+	cycles[ pc_writepos ] = _cycles_;
+	pc_writepos++;
+	if (pc_writepos >= pc_num)
+		pc_writepos = 0;
+	pthread_cond_broadcast(&pc_notempty);
+	pthread_mutex_unlock(&pc_lock);
+	return;
+}
 
-	// /// Функция получения индекса следующего буфера
-	// int32_t get() {
-	// 	if (w_state == PC_STATE_STOP) return 0;
-	// 	pthread_mutex_lock(&lock);
-	// 	while (((writepos + 1) % num == readpos) && (state != PC_STATE_STOP))
-	// 		pthread_cond_wait(&notfull, &lock);
-	// 	if (state == PC_STATE_STOP)
-	// 		w_state = PC_STATE_STOP;
-	// 	int32_t index = writepos;
-	// 	writepos++;
-	// 	if (writepos >= num)
-	// 		writepos = 0;
-	// 	pthread_cond_signal(&notempty);
-	// 	pthread_mutex_unlock(&lock);
-	// 	return index;
-	// };
+// Функция чтения очередного буфера
+inline void pc_get( uint64_t &_cycles_ ) {
+	if (pc_r_state == PC_STATE_STOP) { _cycles_ = 0; return; }
+	pthread_mutex_lock(&pc_lock);
+	while ((pc_writepos == pc_readpos) && (pc_state != PC_STATE_STOP))
+		pthread_cond_wait(&pc_notempty, &pc_lock);
+	if (pc_state == PC_STATE_STOP)
+		pc_r_state = PC_STATE_STOP;
+	_cycles_ = cycles[ pc_readpos ];
+	pc_readpos++;
+	if (pc_readpos >= pc_num)
+		pc_readpos = 0;
+	pthread_cond_signal(&pc_notfull);
+	pthread_mutex_unlock(&pc_lock);
+	return;
+}
 
-	// /// Функция освобождения очередного занятого буфера
-	// void put() {
-	// 	if (r_state == PC_STATE_STOP) return;
-	// 	pthread_mutex_lock(&lock);
-	// 	while ((writepos == readpos) && (state != PC_STATE_STOP))
-	// 		pthread_cond_wait(&notempty, &lock);
-	// 	if (state == PC_STATE_STOP)
-	// 		r_state = PC_STATE_STOP;
-	// 	readpos++;
-	// 	if (readpos >= num)
-	// 		readpos = 0;
-	// 	pthread_cond_signal(&notfull);
-	// 	pthread_mutex_unlock(&lock);
-	// 	return;
-	// };
-
-	/// Функция записи нового буфера
-	void write( uint64_t _cycles_ ) {
-		if (w_state == PC_STATE_STOP) return;
-		pthread_mutex_lock(&lock);
-		while (((writepos + 1) % num == readpos) && (state != PC_STATE_STOP))
-			pthread_cond_wait(&notfull, &lock);
-		if (state == PC_STATE_STOP)
-			w_state = PC_STATE_STOP;
-		// td[ writepos ]->xlen = _cycles_;
-		cycles[ writepos ] = _cycles_;
-		writepos++;
-		if (writepos >= num)
-			writepos = 0;
-		pthread_cond_broadcast(&notempty);
-		pthread_mutex_unlock(&lock);
-		return;
-	};
-
-	/// Функция чтения очередного буфера
-	void read( uint64_t &_cycles_ ) {
-		if (r_state == PC_STATE_STOP) { _cycles_ = 0; return; }
-		pthread_mutex_lock(&lock);
-		while ((writepos == readpos) && (state != PC_STATE_STOP))
-			pthread_cond_wait(&notempty, &lock);
-		if (state == PC_STATE_STOP)
-			r_state = PC_STATE_STOP;
-		// _cycles_ = td[ readpos ]->xlen;
-		_cycles_ = cycles[ readpos ];
-		readpos++;
-		if (readpos >= num)
-			readpos = 0;
-		pthread_cond_signal(&notfull);
-		pthread_mutex_unlock(&lock);
-		return;
-	};
-
-	/// Функция подсчёта занятых буферов
-	int32_t count() { return (writepos - readpos + num) % num; };
-
-};
+// Функция подсчёта занятых буферов
+inline int32_t pc_count() { return (pc_writepos - pc_readpos + pc_num) % pc_num; }
 
 #endif // !__PRODUCER_CONSUMER_H__

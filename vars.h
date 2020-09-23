@@ -34,13 +34,11 @@ __m128i		bi, wi;
 
 __m64		ci, xi;
 
-
 pthread_mutex_t	lock;
 pthread_cond_t	start;
 pthread_cond_t	stop;
 pthread_cond_t	finish;
 
 thread_data_t	td[ MAX_THR_CNT ];
-prodcons	*pc;
 
 #endif // !__VARS_H__

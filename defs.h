@@ -7,7 +7,8 @@
 
 #define MAX_THR_CNT		8192			// maximum value is 8192 threads
 
-#define BM_CYCLES_PER_TIME	2048
+#define ST_BM_CYCLES_PER_TIME	1024			// 1024 - ST
+#define MT_BM_CYCLES_PER_TIME	2048			// 2048 - MT
 
 #define SINGLE_THREAD		1
 

@@ -24,7 +24,7 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 	prctl( PR_SET_NAME, name );
 
 	vector_capacity = 8;
-	uint64_t alloc_length = BM_CYCLES_PER_TIME * vector_capacity;
+	uint64_t alloc_length = MT_BM_CYCLES_PER_TIME * vector_capacity;
 	int64_t alloc_size = alloc_length * sizeof( float );
 	float *ps32 __attribute__((aligned(32))) = (float*)aligned_alloc( 32, alloc_size );
 	if ( !ps32 ) perror( "aligned_alloc() error" );
@@ -38,7 +38,7 @@ void* avx_ai_ps32_bm_thread( void *arg ) {
 
 	while ( td->thread_active ) {
 
-		pc->read( td->cycles_count );
+		pc_get( td->cycles_count );
 
 		if ( !td->thread_active ) break;
 
