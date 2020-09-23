@@ -7,6 +7,12 @@
 #include "sse/simd-ai-epx16.h"
 #include "sse/simd-ai-ps32.h"
 
+#include "sse2/simd-ai-epx8.h"
+#include "sse2/simd-ai-epx16.h"
+#include "sse2/simd-ai-epx32.h"
+#include "sse2/simd-ai-epx64.h"
+#include "sse2/simd-ai-pd64.h"
+
 #include "sse3/simd-ai-ps32.h"
 #include "sse3/simd-ai-pd64.h"
 
@@ -42,6 +48,11 @@ inline void make_st_banchmarks() {
 	bmu_threads( SINGLE_THREAD, sse_ai_ps32_cnt, (char**)sse_ai_ps32_instructions, &sse_ai_ps32_bm_thread );
 
 	make_title( "SSE2" );
+	bmu_threads( SINGLE_THREAD, sse2_ai_epx8_cnt, (char**)sse2_ai_epx8_instructions, &sse2_ai_epx8_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse2_ai_epx16_cnt, (char**)sse2_ai_epx16_instructions, &sse2_ai_epx16_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse2_ai_epx32_cnt, (char**)sse2_ai_epx32_instructions, &sse2_ai_epx32_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse2_ai_epx64_cnt, (char**)sse2_ai_epx64_instructions, &sse2_ai_epx64_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse2_ai_pd64_cnt, (char**)sse2_ai_pd64_instructions, &sse2_ai_pd64_bm_thread );
 
 	make_title( "SSE3" );
 	bmu_threads( SINGLE_THREAD, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread );
@@ -90,6 +101,11 @@ inline void make_mt_banchmarks() {
 	bmu_threads( MULTIPLE_THREADS, sse_ai_ps32_cnt, (char**)sse_ai_ps32_instructions, &sse_ai_ps32_bm_thread );
 
 	make_title( "SSE2" );
+	bmu_threads( MULTIPLE_THREADS, sse2_ai_epx8_cnt, (char**)sse2_ai_epx8_instructions, &sse2_ai_epx8_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse2_ai_epx16_cnt, (char**)sse2_ai_epx16_instructions, &sse2_ai_epx16_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse2_ai_epx32_cnt, (char**)sse2_ai_epx32_instructions, &sse2_ai_epx32_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse2_ai_epx64_cnt, (char**)sse2_ai_epx64_instructions, &sse2_ai_epx64_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse2_ai_pd64_cnt, (char**)sse2_ai_pd64_instructions, &sse2_ai_pd64_bm_thread );
 
 	make_title( "SSE3" );
 	bmu_threads( MULTIPLE_THREADS, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread );
