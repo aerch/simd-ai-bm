@@ -3,6 +3,10 @@
 
 #include "bmuthreads.h"
 
+#include "mmx/simd-ai-epx8.h"
+#include "mmx/simd-ai-epx16.h"
+#include "mmx/simd-ai-epx32.h"
+
 #include "sse/simd-ai-epx8.h"
 #include "sse/simd-ai-epx16.h"
 #include "sse/simd-ai-ps32.h"
@@ -41,6 +45,9 @@ inline void make_st_banchmarks() {
 	make_message( _ST_BM_START_MSG_ );
 
 	make_title( "MMX" );
+	bmu_threads( SINGLE_THREAD, mmx_ai_epx8_cnt, (char**)mmx_ai_epx8_instructions, &mmx_ai_epx8_bm_thread );
+	bmu_threads( SINGLE_THREAD, mmx_ai_epx16_cnt, (char**)mmx_ai_epx16_instructions, &mmx_ai_epx16_bm_thread );
+	bmu_threads( SINGLE_THREAD, mmx_ai_epx32_cnt, (char**)mmx_ai_epx32_instructions, &mmx_ai_epx32_bm_thread );
 
 	make_title( "SSE" );
 	bmu_threads( SINGLE_THREAD, sse_ai_epx8_cnt, (char**)sse_ai_epx8_instructions, &sse_ai_epx8_bm_thread );
@@ -94,6 +101,9 @@ inline void make_mt_banchmarks() {
 	make_message( _MT_BM_START_MSG_ );
 
 	make_title( "MMX" );
+	bmu_threads( MULTIPLE_THREADS, mmx_ai_epx8_cnt, (char**)mmx_ai_epx8_instructions, &mmx_ai_epx8_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, mmx_ai_epx16_cnt, (char**)mmx_ai_epx16_instructions, &mmx_ai_epx16_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, mmx_ai_epx32_cnt, (char**)mmx_ai_epx32_instructions, &mmx_ai_epx32_bm_thread );
 
 	make_title( "SSE" );
 	bmu_threads( MULTIPLE_THREADS, sse_ai_epx8_cnt, (char**)sse_ai_epx8_instructions, &sse_ai_epx8_bm_thread );

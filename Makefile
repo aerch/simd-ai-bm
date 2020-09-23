@@ -2,7 +2,7 @@
 # Makefile for the linux SIMD Instructions Benchmark (simd-ibm) project
 
 TARGET          = simd-ibm
-VERSION         = 0.8.5ai
+VERSION         = 0.8.6ai
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)

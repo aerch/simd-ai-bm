@@ -136,9 +136,7 @@ inline void bmu_threads_finit() {
 inline void bmu_threads( uint16_t th_cnt, uint8_t simd_ai_count, char **simd_ai, void *(*bm_thread)(void *) ) {
 
 	bmu_threads_init( th_cnt, bm_thread );
-
 	bmu_threads_start( simd_ai_count, simd_ai );
-
 	bmu_threads_finit();
 
 	return;
