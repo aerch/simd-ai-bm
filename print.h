@@ -68,8 +68,8 @@ inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count,
 
 	total_tps += transactions_per_second;
 
-	fprintf( stream, "\t   %s\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t  %3d values\t%8.1lf GT/sec\n", str, total_time, time_per_cycle, time_per_gigacycle, vecsz, transactions_per_second );
-	printf("\t   %s\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t  %3d values\t%8.1lf GT/sec\n", str, total_time, time_per_cycle, time_per_gigacycle, vecsz, transactions_per_second );
+	fprintf( stream, "\t   %s\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t  %3d values\t%6.1lf GOps/sec\n", str, total_time, time_per_cycle, time_per_gigacycle, vecsz, transactions_per_second );
+	printf("\t   %s\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t  %3d values\t%6.1lf GOps/sec\n", str, total_time, time_per_cycle, time_per_gigacycle, vecsz, transactions_per_second );
 
 	return;
 }

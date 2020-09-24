@@ -5,18 +5,18 @@ const uint8_t mmx_ai_epx8_cnt = 12;
 
 const char *mmx_ai_epx8_instructions[ mmx_ai_epx8_cnt + 1 ] = {
 	"SIMD MMX 8-bit Integer Arithmetic Instructions with 64-bit vectors ...",
-	"paddb\t__m64 _mm_add_pi8     ",
-	"paddsb\t__m64 _mm_adds_pi8   ",
-	"paddusb\t__m64 _mm_adds_pu8  ",
-	"psubb\t__m64 _mm_sub_pi8     ",
-	"psubsb\t__m64 _mm_subs_pi8   ",
-	"psubusb\t__m64 _mm_subs_pu8  ",
-	"paddb\t__m64 _m_paddb        ",
-	"paddsb\t__m64 _m_paddsb      ",
-	"paddusb\t__m64 _m_paddusb    ",
-	"psubb\t__m64 _m_psubb        ",
-	"psubsb\t__m64 _m_psubsb      ",
-	"psubusb\t__m64 _m_psubusb    "
+	"paddb\t_mm_add_pi8        ",
+	"paddsb\t_mm_adds_pi8      ",
+	"paddusb\t_mm_adds_pu8     ",
+	"psubb\t_mm_sub_pi8        ",
+	"psubsb\t_mm_subs_pi8      ",
+	"psubusb\t_mm_subs_pu8     ",
+	"paddb\t_m_paddb           ",
+	"paddsb\t_m_paddsb         ",
+	"paddusb\t_m_paddusb       ",
+	"psubb\t_m_psubb           ",
+	"psubsb\t_m_psubsb         ",
+	"psubusb\t_m_psubusb       "
 };
 
 void* mmx_ai_epx8_bm_thread( void *arg ) {
@@ -48,18 +48,98 @@ void* mmx_ai_epx8_bm_thread( void *arg ) {
 
 		switch ( td->instruction ) {
 
-			case 1: // add vectors of 8 8-bit signed integers at cycle
+			case 1: // paddb vectors of 8 8-bit signed integers at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
 					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
-					xi = _m_psadbw( xi, ci );
+					xi = _mm_add_pi8( xi, ci );
 					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
 				}
 				break;
 
-			case 2: // adds vectors of 8 8-bit signed integers at cycle
+			case 2: // paddsb vectors of 8 8-bit signed integers at cycle
 				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
 					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
-					xi = _mm_sad_pu8( xi, ci );
+					xi = _mm_adds_pi8( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 3: // paddusb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _mm_adds_pu8( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 4: // psubb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _mm_sub_pi8( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 5: // psubsb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _mm_subs_pi8( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 6: // psubusb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _mm_subs_pu8( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 7: // paddb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _m_paddb( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 8: // paddsb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _m_paddsb( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 9: // paddusb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _m_paddusb( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 10:// psubb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _m_psubb( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 11:// psubsb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _m_psubsb( xi, ci );
+					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
+				}
+				break;
+
+			case 12:// psubusb vectors of 8 8-bit signed integers at cycle
+				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
+					xi = _mm_load_si64( (const __m64 *)&si8[_vi_] );
+					xi = _m_psubusb( xi, ci );
 					_mm_store_si64( (__m64 *)&si8[_vi_], xi );
 				}
 				break;
