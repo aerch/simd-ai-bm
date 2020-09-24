@@ -24,12 +24,16 @@ uint16_t	active_threads;
 double		total_time;
 double		total_tps;
 
-__m256		as, vs;
-__m256d		ad, vd;
+double		simd_ai_st_bm;
+double		simd_ai_mt_bm;
+double		correlation;
+
+__m256		as, vs, ys;
+__m256d		ad, vd, yd;
 __m256i		ai, vi;
 
-__m128		bs, ws;
-__m128d		bd, wd;
+__m128		bs, ws, zs;
+__m128d		bd, wd, zd;
 __m128i		bi, wi;
 
 __m64		ci, xi;

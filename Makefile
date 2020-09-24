@@ -2,7 +2,7 @@
 # Makefile for the linux SIMD Instructions Benchmark (simd-ibm) project
 
 TARGET          = simd-ibm
-VERSION         = 0.8.7ai
+VERSION         = 0.9ai
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
@@ -19,7 +19,7 @@ ECHO            = /bin/echo
 PWD             := $(shell pwd)
 MAKE            = make
 
-CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2
+CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
 DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=10000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
 CXXFLAGS	= -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new

@@ -20,8 +20,9 @@ inline void make_message( uint8_t id ) {
 			break;
 
 		case _ST_BM_FINAL_MSG_:
-			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-ST-BM      %8i ]\n\n", (int32_t)round( total_tps ) );
-			printf( BLUE "SIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-ST-BM      %8i " OFF BLUE "]" OFF "\n\n", (int32_t)round( total_tps ) );
+			simd_ai_st_bm = total_tps;
+			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-ST-BM      %8.0lf ]\n\n", simd_ai_st_bm );
+			printf( BLUE "\nSIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-ST-BM      %8.0lf " OFF BLUE "]" OFF "\n\n", simd_ai_st_bm );
 			break;
 
 		case _MT_BM_START_MSG_:
@@ -32,8 +33,9 @@ inline void make_message( uint8_t id ) {
 			break;
 
 		case _MT_BM_FINAL_MSG_:
-			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-MT-BM      %8i ]\n\n", (int32_t)round( total_tps ) );
-			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-BM      %8i " OFF BLUE "]" OFF "\n\n", (int32_t)round( total_tps ) );
+			simd_ai_mt_bm = total_tps;
+			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-MT-BM      %8.0lf ]\n\n", simd_ai_mt_bm );
+			printf( BLUE "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-BM      %8.0lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm );
 			break;
 
 		default:

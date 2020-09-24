@@ -29,7 +29,7 @@ inline void make_inits() {
 		perror("getline: while reading current processor name");
 		exit(EXIT_FAILURE);
 	}
-	sprintf( current_path, "CPUs/%s", &line[3] );
+	sprintf( current_path, "bmresults/%s", &line[3] );
 	current_path[ strlen(current_path)-1 ] = 0;
 	printf( BLUE "Saving to:" OFF WHITE " %s" OFF "\n\n", current_path );
 	free(line);
@@ -75,6 +75,10 @@ inline void make_inits() {
 }
 
 inline void make_finits() {
+	correlation = simd_ai_mt_bm / simd_ai_st_bm;
+
+	fprintf( stream, "Correlation of SIMD AI Single- & Multi- Threaded Benchmark values\t\t\t\t\t\t\t      [ %5.2lf ]\n\n", correlation );
+	printf( BLUE "Correlation of SIMD AI Single- & Multi- Threaded Benchmark values\t\t\t\t\t\t\t      [" WHITE " %5.2lf " OFF BLUE "]" OFF "\n\n", correlation );
 
 	// close resulting file
 	fclose(stream);
