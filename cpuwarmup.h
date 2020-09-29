@@ -3,7 +3,7 @@
 
 void* cpu_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
-	int64_t i,/* j,*/ _vi_;
+	int64_t i, j, _vi_;
 	__m256d ad, vd;
 
 	sprintf( td->name, "_aibm_warmup%u", td->tid );
@@ -27,7 +27,7 @@ void* cpu_warmup_thread( void *arg ) {
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		// for ( j = 0; j < 1; j++ ) {
+		for ( j = 0; j < 10; j++ ) {
 
 			for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
 				vd = _mm256_load_pd( (const double *)&pd64[_vi_] );
@@ -35,7 +35,7 @@ void* cpu_warmup_thread( void *arg ) {
 				_mm256_store_pd( (double *)&pd64[_vi_], vd );
 			}
 
-		// }
+		}
 
 		pthread_mutex_lock( &lock );
 		evaluating_threads--;
