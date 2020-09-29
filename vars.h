@@ -15,6 +15,8 @@ typedef struct thread_data {
 int32_t		result;
 FILE		*stream = NULL;
 char		_str_[ 1024 ];
+
+char		brand_string[ 50 ];
 char		current_path[ PATH_MAX ];
 
 uint64_t	cycles_count = CYCLES_COUNT;	// 1,000,000,000 - 10,000,000,000
@@ -31,7 +33,7 @@ double		cpu_time;
 
 double		simd_ai_st_bm;
 double		simd_ai_mt_bm;
-double		correlation;
+double		simd_ai_mt_bm_rate;
 
 // __m256		as, vs, ys;
 // __m256d		ad, vd, yd;

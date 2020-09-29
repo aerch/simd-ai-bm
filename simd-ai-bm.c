@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdint.h>
+#include <cpuid.h>
 #include <math.h>
 #include <time.h>
 #include <string.h>

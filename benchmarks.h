@@ -19,8 +19,8 @@
 // #include "sse2/simd-ai-epx64.h"
 // #include "sse2/simd-ai-pd64.h"
 
-// #include "sse3/simd-ai-ps32.h"
-// #include "sse3/simd-ai-pd64.h"
+#include "sse3/simd-ai-ps32.h"
+#include "sse3/simd-ai-pd64.h"
 
 // #include "ssse3/simd-ai-epx8.h"
 // #include "ssse3/simd-ai-epx16.h"
@@ -66,9 +66,9 @@ inline void make_st_banchmarks() {
 	// bmu_threads( SINGLE_THREAD, sse2_ai_epx64_cnt, (char**)sse2_ai_epx64_instructions, &sse2_ai_epx64_bm_thread );
 	// bmu_threads( SINGLE_THREAD, sse2_ai_pd64_cnt, (char**)sse2_ai_pd64_instructions, &sse2_ai_pd64_bm_thread );
 
-	// make_title( "SSE3" );
-	// bmu_threads( SINGLE_THREAD, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread );
-	// bmu_threads( SINGLE_THREAD, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread );
+	make_title( "SSE3" );
+	bmu_threads( SINGLE_THREAD, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread, &sse3_ai_ps32_cpu_bm_thread );
+	bmu_threads( SINGLE_THREAD, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread, &sse3_ai_pd64_cpu_bm_thread );
 
 	// make_title( "SSSE3" );
 	// bmu_threads( SINGLE_THREAD, ssse3_ai_epx8_cnt, (char**)ssse3_ai_epx8_instructions, &ssse3_ai_epx8_bm_thread );
@@ -124,9 +124,9 @@ inline void make_mt_banchmarks() {
 	// bmu_threads( MULTIPLE_THREADS, sse2_ai_epx64_cnt, (char**)sse2_ai_epx64_instructions, &sse2_ai_epx64_bm_thread );
 	// bmu_threads( MULTIPLE_THREADS, sse2_ai_pd64_cnt, (char**)sse2_ai_pd64_instructions, &sse2_ai_pd64_bm_thread );
 
-	// make_title( "SSE3" );
-	// bmu_threads( MULTIPLE_THREADS, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread );
-	// bmu_threads( MULTIPLE_THREADS, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread );
+	make_title( "SSE3" );
+	bmu_threads( MULTIPLE_THREADS, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread, &sse3_ai_ps32_cpu_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread, &sse3_ai_pd64_cpu_bm_thread );
 
 	// make_title( "SSSE3" );
 	// bmu_threads( MULTIPLE_THREADS, ssse3_ai_epx8_cnt, (char**)ssse3_ai_epx8_instructions, &ssse3_ai_epx8_bm_thread );
