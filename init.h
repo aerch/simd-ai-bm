@@ -46,9 +46,9 @@ inline void make_inits() {
 	sprintf( _str_, "lscpu > \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 0" );
 
-	sprintf( _str_, "inxi -SMICfmsxxxt -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
+	sprintf( _str_, "inxi -SMICfmsxxx -c 0 -t cm5 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 1" );
-	if ( system( "inxi -SMICfmsxxxt -c 2" ) != 0 ) perror( "error due system call 10" );
+	if ( system( "inxi -SMICfmsxxx -c 2 -t cm5" ) != 0 ) perror( "error due system call 10" );
 
 	printf("\n");
 
