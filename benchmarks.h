@@ -39,8 +39,8 @@
 #include "avx2/simd-ai-epx32.h"
 #include "avx2/simd-ai-epx64.h"
 
-// #include "fma/simd-ai-ps32.h"
-// #include "fma/simd-ai-pd64.h"
+#include "fma/simd-ai-ps32.h"
+#include "fma/simd-ai-pd64.h"
 
 // single thread benchmarks execution
 inline void make_st_banchmarks() {
@@ -91,9 +91,9 @@ inline void make_st_banchmarks() {
 	bmu_threads( SINGLE_THREAD, avx2_ai_epx32_cnt, (char**)avx2_ai_epx32_instructions, &avx2_ai_epx32_bm_thread, &avx2_ai_epx32_cpu_bm_thread );
 	bmu_threads( SINGLE_THREAD, avx2_ai_epx64_cnt, (char**)avx2_ai_epx64_instructions, &avx2_ai_epx64_bm_thread, &avx2_ai_epx64_cpu_bm_thread );
 
-	// make_title( "FMA" );
-	// bmu_threads( SINGLE_THREAD, fma_ai_ps32_cnt, (char**)fma_ai_ps32_instructions, &fma_ai_ps32_bm_thread );
-	// bmu_threads( SINGLE_THREAD, fma_ai_pd64_cnt, (char**)fma_ai_pd64_instructions, &fma_ai_pd64_bm_thread );
+	make_title( "FMA" );
+	bmu_threads( SINGLE_THREAD, fma_ai_ps32_cnt, (char**)fma_ai_ps32_instructions, &fma_ai_ps32_bm_thread, &fma_ai_ps32_cpu_bm_thread );
+	bmu_threads( SINGLE_THREAD, fma_ai_pd64_cnt, (char**)fma_ai_pd64_instructions, &fma_ai_pd64_bm_thread, &fma_ai_pd64_cpu_bm_thread );
 
 	make_message( _ST_BM_FINAL_MSG_ );
 
@@ -149,9 +149,9 @@ inline void make_mt_banchmarks() {
 	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx32_cnt, (char**)avx2_ai_epx32_instructions, &avx2_ai_epx32_bm_thread, &avx2_ai_epx32_cpu_bm_thread );
 	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx64_cnt, (char**)avx2_ai_epx64_instructions, &avx2_ai_epx64_bm_thread, &avx2_ai_epx64_cpu_bm_thread );
 
-	// make_title( "FMA" );
-	// bmu_threads( MULTIPLE_THREADS, fma_ai_ps32_cnt, (char**)fma_ai_ps32_instructions, &fma_ai_ps32_bm_thread );
-	// bmu_threads( MULTIPLE_THREADS, fma_ai_pd64_cnt, (char**)fma_ai_pd64_instructions, &fma_ai_pd64_bm_thread );
+	make_title( "FMA" );
+	bmu_threads( MULTIPLE_THREADS, fma_ai_ps32_cnt, (char**)fma_ai_ps32_instructions, &fma_ai_ps32_bm_thread, &fma_ai_ps32_cpu_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, fma_ai_pd64_cnt, (char**)fma_ai_pd64_instructions, &fma_ai_pd64_bm_thread, &fma_ai_pd64_cpu_bm_thread );
 
 	make_message( _MT_BM_FINAL_MSG_ );
 

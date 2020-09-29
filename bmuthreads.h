@@ -128,7 +128,6 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 			print_results( simd_ai[ c ], vector_capacity, cycles_count, total_time, cpu_time );
 
 		}
-
 	}
 
 	return;
