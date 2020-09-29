@@ -31,8 +31,8 @@
 // #include "sse4.1/simd-ai-ps32.h"
 // #include "sse4.1/simd-ai-pd64.h"
 
-// #include "avx/simd-ai-ps32.h"
-// #include "avx/simd-ai-pd64.h"
+#include "avx/simd-ai-ps32.h"
+#include "avx/simd-ai-pd64.h"
 
 #include "avx2/simd-ai-epx8.h"
 #include "avx2/simd-ai-epx16.h"
@@ -81,9 +81,9 @@ inline void make_st_banchmarks() {
 	// bmu_threads( SINGLE_THREAD, sse4_1_ai_ps32_cnt, (char**)sse4_1_ai_ps32_instructions, &sse4_1_ai_ps32_bm_thread );
 	// bmu_threads( SINGLE_THREAD, sse4_1_ai_pd64_cnt, (char**)sse4_1_ai_pd64_instructions, &sse4_1_ai_pd64_bm_thread );
 
-	// make_title( "AVX" );
-	// bmu_threads( SINGLE_THREAD, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
-	// bmu_threads( SINGLE_THREAD, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread );
+	make_title( "AVX" );
+	bmu_threads( SINGLE_THREAD, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread, &avx_ai_ps32_cpu_bm_thread );
+	bmu_threads( SINGLE_THREAD, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread, &avx_ai_pd64_cpu_bm_thread );
 
 	make_title( "AVX2" );
 	bmu_threads( SINGLE_THREAD, avx2_ai_epx8_cnt,  (char**)avx2_ai_epx8_instructions,  &avx2_ai_epx8_bm_thread,  &avx2_ai_epx8_cpu_bm_thread  );
@@ -139,9 +139,9 @@ inline void make_mt_banchmarks() {
 	// bmu_threads( MULTIPLE_THREADS, sse4_1_ai_ps32_cnt, (char**)sse4_1_ai_ps32_instructions, &sse4_1_ai_ps32_bm_thread );
 	// bmu_threads( MULTIPLE_THREADS, sse4_1_ai_pd64_cnt, (char**)sse4_1_ai_pd64_instructions, &sse4_1_ai_pd64_bm_thread );
 
-	// make_title( "AVX" );
-	// bmu_threads( MULTIPLE_THREADS, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread );
-	// bmu_threads( MULTIPLE_THREADS, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread );
+	make_title( "AVX" );
+	bmu_threads( MULTIPLE_THREADS, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread, &avx_ai_ps32_cpu_bm_thread );
+	bmu_threads( MULTIPLE_THREADS, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread, &avx_ai_pd64_cpu_bm_thread );
 
 	make_title( "AVX2" );
 	bmu_threads( MULTIPLE_THREADS, avx2_ai_epx8_cnt,  (char**)avx2_ai_epx8_instructions,  &avx2_ai_epx8_bm_thread,  &avx2_ai_epx8_cpu_bm_thread  );
