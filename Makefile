@@ -1,10 +1,10 @@
 #!/bin/bash
-# Makefile for the linux SIMD Instructions Benchmark (simd-ibm) project
+# Makefile for the linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
 
-TARGET          = simd-ibm
-VERSION         = 0.9ai
+TARGET          = simd-ai-bm
+VERSION         = 0.9.1ai
 DATE            = $(shell date +%d.%m.%y)
-PROJECT         = 'SIMD Instructions Benchmark ('$(TARGET)') v'$(VERSION)
+PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
 NPROC           = $(shell nproc)
 
@@ -20,7 +20,7 @@ PWD             := $(shell pwd)
 MAKE            = make
 
 CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
-DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=10000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
+DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
 CXXFLAGS	= -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
@@ -35,9 +35,9 @@ LDOPTIONS       = $(CXXOPTIONS)
 
 DFILES          = $(foreach bdir,$(BUILD_DIRS), $(wildcard $(bdir)/*.d))
 
-SOURCES         = simd-ibm.c
-HEADERS         = simd-ibm.h
-OBJECTS         = simd-ibm.o
+SOURCES         = simd-ai-bm.c
+HEADERS         = simd-ai-bm.h
+OBJECTS         = simd-ai-bm.o
 
 BLACK           = '\033[30;1m'
 RED             = '\033[31;1m'
@@ -57,7 +57,7 @@ $(TARGET): clean $(OBJECTS)
 	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
 
-simd-ibm.o: simd-ibm.c
+simd-ai-bm.o: simd-ai-bm.c
 	@echo -en $(WHITE)' cc  '$<$(OFF)'\n'
 	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 

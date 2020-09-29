@@ -13,7 +13,7 @@ inline void make_inits() {
 	size_t len = 0;
 	ssize_t nread;
 
-	printf( "\n" BLUE "SIMD Instructions Benchmark v" VERSION OFF "\n\n" );
+	printf( "\n\t   " BLUE "SIMD Arithmetic Instructions Benchmark v" VERSION OFF "\n\n" );
 
 	// try to get current processor name to file
 	if ( system( "grep 'model name' /proc/cpuinfo | uniq | awk '/^model name/{$1=$2=$3=\"\";print $0}' > current_processor" ) != 0 )
@@ -46,21 +46,9 @@ inline void make_inits() {
 	sprintf( _str_, "lscpu > \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 0" );
 
-	sprintf( _str_, "inxi -Sxx -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
+	sprintf( _str_, "inxi -SMICfmsxxxt -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 1" );
-	if ( system( "inxi -Sxx -c 2" ) != 0 ) perror( "error due system call 10" );
-
-	printf("\n");
-
-	sprintf( _str_, "inxi -Mxx -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
-	if ( system( _str_ ) != 0 ) perror( "error due system call 2" );
-	if ( system( "inxi -Mxx -c 2" ) != 0 ) perror( "error due system call 20" );
-
-	printf("\n");
-
-	sprintf( _str_, "inxi -Cfx -y 160 -c 0 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
-	if ( system( _str_ ) != 0 ) perror( "error due system call 3" );
-	if ( system( "inxi -Cfx -y 160 -c 2" ) != 0 ) perror( "error due system call 30" );
+	if ( system( "inxi -SMICfmsxxxt -c 2" ) != 0 ) perror( "error due system call 10" );
 
 	printf("\n");
 

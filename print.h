@@ -48,21 +48,21 @@ inline void make_message( uint8_t id ) {
 
 inline void make_title( const char *title ) {
 
-	fprintf( stream, "\n%s:\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tSIMD CAPACITY\tOPERATING SPEED\n", title );
-	printf( BLUE "\n%s:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tSIMD CAPACITY\tOPERATING SPEED\n\n" OFF, title );
+	fprintf( stream, "\n%s:\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\t   TOTAL CPU EVAL TIME\t PURE CPU SPEED\n", title );
+	printf( BLUE "\n%s:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\t   TOTAL CPU EVAL TIME\t PURE CPU SPEED\n" OFF, title );
 
 	return;
 }
 
 inline void make_simd_title( const char *simd_title ) {
 
-	fprintf( stream, "\n      %s\n", simd_title );
+	fprintf( stream, "      %s\n", simd_title );
 	printf( BLUE "      %s\n" OFF, simd_title );
 
 	return;
 }
 
-inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count, double total_time ) {
+inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count, double total_time, double cpu_time ) {
 	const double gigacycle = 1.0e+9;
 	double time_per_cycle = total_time / (double)cycles_count;
 	double time_per_gigacycle = time_per_cycle * gigacycle;
@@ -70,8 +70,12 @@ inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count,
 
 	total_tps += transactions_per_second;
 
-	fprintf( stream, "\t   %s\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t  %3d values\t%6.1lf GOps/sec\n", str, total_time, time_per_cycle, time_per_gigacycle, vecsz, transactions_per_second );
-	printf("\t   %s\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t  %3d values\t%6.1lf GOps/sec\n", str, total_time, time_per_cycle, time_per_gigacycle, vecsz, transactions_per_second );
+	const double teracycle = 1.0e+12;
+	double time_per_cpu_teracycle = cpu_time * teracycle / (double)cycles_count;
+	double cpu_transactions_per_second = (double)vecsz / time_per_cpu_teracycle;
+
+	fprintf( stream, "\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%6.1lf GOps/sec\t   %15.12lf sec\t%7.1lf TOps/sec\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, transactions_per_second, cpu_time, cpu_transactions_per_second );
+	printf("\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%6.1lf GOps/sec\t   %15.12lf sec\t%7.1lf TOps/sec\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, transactions_per_second, cpu_time, cpu_transactions_per_second );
 
 	return;
 }

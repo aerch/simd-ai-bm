@@ -1,19 +1,21 @@
 #ifndef __DEFINES_H__
 #define __DEFINES_H__
 
-#define ALIGN8  __attribute__((aligned(8)))		// to simplify the alignment declaration on variables on a 8-byte boundary
+#define DSP_PC			0
+#define CPU_PC			1
+
 #define ALIGN16 __attribute__((aligned(16)))		// to simplify the alignment declaration on variables on a 16-byte boundary
 #define ALIGN32 __attribute__((aligned(32)))		// to simplify the alignment declaration on variables on a 32-byte boundary
 
-#define MAX_THR_CNT		8192			// maximum value is 8192 threads
+#define MAX_THR_CNT		128			// maximum value is 8192 threads
 
-#define ST_BM_CYCLES_PER_TIME	1024			// 1024 - ST
+#define ST_BM_CYCLES_PER_TIME	8192			// 1024 - ST
 #define MT_BM_CYCLES_PER_TIME	2048			// 2048 - MT
 
 #define SINGLE_THREAD		1
 
 #ifdef THREADSCOUNT
-#define MULTIPLE_THREADS	2 * THREADSCOUNT	// 2 - 8192
+#define MULTIPLE_THREADS	8 * THREADSCOUNT	// 2 - 8192
 #else
 #define MULTIPLE_THREADS	MAX_THR_CNT
 #endif
