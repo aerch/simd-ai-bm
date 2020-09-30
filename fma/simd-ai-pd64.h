@@ -48,7 +48,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 
 		switch ( td->instruction ) {
 
-			case 1: // vfmadd132pd vectors of 4 64-bit doubles at cycle
+			case 1: // vfmadd132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -57,7 +57,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 2: // vfmadd132sd vectors of 4 64-bit doubles at cycle
+			case 2: // vfmadd132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -66,7 +66,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 3: // vfmaddsub132pd vectors of 4 64-bit doubles at cycle
+			case 3: // vfmaddsub132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -75,7 +75,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 4: // vfmsub132pd vectors of 4 64-bit doubles at cycle
+			case 4: // vfmsub132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -84,7 +84,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 5: // vfmsub132sd vectors of 4 64-bit doubles at cycle
+			case 5: // vfmsub132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -93,7 +93,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 6: // vfmsubadd132pd vectors of 4 64-bit doubles at cycle
+			case 6: // vfmsubadd132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -102,7 +102,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 7: // vfnmadd132pd vectors of 4 64-bit doubles at cycle
+			case 7: // vfnmadd132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -111,7 +111,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 8: // vfnmadd132sd vectors of 4 64-bit doubles at cycle
+			case 8: // vfnmadd132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -120,7 +120,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 9: // vfnmsub132pd vectors of 4 64-bit doubles at cycle
+			case 9: // vfnmsub132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );
@@ -129,7 +129,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				}
 				break;
 
-			case 10:// vfnmsub132sd vectors of 4 64-bit doubles at cycle
+			case 10:// vfnmsub132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
 					wd = _mm_load_pd( (const double *)pd64 );

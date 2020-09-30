@@ -45,10 +45,8 @@ inline void bmu_threads_init( uint16_t th_cnt, void *(*bm_thread)(void *), void 
 		td[ CPU_PC ][i].instruction = 0;
 		td[ CPU_PC ][i].thread_active = true;
 	}
-	if ( cpu_bm_thread )
-		active_threads = 2 * threads_count;
-	else
-		active_threads = threads_count;
+	if ( cpu_bm_thread ) active_threads = 2 * threads_count;
+	else active_threads = threads_count;
 	pthread_mutex_unlock( &lock );
 
 	// create threads
@@ -98,7 +96,7 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 		}
 
 		pthread_mutex_lock( &lock );
-		while ( evaluating_threads && pc_count( &pc[ DSP_PC ] ) )
+		while ( evaluating_threads || pc_count( &pc[ DSP_PC ] ) )
 			pthread_cond_wait( &stop, &lock );
 		pthread_mutex_unlock( &lock );
 
@@ -119,7 +117,7 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 			}
 
 			pthread_mutex_lock( &lock );
-			while ( evaluating_threads && pc_count( &pc[ CPU_PC ] ) )
+			while ( evaluating_threads || pc_count( &pc[ CPU_PC ] ) )
 				pthread_cond_wait( &stop, &lock );
 			pthread_mutex_unlock( &lock );
 
@@ -139,9 +137,7 @@ inline void bmu_threads_finit() {
 	// finish threads
 	pthread_mutex_lock( &lock );
 	for ( i = 0; i < threads_count; i++ ) {
-		td[ DSP_PC ][i].instruction = 0;
 		td[ DSP_PC ][i].thread_active = false;
-		td[ CPU_PC ][i].instruction = 0;
 		td[ CPU_PC ][i].thread_active = false;
 	}
 	pthread_mutex_unlock( &lock );

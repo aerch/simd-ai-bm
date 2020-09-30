@@ -2,7 +2,7 @@
 # Makefile for the Linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
 
 TARGET          = simd-ai-bm
-VERSION         = 0.9.6ai
+VERSION         = 0.9.7ai
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
@@ -20,7 +20,7 @@ PWD             := $(shell pwd)
 MAKE            = make
 
 CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
-DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
+DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=10000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
 CXXFLAGS	= -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
