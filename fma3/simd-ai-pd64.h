@@ -1,10 +1,10 @@
-#ifndef __SIMD_FMA_AI_PD64_BM_H__
-#define __SIMD_FMA_AI_PD64_BM_H__
+#ifndef __SIMD_FMA3_AI_PD64_BM_H__
+#define __SIMD_FMA3_AI_PD64_BM_H__
 
-const uint8_t fma_ai_pd64_cnt = 16;
+const uint8_t fma3_ai_pd64_cnt = 16;
 
-const char *fma_ai_pd64_instructions[ fma_ai_pd64_cnt + 1 ] = {
-	"SIMD FMA 64-bit Double-Precision Arithmetic Instructions with 128-bit & 256-bit vectors ...",
+const char *fma3_ai_pd64_instructions[ fma3_ai_pd64_cnt + 1 ] = {
+	"SIMD FMA3 64-bit Double-Precision Arithmetic Instructions with 128-bit & 256-bit vectors ...",
 	"vfmaddXpd\t_mm_fmadd_pd         ",
 	"vfmaddXsd\t_mm_fmadd_sd         ",
 	"vfmaddsubXpd\t_mm_fmaddsub_pd   ",
@@ -23,7 +23,7 @@ const char *fma_ai_pd64_instructions[ fma_ai_pd64_cnt + 1 ] = {
 	"vfnmsubXpd\t_mm256_fnmsub_pd    "
 };
 
-inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uint8_t vector_offset ) {
+inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uint8_t vector_offset ) {
 	int64_t i;
 	double *pd64_start __attribute__((aligned(32))) = pd64;
 	__m128d wd;
@@ -193,7 +193,7 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			default:
-				printf( "fma_ai_pd64_bm_thread%u havn't instruction\n", td->tid );
+				printf( "fma3_ai_pd64_bm_thread%u havn't instruction\n", td->tid );
 
 		}
 
@@ -212,10 +212,10 @@ inline void fma_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 	return;
 }
 
-void* fma_ai_pd64_bm_thread( void *arg ) {
+void* fma3_ai_pd64_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 
-	sprintf( td->name, "fma_aipd64th%u", td->tid );
+	sprintf( td->name, "fma3_aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
 	vector_capacity = 4;
@@ -224,25 +224,25 @@ void* fma_ai_pd64_bm_thread( void *arg ) {
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	fma_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, vector_capacity );
+	fma3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, vector_capacity );
 
 	if ( pd64 ) free( pd64 );
 
 	return NULL;
 }
 
-void* fma_ai_pd64_cpu_bm_thread( void *arg ) {
+void* fma3_ai_pd64_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 
-	sprintf( td->name, "fmacaipd64th%u", td->tid );
+	sprintf( td->name, "fma3caipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
 	vector_capacity = 4;
 	double pd64[ 4 ] ALIGN32 = { 8, 6, 4, 2 };
 
-	fma_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
+	fma3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
 
 	return NULL;
 }
 
-#endif // !__SIMD_FMA_AI_PD64_BM_H__
+#endif // !__SIMD_FMA3_AI_PD64_BM_H__
