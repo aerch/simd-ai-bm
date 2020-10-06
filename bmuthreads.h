@@ -85,6 +85,8 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 
 		portion = ( threads_count > 1 ? MT_BM_CYCLES_PER_TIME : ST_BM_CYCLES_PER_TIME );
 
+		printf("dsp:\tinstruction = %d\n", c);
+
 		_BMARK_ON_;
 
 		cc = cycles_count;
@@ -105,6 +107,8 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 		if ( simd_ai ) {
 
 			portion = ( threads_count > 1 ? cycles_count / threads_count : cycles_count );
+
+			printf("cpu:\tinstruction = %d\n", c);
 
 			_BMARK_ON_;
 

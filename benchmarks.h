@@ -45,9 +45,9 @@
 // single thread benchmarks execution
 inline void make_st_banchmarks() {
 
-	make_cpu_warmup();
+	// make_cpu_warmup();
 
-	make_message( _ST_BM_START_MSG_ );
+	// make_message( _ST_BM_START_MSG_ );
 
 	// // make_title( "MMX" );
 	// // bmu_threads( SINGLE_THREAD, mmx_ai_epx8_cnt, (char**)mmx_ai_epx8_instructions, &mmx_ai_epx8_bm_thread );
@@ -91,11 +91,11 @@ inline void make_st_banchmarks() {
 	// bmu_threads( SINGLE_THREAD, avx2_ai_epx32_cnt, (char**)avx2_ai_epx32_instructions, &avx2_ai_epx32_bm_thread, &avx2_ai_epx32_cpu_bm_thread );
 	// bmu_threads( SINGLE_THREAD, avx2_ai_epx64_cnt, (char**)avx2_ai_epx64_instructions, &avx2_ai_epx64_bm_thread, &avx2_ai_epx64_cpu_bm_thread );
 
-	make_title( "FMA3" );
-	bmu_threads( SINGLE_THREAD, fma3_ai_ps32_cnt, (char**)fma3_ai_ps32_instructions, &fma3_ai_ps32_bm_thread, &fma3_ai_ps32_cpu_bm_thread );
-	bmu_threads( SINGLE_THREAD, fma3_ai_pd64_cnt, (char**)fma3_ai_pd64_instructions, &fma3_ai_pd64_bm_thread, &fma3_ai_pd64_cpu_bm_thread );
+	// make_title( "FMA3" );
+	// bmu_threads( SINGLE_THREAD, fma3_ai_ps32_cnt, (char**)fma3_ai_ps32_instructions, &fma3_ai_ps32_bm_thread, &fma3_ai_ps32_cpu_bm_thread );
+	// bmu_threads( SINGLE_THREAD, fma3_ai_pd64_cnt, (char**)fma3_ai_pd64_instructions, &fma3_ai_pd64_bm_thread, &fma3_ai_pd64_cpu_bm_thread );
 
-	make_message( _ST_BM_FINAL_MSG_ );
+	// make_message( _ST_BM_FINAL_MSG_ );
 
 	return;
 }
@@ -151,7 +151,7 @@ inline void make_mt_banchmarks() {
 
 	make_title( "FMA3" );
 	bmu_threads( MULTIPLE_THREADS, fma3_ai_ps32_cnt, (char**)fma3_ai_ps32_instructions, &fma3_ai_ps32_bm_thread, &fma3_ai_ps32_cpu_bm_thread );
-	bmu_threads( MULTIPLE_THREADS, fma3_ai_pd64_cnt, (char**)fma3_ai_pd64_instructions, &fma3_ai_pd64_bm_thread, &fma3_ai_pd64_cpu_bm_thread );
+	// bmu_threads( MULTIPLE_THREADS, fma3_ai_pd64_cnt, (char**)fma3_ai_pd64_instructions, &fma3_ai_pd64_bm_thread, &fma3_ai_pd64_cpu_bm_thread );
 
 	make_message( _MT_BM_FINAL_MSG_ );
 

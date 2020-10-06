@@ -20,9 +20,9 @@ PWD             := $(shell pwd)
 MAKE            = make
 
 CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
-DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=10000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
+DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
-CXXFLAGS	= -g3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
+CXXFLAGS	= -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
 
 LIBS            = -lm -lpthread
