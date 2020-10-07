@@ -31,7 +31,7 @@ System:    Host: aerch Kernel: 4.8.0-53-generic x86_64 (64 bit gcc: 5.4.0) Conso
 Machine:   System: Gigabyte product: Z97-D3H Chassis: type: 3
            Mobo: Gigabyte model: Z97-D3H-CF v: x.x Bios: American Megatrends v: F9 date: 09/18/2015
 
-CPU:       Quad core Intel Core i7-5775C (-HT-MCP-) cache: 6144 KB bmips: 26400 
+CPU:       Quad core Intel Core i7-5775C (-HT-MCP-) cache: 6144 KB bmips: 26400
            clock speeds: max: 3700 MHz 1: 3630 MHz 2: 3699 MHz 3: 3688 MHz 4: 3628 MHz 5: 3699 MHz 6: 3695 MHz 7: 3600 MHz 8: 3691 MHz
            CPU Flags: 3dnowprefetch abm acpi adx aes aperfmperf apic arat arch_perfmon avx avx2 bmi1 bmi2 bts clflush cmov constant_tsc cx16 cx8 de ds_cpl
            dtes64 dtherm dts eagerfpu ept erms est f16c flexpriority fma fpu fsgsbase fxsr hle ht ida intel_pt invpcid lahf_lm lm mca mce mmx monitor movbe msr
@@ -190,7 +190,7 @@ AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIG
 
 FMA:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
 
-SIMD Arithmetic Instructions Single-Threaded Benchmark finished						[ SIMD-AI-ST-BM          1311 ]
+SIMD Arithmetic Instructions Single-Threaded Benchmark finished
 
 SIMD Arithmetic Instructions Multi-Threaded (128-threads) Benchmark start (measure by 50 MCycles) ...
 
@@ -343,5 +343,7 @@ AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIG
 
 FMA:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
 
-SIMD Arithmetic Instructions Multi-Threaded Benchmark finished						[ SIMD-AI-MT-BM         13558 ]
+SIMD Arithmetic Instructions Multi-Threaded Benchmark finished
 
+SIMD-AI-ST-BM        1311.0
+SIMD-AI-MT-BM       13558.0

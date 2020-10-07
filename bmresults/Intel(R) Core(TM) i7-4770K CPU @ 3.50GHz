@@ -304,7 +304,7 @@ FMA3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE
 	   vfnmaddXpd	_mm256_fnmadd_pd    	   4 values	 1.038871526718 sec	 1.04e-09 sec	 1.038872 sec	      3.85 gops	    0.000007629395 sec	    524.288 tops
 	   vfnmsubXpd	_mm256_fnmsub_pd    	   4 values	 1.035495042801 sec	 1.04e-09 sec	 1.035495 sec	      3.86 gops	    0.000007152557 sec	    559.241 tops
 
-SIMD Arithmetic Instructions Single-Thread Benchmark finished						[ SIMD-AI-ST-BM        1867.9 ]
+SIMD Arithmetic Instructions Single-Thread Benchmark finished
 
 SIMD Arithmetic Instructions Multi-Thread (32-threads) Benchmark start ...
 
@@ -548,7 +548,8 @@ FMA3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE
 	   vfnmaddXpd	_mm256_fnmadd_pd    	   4 values	 0.245567083359 sec	 2.46e-10 sec	 0.245567 sec	     16.29 gops	    0.000109672546 sec	     36.472 tops
 	   vfnmsubXpd	_mm256_fnmsub_pd    	   4 values	 0.246032476425 sec	 2.46e-10 sec	 0.246032 sec	     16.26 gops	    0.000176906586 sec	     22.611 tops
 
-SIMD Arithmetic Instructions Multi-Thread Benchmark finished						[ SIMD-AI-MT-BM        7890.3 ]
+SIMD Arithmetic Instructions Multi-Thread Benchmark finished
 
-SIMD Arithmetic Instructions Multi-Thread Benchmark rate						[ SIMD-AI-MT-RATE      ~  4.2 ]
-
+SIMD-AI-ST-BM        1867.9
+SIMD-AI-MT-BM        7890.3
+SIMD-AI-MT-RATE      ~  4.2

@@ -55,8 +55,6 @@ inline void make_inits() {
 	if ( system( _str_ ) != 0 ) perror( "error due system call 1" );
 	if ( system( "inxi -SMICfmsxxx -c 2 -t cm5" ) != 0 ) perror( "error due system call 10" );
 
-	printf( "\n" BLUE "Measure:   " OFF WHITE "by %i megacycles" OFF "\n\n", (int32_t)(cycles_count / 1e6) );
-
 	// open resulting file
 	stream = fopen( current_path, "a+" );
 	if (stream == NULL) {
@@ -64,6 +62,8 @@ inline void make_inits() {
 		exit(EXIT_FAILURE);
 	}
 
+	fprintf( stream, "Measure:   by %i megacycles\n\n", (int32_t)(cycles_count / 1e6) );
+	printf( "\n" BLUE "Measure:   " OFF WHITE "by %i megacycles" OFF "\n\n", (int32_t)(cycles_count / 1e6) );
 
 	return;
 }

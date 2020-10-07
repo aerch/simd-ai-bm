@@ -27,24 +27,24 @@ NUMA node2 CPU(s):   12-17,36-41
 NUMA node3 CPU(s):   18-23,42-47
 Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid amd_dcm aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb hw_pstate ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xgetbv1 xsaves clzero irperf xsaveerptr arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif overflow_recov succor smca
 
-System:    Host: amod2 Kernel: 5.0.0-32-generic x86_64 bits: 64 compiler: gcc v: 7.4.0 Console: N/A dm: LightDM 
-           Distro: Linux Mint 19.3 Tricia base: Ubuntu 18.04 bionic 
+System:    Host: amod2 Kernel: 5.0.0-32-generic x86_64 bits: 64 compiler: gcc v: 7.4.0 Console: N/A dm: LightDM
+           Distro: Linux Mint 19.3 Tricia base: Ubuntu 18.04 bionic
 
-Machine:   Type: Server System: GIGABYTE product: MZ31-AR0-00 v: 0100 serial: 01234567890123456789AB Chassis: type: 23 
-           v: 01234567 serial: 01234567890123456789AB 
-           Mobo: GIGABYTE model: MZ31-AR0-00 v: 01010101 serial: IG1NA300077 UEFI: GIGABYTE v: F13 date: 04/15/2019 
+Machine:   Type: Server System: GIGABYTE product: MZ31-AR0-00 v: 0100 serial: 01234567890123456789AB Chassis: type: 23
+           v: 01234567 serial: 01234567890123456789AB
+           Mobo: GIGABYTE model: MZ31-AR0-00 v: 01010101 serial: IG1NA300077 UEFI: GIGABYTE v: F13 date: 04/15/2019
 
-CPU:       Topology: 24-Core (4-Die) model: AMD EPYC 7401P bits: 64 type: MT MCP MCM arch: Zen rev: 2 L2 cache: 12.0 MiB bogomips: 192007 
-           Speed: 1203 MHz min/max: 1200/2000 MHz Core speeds (MHz): 1: 1200 2: 1199 3: 1199 4: 1198 5: 1198 6: 1197 7: 1198 8: 1213 9: 2042 10: 1216 11: 1198 
-           12: 1199 13: 1198 14: 1198 15: 1200 16: 1196 17: 1198 18: 1200 19: 1198 20: 1199 21: 1198 22: 1199 23: 1199 24: 1198 25: 1197 26: 1199 27: 1198 
-           28: 1199 29: 1198 30: 1197 31: 1199 32: 1198 33: 1197 34: 1220 35: 1199 36: 1469 37: 1221 38: 1197 39: 1198 40: 1200 41: 1199 42: 1196 43: 1197 
-           44: 1198 45: 1198 46: 1198 47: 1200 48: 1200 
-           Flags: 3dnowprefetch abm adx aes amd_dcm aperfmperf apic arat avic avx avx2 bmi1 bmi2 bpext clflush clflushopt clzero cmov cmp_legacy constant_tsc 
-           cpb cpuid cr8_legacy cx16 cx8 de decodeassists extapic extd_apicid f16c flushbyasid fma fpu fsgsbase fxsr fxsr_opt ht hw_pstate ibpb irperf lahf_lm 
-           lbrv lm mca mce misalignsse mmx mmxext monitor movbe msr mtrr mwaitx nonstop_tsc nopl npt nrip_save nx osvw overflow_recov pae pat pausefilter 
-           pclmulqdq pdpe1gb perfctr_core perfctr_llc perfctr_nb pfthreshold pge pni popcnt pse pse36 rdrand rdseed rdtscp rep_good sep sha_ni skinit smap 
-           smca smep ssbd sse sse2 sse4_1 sse4_2 sse4a ssse3 succor svm svm_lock syscall tce topoext tsc tsc_scale v_vmsave_vmload vgif vmcb_clean vme vmmcall 
-           wdt xgetbv1 xsave xsavec xsaveerptr xsaveopt xsaves 
+CPU:       Topology: 24-Core (4-Die) model: AMD EPYC 7401P bits: 64 type: MT MCP MCM arch: Zen rev: 2 L2 cache: 12.0 MiB bogomips: 192007
+           Speed: 1203 MHz min/max: 1200/2000 MHz Core speeds (MHz): 1: 1200 2: 1199 3: 1199 4: 1198 5: 1198 6: 1197 7: 1198 8: 1213 9: 2042 10: 1216 11: 1198
+           12: 1199 13: 1198 14: 1198 15: 1200 16: 1196 17: 1198 18: 1200 19: 1198 20: 1199 21: 1198 22: 1199 23: 1199 24: 1198 25: 1197 26: 1199 27: 1198
+           28: 1199 29: 1198 30: 1197 31: 1199 32: 1198 33: 1197 34: 1220 35: 1199 36: 1469 37: 1221 38: 1197 39: 1198 40: 1200 41: 1199 42: 1196 43: 1197
+           44: 1198 45: 1198 46: 1198 47: 1200 48: 1200
+           Flags: 3dnowprefetch abm adx aes amd_dcm aperfmperf apic arat avic avx avx2 bmi1 bmi2 bpext clflush clflushopt clzero cmov cmp_legacy constant_tsc
+           cpb cpuid cr8_legacy cx16 cx8 de decodeassists extapic extd_apicid f16c flushbyasid fma fpu fsgsbase fxsr fxsr_opt ht hw_pstate ibpb irperf lahf_lm
+           lbrv lm mca mce misalignsse mmx mmxext monitor movbe msr mtrr mwaitx nonstop_tsc nopl npt nrip_save nx osvw overflow_recov pae pat pausefilter
+           pclmulqdq pdpe1gb perfctr_core perfctr_llc perfctr_nb pfthreshold pge pni popcnt pse pse36 rdrand rdseed rdtscp rep_good sep sha_ni skinit smap
+           smca smep ssbd sse sse2 sse4_1 sse4_2 sse4a ssse3 succor svm svm_lock syscall tce topoext tsc tsc_scale v_vmsave_vmload vgif vmcb_clean vme vmmcall
+           wdt xgetbv1 xsave xsavec xsaveerptr xsaveopt xsaves
 
 SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by 1000 MCycles) ...
 
@@ -197,7 +197,7 @@ AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIG
 
 FMA:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
 
-SIMD Arithmetic Instructions Single-Threaded Benchmark finished						[ SIMD-AI-ST-BM           975 ]
+SIMD Arithmetic Instructions Single-Threaded Benchmark finished
 
 SIMD Arithmetic Instructions Multi-Threaded (128-threads) Benchmark start (measure by 50 MCycles) ...
 
@@ -350,5 +350,7 @@ AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIG
 
 FMA:	   ASM INSTR	INTRINSIC FUNC CALL	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	SIMD CAPACITY	OPERATING SPEED
 
-SIMD Arithmetic Instructions Multi-Threaded Benchmark finished						[ SIMD-AI-MT-BM         54082 ]
+SIMD Arithmetic Instructions Multi-Threaded Benchmark finished
 
+SIMD-AI-ST-BM         975.0
+SIMD-AI-MT-BM       54082.0
