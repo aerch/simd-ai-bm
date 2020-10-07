@@ -56,7 +56,6 @@ $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' ld  '$(TARGET)$(OFF)'\n'
 	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
-	@./results.sh
 
 simd-ai-bm.o: simd-ai-bm.c
 	@echo -en $(WHITE)' cc  '$<$(OFF)'\n'
