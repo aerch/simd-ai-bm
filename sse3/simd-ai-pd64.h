@@ -10,9 +10,9 @@ const char *sse3_ai_pd64_instructions[ sse3_ai_pd64_cnt + 1 ] = {
 	"hsubpd  \t_mm_hsub_pd()    "
 };
 
-inline void sse3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uint8_t vector_offset ) {
+inline void sse3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
 	int64_t i;
-	double *pd64_start __attribute__((aligned(32))) = pd64;
+	double *pd64_start __attribute__((aligned(16))) = pd64;
 	__m128d wd;
 	__m128d bd = _mm_set_pd( 1.11111f, 2.22222f );
 
@@ -27,7 +27,6 @@ inline void sse3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, ui
 		pthread_mutex_unlock( &lock );
 
 		pd64 = pd64_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -78,17 +77,17 @@ inline void sse3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, ui
 
 void* sse3_ai_pd64_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 2;
 
 	sprintf( td->name, "sse3_aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 2;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( double );
-	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
+	double *pd64 __attribute__((aligned(16))) = (double*)aligned_alloc( 16, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	sse3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, vector_capacity );
+	sse3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64 );
 
 	if ( pd64 ) free( pd64 );
 
@@ -97,14 +96,14 @@ void* sse3_ai_pd64_bm_thread( void *arg ) {
 
 void* sse3_ai_pd64_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "sse3caipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 2;
-	double pd64[ 2 ] ALIGN32 = { 8, 6 };
+	double pd64[ 2 ] __attribute__((aligned(16))) = { 8, 6 };
 
-	sse3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
+	sse3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64 );
 
 	return NULL;
 }

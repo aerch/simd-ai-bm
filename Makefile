@@ -2,7 +2,7 @@
 # Makefile for the Linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
 
 TARGET          = simd-ai-bm
-VERSION         = 0.9.8ai
+VERSION         = 0.9.9ai
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)

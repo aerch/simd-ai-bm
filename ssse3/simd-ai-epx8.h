@@ -9,9 +9,9 @@ const char *ssse3_ai_epx8_instructions[ ssse3_ai_epx8_cnt + 1 ] = {
 	"psignb\t_mm_sign_pi8()      "
 };
 
-inline void ssse3_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, uint8_t vector_offset ) {
+inline void ssse3_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8 ) {
 	int64_t i;
-	int8_t *si8_start __attribute__((aligned(32))) = si8;
+	int8_t *si8_start __attribute__((aligned(16))) = si8;
 	__m128i wi;
 	__m128i bi = _mm_set_epi8( 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 );
 	__m64 xi;
@@ -28,7 +28,6 @@ inline void ssse3_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, ui
 		pthread_mutex_unlock( &lock );
 
 		si8 = si8_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -72,17 +71,17 @@ inline void ssse3_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, ui
 
 void* ssse3_ai_epx8_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 16;
 
 	sprintf( td->name, "ssse3_aiep8th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 16;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( int8_t );
 	int8_t *si8 __attribute__((aligned(16))) = (int8_t*)aligned_alloc( 16, alloc_size );
 	if ( !si8 ) perror( "aligned_alloc() error" );
 
-	ssse3_ai_epx8_bm( td, &pc[ DSP_PC ], si8, vector_capacity );
+	ssse3_ai_epx8_bm( td, &pc[ DSP_PC ], si8 );
 
 	if ( si8 ) free( si8 );
 
@@ -91,14 +90,14 @@ void* ssse3_ai_epx8_bm_thread( void *arg ) {
 
 void* ssse3_ai_epx8_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "ssse3caiep8th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 16;
-	int8_t si8[ 16 ] ALIGN32 = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int8_t si8[ 16 ] __attribute__((aligned(16))) = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	ssse3_ai_epx8_bm( td, &pc[ CPU_PC ], si8, 0 );
+	ssse3_ai_epx8_bm( td, &pc[ CPU_PC ], si8 );
 
 	return NULL;
 }

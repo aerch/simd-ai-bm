@@ -9,48 +9,41 @@ const char *sse_ai_epx16_instructions[ sse_ai_epx16_cnt + 1 ] = {
 	"pmulhuw\t_mm_mulhi_pu16()  "
 };
 
-void* sse_ai_epx16_bm_thread( void *arg ) {
-	thread_data_t *td = (thread_data_t*)arg;
-	uint64_t i, _vi_;
-	char name[ 25 ];
-
-	sprintf( name, "sse_aiep16th%u", td->tid );
-	prctl( PR_SET_NAME, name );
-
-	vector_capacity = 4;
-	uint64_t alloc_length = MT_BM_CYCLES_PER_TIME * vector_capacity;
-	uint64_t alloc_size = alloc_length * sizeof( int16_t );
-	int16_t *si16 __attribute__((aligned(16))) = (int16_t*)aligned_alloc( 16, alloc_size );
-	if ( !si16 ) perror( "aligned_alloc() error" );
-
-	ci = _mm_set_si64_epi16( 4, 3, 2, 1 );
-
-	pthread_mutex_lock( &lock );
-	while ( (td->instruction == 0) && td->thread_active )
-		pthread_cond_wait( &start, &lock );
-	pthread_mutex_unlock( &lock );
+inline void sse_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16 ) {
+	int64_t i;
+	int16_t *si16_start __attribute__((aligned(16))) = si16;
+	__m64 xi;
+	__m64 ci = _mm_set_si64_epi16( 4, 3, 2, 1 );
 
 	while ( td->thread_active ) {
 
-		pc_get( td->cycles_count );
+		pc_get( pc, td->cycles_count );
 
 		if ( !td->thread_active ) break;
+
+		pthread_mutex_lock( &lock );
+		evaluating_threads++;
+		pthread_mutex_unlock( &lock );
+
+		si16 = si16_start;
 
 		switch ( td->instruction ) {
 
 			case 1: // pmulhuw vectors of 4 16-bit signed integers at cycle
-				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					xi = _mm_load_si64( (const __m64 *)&si16[_vi_] );
+				vector_capacity = 4;
+				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)si16 );
 					xi = _m_pmulhuw( xi, ci );
-					_mm_store_si64( (__m64 *)&si16[_vi_], xi );
+					_mm_store_si64( (__m64 *)si16, xi );
 				}
 				break;
 
 			case 2: // mulhi vectors of 4 16-bit signed integers at cycle
-				for ( i = 0, _vi_ = 0; i < td->cycles_count; i++, _vi_ += vector_capacity ) {
-					xi = _mm_load_si64( (const __m64 *)&si16[_vi_] );
+				vector_capacity = 4;
+				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)si16 );
 					xi = _mm_mulhi_pu16( xi, ci );
-					_mm_store_si64( (__m64 *)&si16[_vi_], xi );
+					_mm_store_si64( (__m64 *)si16, xi );
 				}
 				break;
 
@@ -60,6 +53,7 @@ void* sse_ai_epx16_bm_thread( void *arg ) {
 		}
 
 		pthread_mutex_lock( &lock );
+		evaluating_threads--;
 		pthread_cond_signal( &stop );
 		pthread_mutex_unlock( &lock );
 
@@ -70,8 +64,38 @@ void* sse_ai_epx16_bm_thread( void *arg ) {
 	pthread_cond_signal( &finish );
 	pthread_mutex_unlock( &lock );
 
-	if ( si16 )
-		free( si16 );
+	return;
+}
+
+void* sse_ai_epx16_bm_thread( void *arg ) {
+	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 4;
+
+	sprintf( td->name, "sse_aiep16th%u", td->tid );
+	prctl( PR_SET_NAME, td->name );
+
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
+	uint64_t alloc_size = alloc_length * sizeof( int16_t );
+	int16_t *si16 __attribute__((aligned(16))) = (int16_t*)aligned_alloc( 16, alloc_size );
+	if ( !si16 ) perror( "aligned_alloc() error" );
+
+	sse_ai_epx16_bm( td, &pc[ DSP_PC ], si16 );
+
+	if ( si16 ) free( si16 );
+
+	return NULL;
+}
+
+void* sse_ai_epx16_cpu_bm_thread( void *arg ) {
+	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
+
+	sprintf( td->name, "ssecaiep16th%u", td->tid );
+	prctl( PR_SET_NAME, td->name );
+
+	int16_t si16[ 4 ] __attribute__((aligned(16))) = { 8, 6, 4, 2 };
+
+	sse_ai_epx16_bm( td, &pc[ CPU_PC ], si16 );
 
 	return NULL;
 }

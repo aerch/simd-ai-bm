@@ -10,9 +10,9 @@ const char *sse3_ai_ps32_instructions[ sse3_ai_ps32_cnt + 1 ] = {
 	"hsubps  \t_mm_hsub_ps()    "
 };
 
-inline void sse3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uint8_t vector_offset ) {
+inline void sse3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32 ) {
 	int64_t i;
-	float *ps32_start __attribute__((aligned(32))) = ps32;
+	float *ps32_start __attribute__((aligned(16))) = ps32;
 	__m128 ws;
 	__m128 bs = _mm_set_ps( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
@@ -27,11 +27,11 @@ inline void sse3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 		pthread_mutex_unlock( &lock );
 
 		ps32 = ps32_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 32-bit singles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
 					ws = _mm_load_ps( (const float *)ps32 );
 					ws = _mm_addsub_ps( ws, bs );
@@ -40,6 +40,7 @@ inline void sse3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 				break;
 
 			case 2: // hadd vectors of 4 32-bit singles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
 					ws = _mm_load_ps( (const float *)ps32 );
 					ws = _mm_hadd_ps( ws, bs );
@@ -48,6 +49,7 @@ inline void sse3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 				break;
 
 			case 3: // hsub vectors of 4 32-bit singles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
 					ws = _mm_load_ps( (const float *)ps32 );
 					ws = _mm_hsub_ps( ws, bs );
@@ -77,17 +79,17 @@ inline void sse3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 
 void* sse3_ai_ps32_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 4;
 
 	sprintf( td->name, "sse3_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 4;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( float );
-	float *ps32 __attribute__((aligned(32))) = (float*)aligned_alloc( 32, alloc_size );
+	float *ps32 __attribute__((aligned(16))) = (float*)aligned_alloc( 16, alloc_size );
 	if ( !ps32 ) perror( "aligned_alloc() error" );
 
-	sse3_ai_ps32_bm( td, &pc[ DSP_PC ], ps32, vector_capacity );
+	sse3_ai_ps32_bm( td, &pc[ DSP_PC ], ps32 );
 
 	if ( ps32 ) free( ps32 );
 
@@ -96,14 +98,14 @@ void* sse3_ai_ps32_bm_thread( void *arg ) {
 
 void* sse3_ai_ps32_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "sse3caips32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 4;
-	float ps32[ 4 ] ALIGN32 = { 8, 7, 6, 5 };
+	float ps32[ 4 ] __attribute__((aligned(16))) = { 8, 7, 6, 5 };
 
-	sse3_ai_ps32_bm( td, &pc[ CPU_PC ], ps32, 0 );
+	sse3_ai_ps32_bm( td, &pc[ CPU_PC ], ps32 );
 
 	return NULL;
 }

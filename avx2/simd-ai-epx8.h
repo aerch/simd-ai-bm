@@ -15,7 +15,7 @@ const char *avx2_ai_epx8_instructions[ avx2_ai_epx8_cnt + 1 ] = {
 	"vpsadbw\t_mm256_sad_epu8()"
 };
 
-inline void avx2_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, uint8_t vector_offset ) {
+inline void avx2_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8 ) {
 	int64_t i;
 	int8_t *si8_start __attribute__((aligned(32))) = si8;
 	__m256i vi;
@@ -32,7 +32,6 @@ inline void avx2_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, uin
 		pthread_mutex_unlock( &lock );
 
 		si8 = si8_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -122,17 +121,17 @@ inline void avx2_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, uin
 
 void* avx2_ai_epx8_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 32;
 
 	sprintf( td->name, "avx2_aiep8th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 32;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( int8_t );
 	int8_t *si8 __attribute__((aligned(32))) = (int8_t*)aligned_alloc( 32, alloc_size );
 	if ( !si8 ) perror( "aligned_alloc() error" );
 
-	avx2_ai_epx8_bm( td, &pc[ DSP_PC ], si8, vector_capacity );
+	avx2_ai_epx8_bm( td, &pc[ DSP_PC ], si8 );
 
 	if ( si8 ) free( si8 );
 
@@ -141,14 +140,14 @@ void* avx2_ai_epx8_bm_thread( void *arg ) {
 
 void* avx2_ai_epx8_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "avx2caiep8th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 32;
-	int8_t si8[ 32 ] ALIGN32 = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int8_t si8[ 32 ] __attribute__((aligned(32))) = { 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1, 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	avx2_ai_epx8_bm( td, &pc[ CPU_PC ], si8, 0 );
+	avx2_ai_epx8_bm( td, &pc[ CPU_PC ], si8 );
 
 	return NULL;
 }

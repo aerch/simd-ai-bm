@@ -4,9 +4,6 @@
 #define DSP_PC			0
 #define CPU_PC			1
 
-#define ALIGN16 __attribute__((aligned(16)))		// to simplify the alignment declaration on variables on a 16-byte boundary
-#define ALIGN32 __attribute__((aligned(32)))		// to simplify the alignment declaration on variables on a 32-byte boundary
-
 #define MAX_THR_CNT		128			// maximum value is 8192 threads
 
 #define ST_BM_CYCLES_PER_TIME	8192			// 1024 - ST

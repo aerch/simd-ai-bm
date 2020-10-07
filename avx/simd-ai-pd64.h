@@ -14,7 +14,7 @@ const char *avx_ai_pd64_instructions[ avx_ai_pd64_cnt + 1 ] = {
 	"vsubpd\t_mm256_sub_pd()      "
 };
 
-inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uint8_t vector_offset ) {
+inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
 	int64_t i;
 	double *pd64_start __attribute__((aligned(32))) = pd64;
 	__m256d vd;
@@ -31,11 +31,11 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 		pthread_mutex_unlock( &lock );
 
 		pd64 = pd64_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_add_pd( vd, ad );
@@ -44,6 +44,7 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			case 2: // addsub vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_addsub_pd( vd, ad );
@@ -52,6 +53,7 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			case 3: // div vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_div_pd( vd, ad );
@@ -60,6 +62,7 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			case 4: // hadd vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_hadd_pd( vd, ad );
@@ -68,6 +71,7 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			case 5: // hsub vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_hsub_pd( vd, ad );
@@ -76,6 +80,7 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			case 6: // mul vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_mul_pd( vd, ad );
@@ -84,6 +89,7 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 				break;
 
 			case 7: // sub vectors of 4 64-bit doubles at cycle
+				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
 					vd = _mm256_load_pd( (const double *)pd64 );
 					vd = _mm256_sub_pd( vd, ad );
@@ -113,17 +119,17 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uin
 
 void* avx_ai_pd64_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 4;
 
 	sprintf( td->name, "avx_aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 4;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( double );
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	avx_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, vector_capacity );
+	avx_ai_pd64_bm( td, &pc[ DSP_PC ], pd64 );
 
 	if ( pd64 ) free( pd64 );
 
@@ -132,14 +138,14 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 
 void* avx_ai_pd64_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "avxcaipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 4;
-	double pd64[ 4 ] ALIGN32 = { 8, 6, 4, 2 };
+	double pd64[ 4 ] __attribute__((aligned(32))) = { 8, 6, 4, 2 };
 
-	avx_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
+	avx_ai_pd64_bm( td, &pc[ CPU_PC ], pd64 );
 
 	return NULL;
 }

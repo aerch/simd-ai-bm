@@ -21,9 +21,9 @@ const char *ssse3_ai_epx16_instructions[ ssse3_ai_epx16_cnt + 1 ] = {
 	"psignw\t_mm_sign_pi16()       "
 };
 
-inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16, uint8_t vector_offset ) {
+inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16 ) {
 	int64_t i;
-	int16_t *si16_start __attribute__((aligned(32))) = si16;
+	int16_t *si16_start __attribute__((aligned(16))) = si16;
 	__m128i wi;
 	__m128i bi = _mm_set_epi16( 8, 7, 6, 5, 4, 3, 2, 1 );
 	__m64 xi;
@@ -40,7 +40,6 @@ inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16,
 		pthread_mutex_unlock( &lock );
 
 		si16 = si16_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -192,17 +191,17 @@ inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16,
 
 void* ssse3_ai_epx16_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 8;
 
 	sprintf( td->name, "ssse3_aiep16th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 8;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( int16_t );
 	int16_t *si16 __attribute__((aligned(16))) = (int16_t*)aligned_alloc( 16, alloc_size );
 	if ( !si16 ) perror( "aligned_alloc() error" );
 
-	ssse3_ai_epx16_bm( td, &pc[ DSP_PC ], si16, vector_capacity );
+	ssse3_ai_epx16_bm( td, &pc[ DSP_PC ], si16 );
 
 	if ( si16 ) free( si16 );
 
@@ -211,14 +210,14 @@ void* ssse3_ai_epx16_bm_thread( void *arg ) {
 
 void* ssse3_ai_epx16_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "ssse3caiep16th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 8;
-	int16_t si16[ 8 ] ALIGN32 = { 8, 7, 6, 5, 4, 3, 2, 1 };
+	int16_t si16[ 8 ] __attribute__((aligned(16))) = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	ssse3_ai_epx16_bm( td, &pc[ CPU_PC ], si16, 0 );
+	ssse3_ai_epx16_bm( td, &pc[ CPU_PC ], si16 );
 
 	return NULL;
 }

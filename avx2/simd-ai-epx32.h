@@ -15,7 +15,7 @@ const char *avx2_ai_epx32_instructions[ avx2_ai_epx32_cnt + 1 ] = {
 	"vpsignd\t_mm256_sign_epi32()"
 };
 
-inline void avx2_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32, uint8_t vector_offset ) {
+inline void avx2_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32 ) {
 	int64_t i;
 	int32_t *si32_start __attribute__((aligned(32))) = si32;
 	__m256i vi;
@@ -32,7 +32,6 @@ inline void avx2_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32, 
 		pthread_mutex_unlock( &lock );
 
 		si32 = si32_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -122,17 +121,17 @@ inline void avx2_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32, 
 
 void* avx2_ai_epx32_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 8;
 
 	sprintf( td->name, "avx2_aiep32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 8;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( int32_t );
 	int32_t *si32 __attribute__((aligned(32))) = (int32_t*)aligned_alloc( 32, alloc_size );
 	if ( !si32 ) perror( "aligned_alloc() error" );
 
-	avx2_ai_epx32_bm( td, &pc[ DSP_PC ], si32, vector_capacity );
+	avx2_ai_epx32_bm( td, &pc[ DSP_PC ], si32 );
 
 	if ( si32 ) free( si32 );
 
@@ -141,14 +140,14 @@ void* avx2_ai_epx32_bm_thread( void *arg ) {
 
 void* avx2_ai_epx32_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "avx2caiep32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 8;
-	int32_t si32[ 8 ] ALIGN32 = { 8, 7, 6, 5, 4, 3, 2, 1 };
+	int32_t si32[ 8 ] __attribute__((aligned(32))) = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	avx2_ai_epx32_bm( td, &pc[ CPU_PC ], si32, 0 );
+	avx2_ai_epx32_bm( td, &pc[ CPU_PC ], si32 );
 
 	return NULL;
 }

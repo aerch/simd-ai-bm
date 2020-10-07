@@ -23,7 +23,7 @@ const char *fma3_ai_ps32_instructions[ fma3_ai_ps32_cnt + 1 ] = {
 	"vfnmsubXps\t_mm256_fnmsub_ps    "
 };
 
-inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uint8_t vector_offset ) {
+inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32 ) {
 	int64_t i;
 	float *ps32_start __attribute__((aligned(32))) = ps32;
 	__m128 ws;
@@ -33,12 +33,9 @@ inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 	__m256 as = _mm256_set_ps( 1.11111f, 2.22222f, 3.33333f, 4.44444f, 5.55555f, 6.66666f, 7.77777f, 8.88888f );
 	__m256 ys = _mm256_set_ps( 5.55555f, 6.66666f, 7.77777f, 8.88888f, 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
-	usleep( 1 );
-
 	while ( td->thread_active ) {
 
 		pc_get( pc, td->cycles_count );
-		// printf( "td->cycles_count = %lu   vector_offset = %d\n", td->cycles_count, vector_offset );
 
 		if ( !td->thread_active ) break;
 
@@ -47,7 +44,6 @@ inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 		pthread_mutex_unlock( &lock );
 
 		ps32 = ps32_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -170,7 +166,6 @@ inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 
 			case 13:// vfmsub132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				// printf("case 13:\tvector_capacity = %d\tcycles_count = %lu\tvector_offset = %d\n", vector_capacity, td->cycles_count, td->vector_offset);
 				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
 					vs = _mm256_load_ps( (const float *)ps32 );
 					vs = _mm256_fmsub_ps( vs, as, ys );
@@ -228,20 +223,17 @@ inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, uin
 
 void* fma3_ai_ps32_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 8;
 
 	sprintf( td->name, "fma3_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 8;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
-	printf("alloc_length = %lu\n",alloc_length);
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( float );
-	printf("alloc_size = %lu\n",alloc_size);
 	float *ps32 __attribute__((aligned(32))) = (float*)aligned_alloc( 32, alloc_size );
 	if ( !ps32 ) perror( "aligned_alloc() error" );
-	printf("%s\tps32 = %p\tvector_capacity = %d\n", td->name, ps32, vector_capacity);
 
-	fma3_ai_ps32_bm( td, &pc[ DSP_PC ], ps32, vector_capacity );
+	fma3_ai_ps32_bm( td, &pc[ DSP_PC ], ps32 );
 
 	if ( ps32 ) free( ps32 );
 
@@ -250,14 +242,14 @@ void* fma3_ai_ps32_bm_thread( void *arg ) {
 
 void* fma3_ai_ps32_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "fma3caips32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 8;
-	float ps32[ 8 ] ALIGN32 = { 8, 7, 6, 5, 4, 3, 2, 1 };
+	float ps32[ 8 ] __attribute__((aligned(32))) = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	fma3_ai_ps32_bm( td, &pc[ CPU_PC ], ps32, 0 );
+	fma3_ai_ps32_bm( td, &pc[ CPU_PC ], ps32 );
 
 	return NULL;
 }

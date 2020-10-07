@@ -23,7 +23,7 @@ const char *fma3_ai_pd64_instructions[ fma3_ai_pd64_cnt + 1 ] = {
 	"vfnmsubXpd\t_mm256_fnmsub_pd    "
 };
 
-inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, uint8_t vector_offset ) {
+inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
 	int64_t i;
 	double *pd64_start __attribute__((aligned(32))) = pd64;
 	__m128d wd;
@@ -44,7 +44,6 @@ inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, ui
 		pthread_mutex_unlock( &lock );
 
 		pd64 = pd64_start;
-		td->vector_offset = vector_offset;
 
 		switch ( td->instruction ) {
 
@@ -214,17 +213,17 @@ inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, ui
 
 void* fma3_ai_pd64_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 4;
 
 	sprintf( td->name, "fma3_aipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 4;
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * vector_capacity;
+	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( double );
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	fma3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, vector_capacity );
+	fma3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64 );
 
 	if ( pd64 ) free( pd64 );
 
@@ -233,14 +232,14 @@ void* fma3_ai_pd64_bm_thread( void *arg ) {
 
 void* fma3_ai_pd64_cpu_bm_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
+	td->vector_offset = 0;
 
 	sprintf( td->name, "fma3caipd64th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	vector_capacity = 4;
-	double pd64[ 4 ] ALIGN32 = { 8, 6, 4, 2 };
+	double pd64[ 4 ] __attribute__((aligned(32))) = { 8, 6, 4, 2 };
 
-	fma3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
+	fma3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64 );
 
 	return NULL;
 }
