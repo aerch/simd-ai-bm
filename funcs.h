@@ -22,9 +22,4 @@ inline __m64 _mm_set_si64_epi32( int32_t v0, int32_t v1 ) {
 	return tmp;
 }
 
-// inline void _mm_store_si64( __m64 *d, const __m64 v ) {
-// 	memcpy( d, &v, sizeof(__m64) );
-// 	return;
-// }
-
 #endif // !__FUNCTIONS_H__
