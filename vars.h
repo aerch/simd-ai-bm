@@ -2,14 +2,19 @@
 #define __VARS_H__
 
 typedef struct thread_data {
+
+	int32_t		vector_offset;
+	int64_t		cycles_count;
+	uint8_t		instruction;
+	bool		thread_active;
+
 	uint16_t	tid;
+
 	pthread_t	th;
 	pthread_t	cpu_th;
-	uint8_t		instruction;
-	uint8_t		vector_offset;
-	int64_t		cycles_count;
-	bool		thread_active;
+
 	char		name[ 25 ];
+
 } thread_data_t;
 
 int32_t		result;
@@ -40,7 +45,6 @@ pthread_cond_t	stop;
 pthread_cond_t	finish;
 
 thread_data_t	td[ 2 ][ MAX_THR_CNT ];
-
 pc_data_t	pc[ 2 ];
 
 #endif // !__VARS_H__

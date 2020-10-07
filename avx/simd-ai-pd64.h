@@ -14,13 +14,15 @@ const char *avx_ai_pd64_instructions[ avx_ai_pd64_cnt + 1 ] = {
 	"vsubpd\t_mm256_sub_pd()      "
 };
 
-inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
+inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, int32_t vector_offset ) {
 	int64_t i;
-	double *pd64_start __attribute__((aligned(32))) = pd64;
+	double *p __attribute__((aligned(32)));
 	__m256d vd;
 	__m256d ad = _mm256_set_pd( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
 	while ( td->thread_active ) {
+
+		p = pd64;
 
 		pc_get( pc, td->cycles_count );
 
@@ -30,70 +32,68 @@ inline void avx_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		pd64 = pd64_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_add_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 2: // addsub vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_addsub_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 3: // div vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_div_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 4: // hadd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_hadd_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 5: // hsub vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_hsub_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 6: // mul vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_mul_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 7: // sub vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset ) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_sub_pd( vd, ad );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
@@ -129,7 +129,7 @@ void* avx_ai_pd64_bm_thread( void *arg ) {
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	avx_ai_pd64_bm( td, &pc[ DSP_PC ], pd64 );
+	avx_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, 4 );
 
 	if ( pd64 ) free( pd64 );
 
@@ -145,7 +145,7 @@ void* avx_ai_pd64_cpu_bm_thread( void *arg ) {
 
 	double pd64[ 4 ] __attribute__((aligned(32))) = { 8, 6, 4, 2 };
 
-	avx_ai_pd64_bm( td, &pc[ CPU_PC ], pd64 );
+	avx_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
 
 	return NULL;
 }

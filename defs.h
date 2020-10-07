@@ -4,21 +4,21 @@
 #define DSP_PC			0
 #define CPU_PC			1
 
-#define MAX_THR_CNT		128			// maximum value is 8192 threads
+#define MAX_THR_CNT		128				// maximum value is 8192 threads
 
-#define ST_BM_CYCLES_PER_TIME	8192			// 1024 - ST
-#define MT_BM_CYCLES_PER_TIME	2048			// 2048 - MT
+#define ST_BM_CYCLES_PER_TIME	8192				// 8192 - ST
+#define MT_BM_CYCLES_PER_TIME	4096				// 4096 - MT
 
 #define SINGLE_THREAD		1
 
 #ifdef THREADSCOUNT
-#define MULTIPLE_THREADS	8 * THREADSCOUNT	// 2 - 8192
+#define MULTIPLE_THREADS	4 * THREADSCOUNT		// 2 - 8192
 #else
 #define MULTIPLE_THREADS	MAX_THR_CNT
 #endif
 
 #ifdef THREADSCOUNT
-#define CYCLES_COUNT		CYCLESCOUNT		// 1,000,000 - 10,000,000,000
+#define CYCLES_COUNT		CYCLESCOUNT			// 1,000,000 - 10,000,000,000
 #else
 #define CYCLES_COUNT		1000000000
 #endif

@@ -45,7 +45,7 @@ inline void make_inits() {
 	printf( BLUE "Saving to:" OFF WHITE " %s" OFF "\n\n", current_path );
 
 	available_processors = get_nprocs();
-	printf( BLUE "Threads:   " OFF WHITE "This system has " BLUE "%d" OFF WHITE " processors configured and " BLUE "%d" OFF WHITE " processors available" OFF "\n\n", get_nprocs_conf(), available_processors );
+	printf( BLUE "Threads:   " OFF WHITE "This system has got " BLUE "%d" OFF WHITE " processors configured and " BLUE "%d" OFF WHITE " processors available" OFF "\n\n", get_nprocs_conf(), available_processors );
 
 	// writing machine config and cpu info to resulting file
 	sprintf( _str_, "lscpu > \"%s\"; echo '' >> \"%s\"", current_path, current_path );
@@ -55,7 +55,7 @@ inline void make_inits() {
 	if ( system( _str_ ) != 0 ) perror( "error due system call 1" );
 	if ( system( "inxi -SMICfmsxxx -c 2 -t cm5" ) != 0 ) perror( "error due system call 10" );
 
-	printf("\n");
+	printf( "\n" BLUE "Measure:   " OFF WHITE "by %i megacycles" OFF "\n\n", (int32_t)(cycles_count / 1e6) );
 
 	// open resulting file
 	stream = fopen( current_path, "a+" );
@@ -64,14 +64,14 @@ inline void make_inits() {
 		exit(EXIT_FAILURE);
 	}
 
+
 	return;
 }
 
 inline void make_finits() {
-	simd_ai_mt_bm_rate = simd_ai_mt_bm / simd_ai_st_bm;
 
-	fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded Benchmark rate\t\t\t\t\t\t\t\t      [ %5.2lf ]\n\n", simd_ai_mt_bm_rate );
-	printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded Benchmark rate\t\t\t\t\t\t\t\t      [" WHITE " %5.2lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm_rate );
+	// print out final multi-threading rate
+	make_finit_title();
 
 	// close resulting file
 	fclose(stream);

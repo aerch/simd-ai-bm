@@ -13,29 +13,27 @@ inline void make_message( uint8_t id ) {
 
 		case _ST_BM_START_MSG_:
 			total_tps = 0.0;
-			cycles_count = CYCLES_COUNT / available_processors;
-			fprintf( stream, "SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by %i MCycles) ...\n", (int32_t)(cycles_count/1e6) );
+			fprintf( stream, "SIMD Arithmetic Instructions Single-Thread Benchmark start ...\n" );
 
-			printf( BLUE "SIMD Arithmetic Instructions Single-Threaded Benchmark start (measure by %i MCycles) ..." OFF "\n", (int32_t)(cycles_count/1e6) );
+			printf( BLUE "SIMD Arithmetic Instructions Single-Thread Benchmark start ..." OFF "\n" );
 			break;
 
 		case _ST_BM_FINAL_MSG_:
 			simd_ai_st_bm = total_tps;
-			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-ST-BM      %8.0lf ]\n\n", simd_ai_st_bm );
-			printf( BLUE "\nSIMD Arithmetic Instructions Single-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-ST-BM      %8.0lf " OFF BLUE "]" OFF "\n\n", simd_ai_st_bm );
+			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Thread Benchmark finished\t\t\t\t\t\t[ SIMD-AI-ST-BM     %9.1lf ]\n\n", simd_ai_st_bm );
+			printf( BLUE "\nSIMD Arithmetic Instructions Single-Thread Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-ST-BM     %9.1lf " OFF BLUE "]" OFF "\n\n", simd_ai_st_bm );
 			break;
 
 		case _MT_BM_START_MSG_:
 			total_tps = 0.0;
-			cycles_count = CYCLES_COUNT;
-			fprintf( stream, "SIMD Arithmetic Instructions Multi-Threaded (%d-threads) Benchmark start (measure by %i MCycles) ...\n", MULTIPLE_THREADS, (int32_t)(cycles_count/1e6) );
-			printf( BLUE "SIMD Arithmetic Instructions Multi-Threaded (%d-threads) Benchmark start (measure by %i MCycles) ..." OFF "\n", MULTIPLE_THREADS, (int32_t)(cycles_count/1e6) );
+			fprintf( stream, "SIMD Arithmetic Instructions Multi-Thread (%d-threads) Benchmark start ...\n", MULTIPLE_THREADS );
+			printf( BLUE "SIMD Arithmetic Instructions Multi-Thread (%d-threads) Benchmark start ..." OFF "\n", MULTIPLE_THREADS );
 			break;
 
 		case _MT_BM_FINAL_MSG_:
 			simd_ai_mt_bm = total_tps;
-			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[ SIMD-AI-MT-BM      %8.0lf ]\n\n", simd_ai_mt_bm );
-			printf( BLUE "\nSIMD Arithmetic Instructions Multi-Threaded Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-BM      %8.0lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm );
+			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Thread Benchmark finished\t\t\t\t\t\t[ SIMD-AI-MT-BM     %9.1lf ]\n\n", simd_ai_mt_bm );
+			printf( BLUE "\nSIMD Arithmetic Instructions Multi-Thread Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-BM     %9.1lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm );
 			break;
 
 		default:
@@ -47,10 +45,15 @@ inline void make_message( uint8_t id ) {
 }
 
 inline void make_title( const char *title ) {
-
 	fprintf( stream, "\n%s:\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\t   TOTAL CPU EVAL TIME\t  PURE CPU SPEED\n", title );
 	printf( BLUE "\n%s:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\t   TOTAL CPU EVAL TIME\t  PURE CPU SPEED\n" OFF, title );
+	return;
+}
 
+inline void make_finit_title() {
+	simd_ai_mt_bm_rate = simd_ai_mt_bm / simd_ai_st_bm;
+	fprintf( stream, "SIMD Arithmetic Instructions Multi-Thread Benchmark rate\t\t\t\t\t\t[ SIMD-AI-MT-RATE      ~%5.1lf ]\n\n", simd_ai_mt_bm_rate );
+	printf( BLUE "SIMD Arithmetic Instructions Multi-Thread Benchmark rate\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-RATE      ~%5.1lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm_rate );
 	return;
 }
 
@@ -66,16 +69,16 @@ inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count,
 	const double gigacycle = 1.0e+9;
 	double time_per_cycle = total_time / (double)cycles_count;
 	double time_per_gigacycle = time_per_cycle * gigacycle;
-	double transactions_per_second = (double)vecsz / time_per_gigacycle;
+	double operations_per_second = (double)vecsz / time_per_gigacycle;
 
-	total_tps += transactions_per_second;
+	total_tps += operations_per_second;
 
-	const double teracycle = 1.0e+9;
-	double time_per_cpu_teracycle = cpu_time * teracycle / (double)cycles_count;
-	double cpu_transactions_per_second = (double)vecsz / time_per_cpu_teracycle;
+	// const double teracycle = 1.0e+12;
+	double time_per_cpu_gigacycle = cpu_time * gigacycle / (double)cycles_count;
+	double cpu_operations_per_second = (double)vecsz / time_per_cpu_gigacycle;
 
-	fprintf( stream, "\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.3lf gops\t   %15.12lf sec\t%11.3lf gops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, transactions_per_second, cpu_time, cpu_transactions_per_second );
-	printf("\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.3lf gops\t   %15.12lf sec\t%11.3lf gops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, transactions_per_second, cpu_time, cpu_transactions_per_second );
+	fprintf( stream, "\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.2lf gops\t   %15.12lf sec\t%11.2lf gops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, operations_per_second, cpu_time, cpu_operations_per_second );
+	printf("\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.2lf gops\t   %15.12lf sec\t%11.2lf gops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, operations_per_second, cpu_time, cpu_operations_per_second );
 
 	return;
 }

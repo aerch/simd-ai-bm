@@ -9,13 +9,15 @@ const char *sse_ai_epx16_instructions[ sse_ai_epx16_cnt + 1 ] = {
 	"pmulhuw\t_mm_mulhi_pu16()  "
 };
 
-inline void sse_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16 ) {
+inline void sse_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16, int32_t vector_offset ) {
 	int64_t i;
-	int16_t *si16_start __attribute__((aligned(16))) = si16;
+	int16_t *p __attribute__((aligned(16)));
 	__m64 xi;
 	__m64 ci = _mm_set_si64_epi16( 4, 3, 2, 1 );
 
 	while ( td->thread_active ) {
+
+		p = si16;
 
 		pc_get( pc, td->cycles_count );
 
@@ -25,25 +27,23 @@ inline void sse_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16 ) 
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		si16 = si16_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // pmulhuw vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _m_pmulhuw( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 2: // mulhi vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_mulhi_pu16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
@@ -79,7 +79,7 @@ void* sse_ai_epx16_bm_thread( void *arg ) {
 	int16_t *si16 __attribute__((aligned(16))) = (int16_t*)aligned_alloc( 16, alloc_size );
 	if ( !si16 ) perror( "aligned_alloc() error" );
 
-	sse_ai_epx16_bm( td, &pc[ DSP_PC ], si16 );
+	sse_ai_epx16_bm( td, &pc[ DSP_PC ], si16, 4 );
 
 	if ( si16 ) free( si16 );
 
@@ -95,7 +95,7 @@ void* sse_ai_epx16_cpu_bm_thread( void *arg ) {
 
 	int16_t si16[ 4 ] __attribute__((aligned(16))) = { 8, 6, 4, 2 };
 
-	sse_ai_epx16_bm( td, &pc[ CPU_PC ], si16 );
+	sse_ai_epx16_bm( td, &pc[ CPU_PC ], si16, 0 );
 
 	return NULL;
 }

@@ -9,13 +9,15 @@ const char *sse_ai_epx8_instructions[ sse_ai_epx8_cnt + 1 ] = {
 	"psadbw\t_mm_sad_pu8()      "
 };
 
-inline void sse_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8 ) {
+inline void sse_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, int32_t vector_offset ) {
 	int64_t i;
-	int8_t *si8_start __attribute__((aligned(16))) = si8;
+	int8_t *p __attribute__((aligned(16)));
 	__m64 xi;
 	__m64 ci = _mm_set_si64_epi8( 8, 7, 6, 5, 4, 3, 2, 1 );
 
 	while ( td->thread_active ) {
+
+		p = si8;
 
 		pc_get( pc, td->cycles_count );
 
@@ -25,25 +27,23 @@ inline void sse_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8 ) {
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		si8 = si8_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si8 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si8 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _m_psadbw( xi, ci );
-					_mm_store_si64( (__m64 *)si8, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 2: // adds vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si8 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si8 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_sad_pu8( xi, ci );
-					_mm_store_si64( (__m64 *)si8, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
@@ -79,7 +79,7 @@ void* sse_ai_epx8_bm_thread( void *arg ) {
 	int8_t *si8 __attribute__((aligned(16))) = (int8_t*)aligned_alloc( 16, alloc_size );
 	if ( !si8 ) perror( "aligned_alloc() error" );
 
-	sse_ai_epx8_bm( td, &pc[ DSP_PC ], si8 );
+	sse_ai_epx8_bm( td, &pc[ DSP_PC ], si8, 8 );
 
 	if ( si8 ) free( si8 );
 
@@ -95,7 +95,7 @@ void* sse_ai_epx8_cpu_bm_thread( void *arg ) {
 
 	int8_t si8[ 8 ] __attribute__((aligned(16))) = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	sse_ai_epx8_bm( td, &pc[ CPU_PC ], si8 );
+	sse_ai_epx8_bm( td, &pc[ CPU_PC ], si8, 0 );
 
 	return NULL;
 }

@@ -26,8 +26,8 @@ inline void bmu_threads_init( uint16_t th_cnt, void *(*bm_thread)(void *), void 
 	pthread_attr_setstacksize( &attr, PTHREAD_STACK_SIZE );
 	#endif
 
-	pc_init( &pc[ DSP_PC ], 4096 );
-	pc_init( &pc[ CPU_PC ], 4096 );
+	pc_init( &pc[ DSP_PC ], 16384 );
+	pc_init( &pc[ CPU_PC ], 16384 );
 
 	pthread_mutex_init( &lock, NULL );
 	pthread_cond_init( &stop, NULL );

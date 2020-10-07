@@ -13,15 +13,17 @@ const char *ssse3_ai_epx32_instructions[ ssse3_ai_epx32_cnt + 1 ] = {
 	"psignd\t_mm_sign_pi32() "
 };
 
-inline void ssse3_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32 ) {
+inline void ssse3_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32, int32_t vector_offset ) {
 	int64_t i;
-	int32_t *si32_start __attribute__((aligned(16))) = si32;
+	int32_t *p __attribute__((aligned(16)));
 	__m128i wi;
 	__m128i bi = _mm_set_epi32( 8, 7, 6, 5 );
 	__m64 xi;
 	__m64 ci = _mm_set_si64_epi32( 2, 1 );
 
 	while ( td->thread_active ) {
+
+		p = si32;
 
 		pc_get( pc, td->cycles_count );
 
@@ -31,61 +33,59 @@ inline void ssse3_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32 
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		si32 = si32_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 32-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_hadd_epi32( wi, bi );
-					_mm_store_si128( (__m128i *)si32, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 2: // hadd vectors of 4 32-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_hsub_epi32( wi, bi );
-					_mm_store_si128( (__m128i *)si32, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 3: // sub vectors of 4 32-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_sign_epi32( wi, bi );
-					_mm_store_si128( (__m128i *)si32, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 4: // hsub vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_hadd_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 5: // mul vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_hsub_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 6: // mul vectors of 2 32-bit unsigned integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_sign_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
@@ -121,7 +121,7 @@ void* ssse3_ai_epx32_bm_thread( void *arg ) {
 	int32_t *si32 __attribute__((aligned(16))) = (int32_t*)aligned_alloc( 16, alloc_size );
 	if ( !si32 ) perror( "aligned_alloc() error" );
 
-	ssse3_ai_epx32_bm( td, &pc[ DSP_PC ], si32 );
+	ssse3_ai_epx32_bm( td, &pc[ DSP_PC ], si32, 4 );
 
 	if ( si32 ) free( si32 );
 
@@ -137,7 +137,7 @@ void* ssse3_ai_epx32_cpu_bm_thread( void *arg ) {
 
 	int32_t si32[ 4 ] __attribute__((aligned(16))) = { 8, 6, 4, 2 };
 
-	ssse3_ai_epx32_bm( td, &pc[ CPU_PC ], si32 );
+	ssse3_ai_epx32_bm( td, &pc[ CPU_PC ], si32, 0 );
 
 	return NULL;
 }

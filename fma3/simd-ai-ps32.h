@@ -23,9 +23,9 @@ const char *fma3_ai_ps32_instructions[ fma3_ai_ps32_cnt + 1 ] = {
 	"vfnmsubXps\t_mm256_fnmsub_ps    "
 };
 
-inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32 ) {
+inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32, int32_t vector_offset ) {
 	int64_t i;
-	float *ps32_start __attribute__((aligned(32))) = ps32;
+	float *p __attribute__((aligned(32)));
 	__m128 ws;
 	__m128 bs = _mm_set_ps( 3.33333f, 4.44444f, 1.11111f, 2.22222f );
 	__m128 zs = _mm_set_ps( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
@@ -35,6 +35,8 @@ inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32 ) {
 
 	while ( td->thread_active ) {
 
+		p = ps32;
+
 		pc_get( pc, td->cycles_count );
 
 		if ( !td->thread_active ) break;
@@ -43,160 +45,149 @@ inline void fma3_ai_ps32_bm( thread_data_t *td,  pc_data_t *pc, float *ps32 ) {
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		ps32 = ps32_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // vfmadd132ps vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fmadd_ps( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 2: // vfmadd132ss vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fmadd_ss( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 3: // vfmaddsub132ps vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fmaddsub_ps( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 4: // vfmsub132ps vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fmsub_ps( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 5: // vfmsub132ss vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fmsub_ss( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 6: // vfmsubadd132ps vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fmsubadd_ps( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 7: // vfnmadd132ps vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fnmadd_ps( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 8: // vfnmadd132ss vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fnmadd_ss( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 9: // vfnmsub132ps vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				// printf("case 09:\tvector_capacity = %d\tcycles_count = %lu\tvector_offset = %d\n", vector_capacity, td->cycles_count, td->vector_offset);
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fnmsub_ps( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 10:// vfnmsub132ss vectors of 4 32-bit singles at cycle
 				vector_capacity = 4;
-				// printf("case 10:\tvector_capacity = %d\tcycles_count = %lu\tvector_offset = %d\n", vector_capacity, td->cycles_count, td->vector_offset);
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					ws = _mm_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					ws = _mm_load_ps( (const float *)p );
 					ws = _mm_fnmsub_ss( ws, bs, zs );
-					_mm_store_ps( (float *)ps32, ws );
+					_mm_store_ps( (float *)p, ws );
 				}
 				break;
 
 			case 11:// vfmadd132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				if ( td->vector_offset != 0 && td->vector_offset != 8 )
-					printf("case 11:\tvector_capacity = %d\tcycles_count = %lu\tvector_offset = %d\t%p\t%p\t%s\t%i\n",
-						vector_capacity, td->cycles_count, td->vector_offset, ps32, ps32_start, td->name, pc_count(pc));
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					vs = _mm256_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vs = _mm256_load_ps( (const float *)p );
 					vs = _mm256_fmadd_ps( vs, as, ys );
-					_mm256_store_ps( (float *)ps32, vs );
+					_mm256_store_ps( (float *)p, vs );
 				}
-				// printf("-\n");
 				break;
 
 			case 12:// vfmaddsub132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				if ( td->vector_offset != 0 && td->vector_offset != 8 )
-					printf("case 12:\tvector_capacity = %d\tcycles_count = %lu\tvector_offset = %d\t%p\t%p\t%s\t%i\n",
-						vector_capacity, td->cycles_count, td->vector_offset, ps32, ps32_start, td->name, pc_count(pc));
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					vs = _mm256_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vs = _mm256_load_ps( (const float *)p );
 					vs = _mm256_fmaddsub_ps( vs, as, ys );
-					_mm256_store_ps( (float *)ps32, vs );
+					_mm256_store_ps( (float *)p, vs );
 				}
 				break;
 
 			case 13:// vfmsub132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					vs = _mm256_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vs = _mm256_load_ps( (const float *)p );
 					vs = _mm256_fmsub_ps( vs, as, ys );
-					_mm256_store_ps( (float *)ps32, vs );
+					_mm256_store_ps( (float *)p, vs );
 				}
 				break;
 
 			case 14:// vfmsubadd132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					vs = _mm256_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vs = _mm256_load_ps( (const float *)p );
 					vs = _mm256_fmsubadd_ps( vs, as, ys );
-					_mm256_store_ps( (float *)ps32, vs );
+					_mm256_store_ps( (float *)p, vs );
 				}
 				break;
 
 			case 15:// vfnmadd132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					vs = _mm256_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vs = _mm256_load_ps( (const float *)p );
 					vs = _mm256_fnmadd_ps( vs, as, ys );
-					_mm256_store_ps( (float *)ps32, vs );
+					_mm256_store_ps( (float *)p, vs );
 				}
 				break;
 
 			case 16:// vfnmsub132ps vectors of 8 32-bit singles at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, ps32 += td->vector_offset ) {
-					vs = _mm256_load_ps( (const float *)ps32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					vs = _mm256_load_ps( (const float *)p );
 					vs = _mm256_fnmsub_ps( vs, as, ys );
-					_mm256_store_ps( (float *)ps32, vs );
+					_mm256_store_ps( (float *)p, vs );
 				}
 				break;
 
@@ -233,7 +224,7 @@ void* fma3_ai_ps32_bm_thread( void *arg ) {
 	float *ps32 __attribute__((aligned(32))) = (float*)aligned_alloc( 32, alloc_size );
 	if ( !ps32 ) perror( "aligned_alloc() error" );
 
-	fma3_ai_ps32_bm( td, &pc[ DSP_PC ], ps32 );
+	fma3_ai_ps32_bm( td, &pc[ DSP_PC ], ps32, 8 );
 
 	if ( ps32 ) free( ps32 );
 
@@ -249,7 +240,7 @@ void* fma3_ai_ps32_cpu_bm_thread( void *arg ) {
 
 	float ps32[ 8 ] __attribute__((aligned(32))) = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	fma3_ai_ps32_bm( td, &pc[ CPU_PC ], ps32 );
+	fma3_ai_ps32_bm( td, &pc[ CPU_PC ], ps32, 0 );
 
 	return NULL;
 }

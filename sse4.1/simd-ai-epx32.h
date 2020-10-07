@@ -9,13 +9,15 @@ const char *sse4_1_ai_epx32_instructions[ sse4_1_ai_epx32_cnt + 1 ] = {
 	"pmulld \t_mm_mullo_epi32()    "
 };
 
-inline void sse4_1_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32 ) {
+inline void sse4_1_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32, int32_t vector_offset ) {
 	int64_t i;
-	int32_t *si32_start __attribute__((aligned(16))) = si32;
+	int32_t *p __attribute__((aligned(16)));
 	__m128i wi;
 	__m128i bi = _mm_set_epi32( 4, 3, 2, 1 );
 
 	while ( td->thread_active ) {
+
+		p = si32;
 
 		pc_get( pc, td->cycles_count );
 
@@ -25,25 +27,23 @@ inline void sse4_1_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		si32 = si32_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 4 32-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_mul_epi32( wi, bi );
-					_mm_store_si128( (__m128i *)si32, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 2: // hadd vectors of 4 32-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_mullo_epi32( wi, bi );
-					_mm_store_si128( (__m128i *)si32, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
@@ -79,7 +79,7 @@ void* sse4_1_ai_epx32_bm_thread( void *arg ) {
 	int32_t *si32 __attribute__((aligned(16))) = (int32_t*)aligned_alloc( 16, alloc_size );
 	if ( !si32 ) perror( "aligned_alloc() error" );
 
-	sse4_1_ai_epx32_bm( td, &pc[ DSP_PC ], si32 );
+	sse4_1_ai_epx32_bm( td, &pc[ DSP_PC ], si32, 4 );
 
 	if ( si32 ) free( si32 );
 
@@ -95,7 +95,7 @@ void* sse4_1_ai_epx32_cpu_bm_thread( void *arg ) {
 
 	int32_t si32[ 4 ] __attribute__((aligned(16))) = { 8, 7, 6, 5 };
 
-	sse4_1_ai_epx32_bm( td, &pc[ CPU_PC ], si32 );
+	sse4_1_ai_epx32_bm( td, &pc[ CPU_PC ], si32, 0 );
 
 	return NULL;
 }

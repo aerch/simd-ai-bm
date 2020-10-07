@@ -11,13 +11,15 @@ const char *mmx_ai_epx32_instructions[ mmx_ai_epx32_cnt + 1 ] = {
 	"psubd\t_m_psubd        "
 };
 
-inline void mmx_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32 ) {
+inline void mmx_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32, int32_t vector_offset ) {
 	int64_t i;
-	int32_t *si32_start __attribute__((aligned(16))) = si32;
+	int32_t *p __attribute__((aligned(16)));
 	__m64 xi;
 	__m64 ci = _mm_set_si64_epi16( 4, 3, 2, 1 );
 
 	while ( td->thread_active ) {
+
+		p = si32;
 
 		pc_get( pc, td->cycles_count );
 
@@ -27,43 +29,41 @@ inline void mmx_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32 ) 
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		si32 = si32_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // paddd vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_add_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 2: // paddd vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _m_paddd( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 3: // psubd vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_sub_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 4: // psubd vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, si32 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si32 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _m_psubd( xi, ci );
-					_mm_store_si64( (__m64 *)si32, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
@@ -99,7 +99,7 @@ void* mmx_ai_epx32_bm_thread( void *arg ) {
 	int32_t *si32 __attribute__((aligned(16))) = (int32_t*)aligned_alloc( 16, alloc_size );
 	if ( !si32 ) perror( "aligned_alloc() error" );
 
-	mmx_ai_epx32_bm( td, &pc[ DSP_PC ], si32 );
+	mmx_ai_epx32_bm( td, &pc[ DSP_PC ], si32, 2 );
 
 	if ( si32 ) free( si32 );
 
@@ -115,7 +115,7 @@ void* mmx_ai_epx32_cpu_bm_thread( void *arg ) {
 
 	int32_t si32[ 2 ] __attribute__((aligned(16))) = { 6, 5 };
 
-	mmx_ai_epx32_bm( td, &pc[ CPU_PC ], si32 );
+	mmx_ai_epx32_bm( td, &pc[ CPU_PC ], si32, 0 );
 
 	return NULL;
 }

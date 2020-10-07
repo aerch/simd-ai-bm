@@ -21,15 +21,17 @@ const char *ssse3_ai_epx16_instructions[ ssse3_ai_epx16_cnt + 1 ] = {
 	"psignw\t_mm_sign_pi16()       "
 };
 
-inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16 ) {
+inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16, int32_t vector_offset ) {
 	int64_t i;
-	int16_t *si16_start __attribute__((aligned(16))) = si16;
+	int16_t *p __attribute__((aligned(16)));
 	__m128i wi;
 	__m128i bi = _mm_set_epi16( 8, 7, 6, 5, 4, 3, 2, 1 );
 	__m64 xi;
 	__m64 ci = _mm_set_si64_epi16( 4, 3, 2, 1 );
 
 	while ( td->thread_active ) {
+
+		p = si16;
 
 		pc_get( pc, td->cycles_count );
 
@@ -39,133 +41,131 @@ inline void ssse3_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16 
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		si16 = si16_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // add vectors of 8 16-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_hadd_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 2: // adds vectors of 8 16-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_hadds_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 3: // adds vectors of 8 16-bit unsigned integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_hsub_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 4: // hadd vectors of 8 16-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_hsubs_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 5: // hadds vectors of 8 16-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_maddubs_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 6: // madd vectors of 8 16-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_mulhrs_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 7: // maddubs vectors of 8 16-bit signed integers at cycle
 				vector_capacity = 8;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					wi = _mm_load_si128( (const __m128i *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					wi = _mm_load_si128( (const __m128i *)p );
 					wi = _mm_sign_epi16( wi, bi );
-					_mm_store_si128( (__m128i *)si16, wi );
+					_mm_store_si128( (__m128i *)p, wi );
 				}
 				break;
 
 			case 8: // add vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_hadd_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 9: // adds vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_hadds_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 10:// adds vectors of 4 16-bit unsigned integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_hsub_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 11:// hadd vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_hsubs_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 12:// hadds vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_maddubs_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 13:// madd vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_mulhrs_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
 			case 14:// maddubs vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, si16 += td->vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)si16 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
+					xi = _mm_load_si64( (const __m64 *)p );
 					xi = _mm_sign_pi16( xi, ci );
-					_mm_store_si64( (__m64 *)si16, xi );
+					_mm_store_si64( (__m64 *)p, xi );
 				}
 				break;
 
@@ -201,7 +201,7 @@ void* ssse3_ai_epx16_bm_thread( void *arg ) {
 	int16_t *si16 __attribute__((aligned(16))) = (int16_t*)aligned_alloc( 16, alloc_size );
 	if ( !si16 ) perror( "aligned_alloc() error" );
 
-	ssse3_ai_epx16_bm( td, &pc[ DSP_PC ], si16 );
+	ssse3_ai_epx16_bm( td, &pc[ DSP_PC ], si16, 8 );
 
 	if ( si16 ) free( si16 );
 
@@ -217,7 +217,7 @@ void* ssse3_ai_epx16_cpu_bm_thread( void *arg ) {
 
 	int16_t si16[ 8 ] __attribute__((aligned(16))) = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
-	ssse3_ai_epx16_bm( td, &pc[ CPU_PC ], si16 );
+	ssse3_ai_epx16_bm( td, &pc[ CPU_PC ], si16, 0 );
 
 	return NULL;
 }

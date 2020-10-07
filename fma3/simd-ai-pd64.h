@@ -23,9 +23,9 @@ const char *fma3_ai_pd64_instructions[ fma3_ai_pd64_cnt + 1 ] = {
 	"vfnmsubXpd\t_mm256_fnmsub_pd    "
 };
 
-inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
+inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64, int32_t vector_offset ) {
 	int64_t i;
-	double *pd64_start __attribute__((aligned(32))) = pd64;
+	double *p __attribute__((aligned(32)));
 	__m128d wd;
 	__m128d bd = _mm_set_pd( 3.33333f, 4.44444f );
 	__m128d zd = _mm_set_pd( 1.11111f, 2.22222f );
@@ -35,6 +35,8 @@ inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
 
 	while ( td->thread_active ) {
 
+		p = pd64;
+
 		pc_get( pc, td->cycles_count );
 
 		if ( !td->thread_active ) break;
@@ -43,151 +45,149 @@ inline void fma3_ai_pd64_bm( thread_data_t *td,  pc_data_t *pc, double *pd64 ) {
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		pd64 = pd64_start;
-
 		switch ( td->instruction ) {
 
 			case 1: // vfmadd132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fmadd_pd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 2: // vfmadd132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fmadd_sd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 3: // vfmaddsub132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fmaddsub_pd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 4: // vfmsub132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fmsub_pd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 5: // vfmsub132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fmsub_sd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 6: // vfmsubadd132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fmsubadd_pd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 7: // vfnmadd132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fnmadd_pd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 8: // vfnmadd132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fnmadd_sd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 9: // vfnmsub132pd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fnmsub_pd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 10:// vfnmsub132sd vectors of 2 64-bit doubles at cycle
 				vector_capacity = 2;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					wd = _mm_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					wd = _mm_load_pd( (const double *)p );
 					wd = _mm_fnmsub_sd( wd, bd, zd );
-					_mm_store_pd( (double *)pd64, wd );
+					_mm_store_pd( (double *)p, wd );
 				}
 				break;
 
 			case 11:// vfmadd132pd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_fmadd_pd( vd, ad, yd );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 12:// vfmaddsub132pd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_fmaddsub_pd( vd, ad, yd );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 13:// vfmsub132pd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_fmsub_pd( vd, ad, yd );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 14:// vfmsubadd132pd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_fmsubadd_pd( vd, ad, yd );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 15:// vfnmadd132pd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_fnmadd_pd( vd, ad, yd );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
 			case 16:// vfnmsub132pd vectors of 4 64-bit doubles at cycle
 				vector_capacity = 4;
-				for ( i = 0; i < td->cycles_count; i++, pd64 += td->vector_offset) {
-					vd = _mm256_load_pd( (const double *)pd64 );
+				for ( i = 0; i < td->cycles_count; i++, p += vector_offset) {
+					vd = _mm256_load_pd( (const double *)p );
 					vd = _mm256_fnmsub_pd( vd, ad, yd );
-					_mm256_store_pd( (double *)pd64, vd );
+					_mm256_store_pd( (double *)p, vd );
 				}
 				break;
 
@@ -223,7 +223,7 @@ void* fma3_ai_pd64_bm_thread( void *arg ) {
 	double *pd64 __attribute__((aligned(32))) = (double*)aligned_alloc( 32, alloc_size );
 	if ( !pd64 ) perror( "aligned_alloc() error" );
 
-	fma3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64 );
+	fma3_ai_pd64_bm( td, &pc[ DSP_PC ], pd64, 4 );
 
 	if ( pd64 ) free( pd64 );
 
@@ -239,7 +239,7 @@ void* fma3_ai_pd64_cpu_bm_thread( void *arg ) {
 
 	double pd64[ 4 ] __attribute__((aligned(32))) = { 8, 6, 4, 2 };
 
-	fma3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64 );
+	fma3_ai_pd64_bm( td, &pc[ CPU_PC ], pd64, 0 );
 
 	return NULL;
 }
