@@ -20,7 +20,7 @@ inline void make_message( uint8_t id ) {
 
 		case _ST_BM_FINAL_MSG_:
 			simd_ai_st_bm = total_tps;
-			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Thread Benchmark finished\t\t\t\t\t\t[ SIMD-AI-ST-BM     %9.1lf ]\n\n", simd_ai_st_bm );
+			fprintf( stream, "\nSIMD Arithmetic Instructions Single-Thread Benchmark finished\t\t\t\t\t\t\n[ SIMD-AI-ST-BM     %9.1lf ]\n\n", simd_ai_st_bm );
 			printf( BLUE "\nSIMD Arithmetic Instructions Single-Thread Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-ST-BM     %9.1lf " OFF BLUE "]" OFF "\n\n", simd_ai_st_bm );
 			break;
 
@@ -32,7 +32,7 @@ inline void make_message( uint8_t id ) {
 
 		case _MT_BM_FINAL_MSG_:
 			simd_ai_mt_bm = total_tps;
-			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Thread Benchmark finished\t\t\t\t\t\t[ SIMD-AI-MT-BM     %9.1lf ]\n\n", simd_ai_mt_bm );
+			fprintf( stream, "\nSIMD Arithmetic Instructions Multi-Thread Benchmark finished\t\t\t\t\t\t\n[ SIMD-AI-MT-BM     %9.1lf ]\n\n", simd_ai_mt_bm );
 			printf( BLUE "\nSIMD Arithmetic Instructions Multi-Thread Benchmark finished\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-BM     %9.1lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm );
 			break;
 
@@ -52,7 +52,7 @@ inline void make_title( const char *title ) {
 
 inline void make_finit_title() {
 	simd_ai_mt_bm_rate = simd_ai_mt_bm / simd_ai_st_bm;
-	fprintf( stream, "SIMD Arithmetic Instructions Multi-Thread Benchmark rate\t\t\t\t\t\t[ SIMD-AI-MT-RATE      ~%5.1lf ]\n\n", simd_ai_mt_bm_rate );
+	fprintf( stream, "SIMD Arithmetic Instructions Multi-Thread Benchmark rate\t\t\t\t\t\t\n[ SIMD-AI-MT-RATE      ~%5.1lf ]\n\n", simd_ai_mt_bm_rate );
 	printf( BLUE "SIMD Arithmetic Instructions Multi-Thread Benchmark rate\t\t\t\t\t\t[" WHITE " SIMD-AI-MT-RATE      ~%5.1lf " OFF BLUE "]" OFF "\n\n", simd_ai_mt_bm_rate );
 	return;
 }
