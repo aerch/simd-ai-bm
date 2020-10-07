@@ -65,27 +65,27 @@ inline void ssse3_ai_epx32_bm( thread_data_t *td,  pc_data_t *pc, int32_t *si32,
 			case 4: // hsub vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_hadd_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 5: // mul vectors of 2 32-bit signed integers at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_hsub_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 6: // mul vectors of 2 32-bit unsigned integers at cycle
 				vector_capacity = 2;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_sign_pi32( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 

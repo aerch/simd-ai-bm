@@ -42,108 +42,108 @@ inline void mmx_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, int3
 			case 1: // paddb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_add_pi8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 2: // paddsb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_adds_pi8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 3: // paddusb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_adds_pu8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 4: // psubb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_sub_pi8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 5: // psubsb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_subs_pi8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 6: // psubusb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_subs_pu8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 7: // paddb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_paddb( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 8: // paddsb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_paddsb( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 9: // paddusb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_paddusb( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 10:// psubb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_psubb( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 11:// psubsb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_psubsb( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 12:// psubusb vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_psubusb( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 

@@ -43,9 +43,9 @@ inline void ssse3_ai_epx8_bm( thread_data_t *td,  pc_data_t *pc, int8_t *si8, in
 			case 2: // adds vectors of 8 8-bit signed integers at cycle
 				vector_capacity = 8;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_sign_pi8( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 

@@ -18,7 +18,7 @@ inline void sse2_ai_epx64_bm( thread_data_t *td,  pc_data_t *pc, int64_t *si64, 
 	__m128i bi = _mm_set_epi64x( 8, 5 );
 	__m64 xi;
 	si64[0] = 1;
-	__m64 ci = _mm_load_si64( (const __m64 *)si64 );
+	__m64 ci = *((const __m64*)si64);
 
 	while ( td->thread_active ) {
 
@@ -46,9 +46,9 @@ inline void sse2_ai_epx64_bm( thread_data_t *td,  pc_data_t *pc, int64_t *si64, 
 			case 2: // add vectors of 1 64-bit signed integers at cycle
 				vector_capacity = 1;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_add_si64( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
@@ -64,9 +64,9 @@ inline void sse2_ai_epx64_bm( thread_data_t *td,  pc_data_t *pc, int64_t *si64, 
 			case 4: // sub vectors of 1 64-bit signed integers at cycle
 				vector_capacity = 1;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_sub_si64( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 

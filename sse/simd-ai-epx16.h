@@ -32,18 +32,18 @@ inline void sse_ai_epx16_bm( thread_data_t *td,  pc_data_t *pc, int16_t *si16, i
 			case 1: // pmulhuw vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _m_pmulhuw( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
 			case 2: // mulhi vectors of 4 16-bit signed integers at cycle
 				vector_capacity = 4;
 				for ( i = 0; i < td->cycles_count; i++, p += vector_offset ) {
-					xi = _mm_load_si64( (const __m64 *)p );
+					xi = *((const __m64*)p);
 					xi = _mm_mulhi_pu16( xi, ci );
-					_mm_store_si64( (__m64 *)p, xi );
+					*((__m64 *)p) = xi;
 				}
 				break;
 
