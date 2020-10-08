@@ -10,35 +10,8 @@
 #include "benchmarks.h"
 
 inline void make_inits() {
-	// char *line = NULL;
-	// size_t len = 0;
-	// ssize_t nread;
 
 	printf( "\n\t   " BLUE "SIMD Arithmetic Instructions Benchmark v" VERSION OFF "\n\n" );
-
-	// // try to get current processor name to file
-	// if ( system( "grep 'model name' /proc/cpuinfo | uniq | awk '/^model name/{$1=$2=$3=\"\";print $0}' > current_processor" ) != 0 )
-	// 	perror( "error due system call" );
-
-	// // try to read current processor name from file
-	// stream = fopen( "current_processor", "r" );
-	// if (stream == NULL) {
-	// 	perror("fopen: while reading the name of current processor");
-	// 	exit(EXIT_FAILURE);
-	// }
-	// if ((nread = getline(&line, &len, stream)) == -1) {
-	// 	perror("getline: while reading current processor name");
-	// 	exit(EXIT_FAILURE);
-	// }
-	// sprintf( current_path, "bmresults/%s", &line[3] );
-	// current_path[ strlen(current_path)-1 ] = 0;
-	// printf( BLUE "Saving to:" OFF WHITE " %s" OFF "\n\n", current_path );
-	// free(line);
-	// fclose(stream);
-	// stream = NULL;
-
-	// // removing no more needed file 'current_processor'
-	// remove("current_processor");
 
 	get_cpu_brand_string( brand_string );
 	sprintf( current_path, "bmresults/%s", brand_string );
@@ -58,7 +31,7 @@ inline void make_inits() {
 	// open resulting file
 	stream = fopen( current_path, "a+" );
 	if (stream == NULL) {
-		perror("fopen: while reading the name of current processor");
+		perror("fopen: while reading the brand name of the current processor");
 		exit(EXIT_FAILURE);
 	}
 
