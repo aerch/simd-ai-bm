@@ -50,6 +50,12 @@ inline void make_title( const char *title ) {
 	return;
 }
 
+inline void make_unsupported_mode_title( const char *title ) {
+	fprintf( stream, "\n%s:\tUNSUPPORTED CPU INTRINSICS\n", title );
+	printf( RED "\n%s:" OFF WHITE "\tUNSUPPORTED CPU INTRINSICS\n" OFF, title );
+	return;
+}
+
 inline void make_finit_title() {
 	simd_ai_mt_bm_rate = simd_ai_mt_bm / simd_ai_st_bm;
 	fprintf( stream, "SIMD-AI-ST-BM     %9.1lf\n", simd_ai_st_bm );
