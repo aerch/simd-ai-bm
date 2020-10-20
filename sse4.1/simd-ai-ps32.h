@@ -64,7 +64,7 @@ void* sse4_1_ai_ps32_bm_thread( void *arg ) {
 	sprintf( td->name, "sse4.1_aips32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
+	uint64_t alloc_length = ( st_bm_cpt > mt_bm_cpt ? st_bm_cpt : mt_bm_cpt ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( float );
 	float *ps32 __attribute__((aligned(16))) = (float*)aligned_alloc( 16, alloc_size );
 	if ( !ps32 ) perror( "aligned_alloc() error" );

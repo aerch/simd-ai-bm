@@ -83,7 +83,7 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 		}
 		pthread_mutex_unlock( &lock );
 
-		portion = ( threads_count > 1 ? MT_BM_CYCLES_PER_TIME : ST_BM_CYCLES_PER_TIME );
+		portion = ( threads_count > 1 ? mt_bm_cpt : st_bm_cpt );
 
 		_BMARK_ON_;
 

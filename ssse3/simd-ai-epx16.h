@@ -196,7 +196,7 @@ void* ssse3_ai_epx16_bm_thread( void *arg ) {
 	sprintf( td->name, "ssse3_aiep16th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
+	uint64_t alloc_length = ( st_bm_cpt > mt_bm_cpt ? st_bm_cpt : mt_bm_cpt ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( int16_t );
 	int16_t *si16 __attribute__((aligned(16))) = (int16_t*)aligned_alloc( 16, alloc_size );
 	if ( !si16 ) perror( "aligned_alloc() error" );

@@ -96,7 +96,7 @@ void* sse2_ai_epx32_bm_thread( void *arg ) {
 	sprintf( td->name, "sse2_aiep32th%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
-	uint64_t alloc_length = ( ST_BM_CYCLES_PER_TIME > MT_BM_CYCLES_PER_TIME ? ST_BM_CYCLES_PER_TIME : MT_BM_CYCLES_PER_TIME ) * td->vector_offset;
+	uint64_t alloc_length = ( st_bm_cpt > mt_bm_cpt ? st_bm_cpt : mt_bm_cpt ) * td->vector_offset;
 	uint64_t alloc_size = alloc_length * sizeof( int32_t );
 	int32_t *si32 __attribute__((aligned(16))) = (int32_t*)aligned_alloc( 16, alloc_size );
 	if ( !si32 ) perror( "aligned_alloc() error" );

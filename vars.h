@@ -1,6 +1,10 @@
 #ifndef __VARS_H__
 #define __VARS_H__
 
+typedef enum instructions { _MMX_, _SSE_, _SSE2_, _SSE3_, _SSSE3_, _SSE4_1_, _AVX_, _AVX2_, _FMA3_ } instructions_e;
+
+const char *instructions_s[ 9 ] = { "MMX", "SSE", "SSE2", "SSE3", "SSSE3", "SSE4_1", "AVX", "AVX2", "FMA3" };
+
 typedef struct thread_data {
 
 	int32_t		vector_offset;
@@ -19,12 +23,14 @@ typedef struct thread_data {
 
 int32_t		result;
 FILE		*stream = NULL;
-char		_str_[ 1024 ];
+char		_str_[ 16384 ];
 
 char		brand_string[ 50 ];
 char		current_path[ PATH_MAX ];
 
-uint64_t	cycles_count = CYCLES_COUNT;	// 1,000,000,000 - 10,000,000,000
+uint64_t	cycles_count = CYCLES_COUNT;		// 1,000,000,000 - 10,000,000,000
+uint32_t	st_bm_cpt = ST_BM_CYCLES_PER_TIME;	//
+uint32_t	mt_bm_cpt = MT_BM_CYCLES_PER_TIME;	//
 
 uint8_t 	available_processors;		// system's available processor threads
 uint8_t 	vector_capacity;		// simd vector's capacity

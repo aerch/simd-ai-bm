@@ -2,7 +2,7 @@
 # Makefile for the Linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
 
 TARGET          = simd-ai-bm
-VERSION         = 0.9.13a
+VERSION         = 0.9.14a
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
@@ -19,16 +19,16 @@ ECHO            = /bin/echo
 PWD             := $(shell pwd)
 MAKE            = make
 
-CPUFLAGS	= -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
-DFLAGS		= -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
+CPUFLAGS        = -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
+DFLAGS          = -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
-CXXFLAGS	= -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
+CXXFLAGS        = -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
 
 LIBS            = -lm -lpthread
 LIB_DIRS        = -L.
 
-INCLUDES	= -I.
+INCLUDES        = -I.
 
 CXXOPTIONS      = $(LIBS) $(LIB_DIRS) $(INCLUDES)
 LDOPTIONS       = $(CXXOPTIONS)
@@ -47,7 +47,7 @@ BLUE            = '\033[34;1m'
 PURPLE          = '\033[35;1m'
 CYAN            = '\033[36;1m'
 WHITE           = '\033[37;1m'
-GRAY		= '\033[30;1m'
+GRAY            = '\033[30;1m'
 OFF             = '\033[0m'
 
 .PHONY: $(TARGET) clean git-push-"update" backup
