@@ -57,23 +57,23 @@ void* mmx_calibrating_and_warmup_thread( void *arg ) {
 
 void* sse_calibrating_and_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
-	td->vector_offset = 8;
+	td->vector_offset = 4;
 	int64_t i;
-	int8_t *p __attribute__((aligned(16)));
-	__m64 xi;
-	__m64 ci = _mm_set_si64_epi8( 8, 7, 6, 5, 4, 3, 2, 1 );
+	float *p __attribute__((aligned(16)));
+	__m128 ws;
+	__m128 bs = _mm_set_ps( 1.11111f, 2.22222f, 3.33333f, 4.44444f );
 
 	sprintf( td->name, "sse_ai_bm_warmup%u", td->tid );
 	prctl( PR_SET_NAME, td->name );
 
 	uint64_t alloc_length = ( st_bm_cpt > mt_bm_cpt ? st_bm_cpt : mt_bm_cpt ) * td->vector_offset;
-	uint64_t alloc_size = alloc_length * sizeof( int8_t );
-	int8_t *si8 __attribute__((aligned(16))) = (int8_t*)aligned_alloc( 16, alloc_size );
-	if ( !si8 ) perror( "aligned_alloc() error" );
+	uint64_t alloc_size = alloc_length * sizeof( float );
+	float *ps32 __attribute__((aligned(16))) = (float*)aligned_alloc( 16, alloc_size );
+	if ( !ps32 ) perror( "aligned_alloc() error" );
 
 	while ( td->thread_active ) {
 
-		p = si8;
+		p = ps32;
 
 		pc_get( &pc[ DSP_PC ], td->cycles_count );
 
@@ -83,11 +83,11 @@ void* sse_calibrating_and_warmup_thread( void *arg ) {
 		evaluating_threads++;
 		pthread_mutex_unlock( &lock );
 
-		// add vectors of 8 8-bit signed integers at cycle
+		// add vectors of 4 32-bit singles at cycle
 		for ( i = 0; i < td->cycles_count; i++, p += td->vector_offset ) {
-			xi = *((const __m64*)p);
-			xi = _m_psadbw( xi, ci );
-			*((__m64 *)p) = xi;
+			ws = _mm_load_ps( (const float *)p );
+			ws = _mm_add_ps( ws, bs );
+			_mm_store_ps( (float *)p, ws );
 		}
 
 		pthread_mutex_lock( &lock );
@@ -102,7 +102,7 @@ void* sse_calibrating_and_warmup_thread( void *arg ) {
 	pthread_cond_signal( &finish );
 	pthread_mutex_unlock( &lock );
 
-	if ( si8 ) free( si8 );
+	if ( ps32 ) free( ps32 );
 
 	return NULL;
 }
@@ -476,6 +476,7 @@ inline void make_cpu_warmup( uint16_t th_cnt, instructions_e instr ) {
 	double best_total_time = 1000.0;
 
 	fprintf( stdout, BLUE "\t   cpu, cache, memory calibrating & warming up for %s instructions (%d thread(s)) ... " OFF, instructions_s[ instr ], th_cnt ); fflush( stdout );
+	fprintf( stream, "\t   cpu, cache, memory calibrating & warming up for %s instructions (%d thread(s)) ... ", instructions_s[ instr ], th_cnt );
 
 	if ( th_cnt >> 1 ) {
 		mt_bm_cpt = 128;
@@ -529,9 +530,11 @@ inline void make_cpu_warmup( uint16_t th_cnt, instructions_e instr ) {
 	if ( th_cnt >> 1 ) {
 		mt_bm_cpt = best_cpt;
 		printf( BLUE "mt_bm_cpt = %u choosed, calibration done." OFF "\n\n", mt_bm_cpt );
+		fprintf( stream, "mt_bm_cpt = %u choosed, calibration done.\n\n", mt_bm_cpt );
 	} else {
 		st_bm_cpt = best_cpt;
 		printf( BLUE "st_bm_cpt = %u choosed, calibration done." OFF "\n\n", st_bm_cpt );
+		fprintf( stream, "st_bm_cpt = %u choosed, calibration done.\n\n", st_bm_cpt );
 	}
 
 	return;
