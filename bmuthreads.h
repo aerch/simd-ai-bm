@@ -104,6 +104,8 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 
 		if ( simd_ai ) {
 
+		#ifndef NO_CPU_TIME_MEASURE
+
 			portion = ( threads_count > 1 ? cycles_count / threads_count : cycles_count );
 
 			_BMARK_ON_;
@@ -122,6 +124,8 @@ inline void bmu_threads_start( uint8_t simd_ai_count, char **simd_ai ) {
 			pthread_mutex_unlock( &lock );
 
 			_BMARK_OFF( cpu_time );
+
+		#endif // !NO_CPU_TIME_MEASURE
 
 			print_results( simd_ai[ c ], vector_capacity, cycles_count, total_time, cpu_time );
 

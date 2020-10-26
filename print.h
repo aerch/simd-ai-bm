@@ -45,8 +45,13 @@ inline void make_message( uint8_t id ) {
 }
 
 inline void make_title( const char *title ) {
+#ifndef NO_CPU_TIME_MEASURE
 	fprintf( stream, "\n%s:\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\t   TOTAL CPU EVAL TIME\t  PURE CPU SPEED\n", title );
 	printf( BLUE "\n%s:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\t   TOTAL CPU EVAL TIME\t  PURE CPU SPEED\n" OFF, title );
+#else
+	fprintf( stream, "\n%s:\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\n", title );
+	printf( BLUE "\n%s:" OFF WHITE "\t   ASM INSTR\tINTRINSIC FUNC CALL\tSIMD CAPACITY\tTOTAL EVALUATE TIME\tPER ONE CYCLE\tPER GIGACYCLE\tOPERATING SPEED\n" OFF, title );
+#endif // !NO_CPU_TIME_MEASURE
 	return;
 }
 
@@ -81,12 +86,17 @@ inline void print_results( const char *str, int8_t vecsz, uint64_t cycles_count,
 
 	total_tps += operations_per_second;
 
+#ifndef NO_CPU_TIME_MEASURE
 	const double teracycle = 1.0e+12;
 	double time_per_cpu_teracycle = cpu_time * teracycle / (double)cycles_count;
 	double cpu_operations_per_second = (double)vecsz / time_per_cpu_teracycle;
 
 	fprintf( stream, "\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.2lf gops\t   %15.12lf sec\t%11.3lf tops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, operations_per_second, cpu_time, cpu_operations_per_second );
 	printf("\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.2lf gops\t   %15.12lf sec\t%11.3lf tops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, operations_per_second, cpu_time, cpu_operations_per_second );
+#else
+	fprintf( stream, "\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.2lf gops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, operations_per_second );
+	printf("\t   %s\t %3d values\t%15.12lf sec\t%9.2e sec\t%9.6lf sec\t%10.2lf gops\n", str, vecsz, total_time, time_per_cycle, time_per_gigacycle, operations_per_second );
+#endif // !NO_CPU_TIME_MEASURE
 
 	return;
 }
