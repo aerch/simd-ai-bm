@@ -2,7 +2,7 @@
 # Makefile for the Linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
 
 TARGET          = simd-ai-bm
-VERSION         = 0.9.18a
+VERSION         = 0.9.19a
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
@@ -22,7 +22,7 @@ MAKE            = make
 CPUFLAGS        = -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
 DFLAGS          = -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) -D NO_CPU_TIME_MEASURE #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
-CXXFLAGS        = -g3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
+CXXFLAGS        = -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
 LDFLAGS         = $(CXXFLAGS)
 
 LIBS            = -lm -lpthread
@@ -55,8 +55,8 @@ OFF             = '\033[0m'
 $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' ld  '$(TARGET)$(OFF)'\n'
 	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
-	@file $(TARGET)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
+# 	@file $(TARGET)
 
 simd-ai-bm.o: simd-ai-bm.c
 	@echo -en $(WHITE)' cc  '$<$(OFF)'\n'
