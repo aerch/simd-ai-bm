@@ -1,10 +1,10 @@
 #!/bin/bash
-# Makefile for the Linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
+# Makefile for the Linux (test) project
 
-TARGET          = simd-ai-bm
-VERSION         = 0.9.18a
+TARGET          = test
+VERSION         = 0.1a
 DATE            = $(shell date +%d.%m.%y)
-PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
+PROJECT         = 'Test Project ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
 NPROC           = $(shell nproc)
 
@@ -19,7 +19,7 @@ ECHO            = /bin/echo
 PWD             := $(shell pwd)
 MAKE            = make
 
-CPUFLAGS        = -mmmx -msse -msse2 -msse3 -mssse3 -msse4 -mavx -mavx2 -mfma
+CPUFLAGS        = -mmmx -msse -msse2 -msse3 -mssse3 -msse4 #-mavx -mavx2 -mfma
 DFLAGS          = -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) -D NO_CPU_TIME_MEASURE #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
 CXXFLAGS        = -g3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
@@ -35,9 +35,9 @@ LDOPTIONS       = $(CXXOPTIONS)
 
 DFILES          = $(foreach bdir,$(BUILD_DIRS), $(wildcard $(bdir)/*.d))
 
-SOURCES         = simd-ai-bm.c
-HEADERS         = simd-ai-bm.h
-OBJECTS         = simd-ai-bm.o
+SOURCES         = test.c
+HEADERS         = test.h
+OBJECTS         = test.o
 
 BLACK           = '\033[30;1m'
 RED             = '\033[31;1m'
@@ -50,36 +50,17 @@ WHITE           = '\033[37;1m'
 GRAY            = '\033[30;1m'
 OFF             = '\033[0m'
 
-.PHONY: $(TARGET) clean git-push-"update" backup
+.PHONY: $(TARGET) clean
 
 $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' ld  '$(TARGET)$(OFF)'\n'
 	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
-	@file $(TARGET)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
 
-simd-ai-bm.o: simd-ai-bm.c
+test.o: test.c
 	@echo -en $(WHITE)' cc  '$<$(OFF)'\n'
 	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 
 clean:
 	@echo -en $(WHITE)' cleaning project folder ...'$<$(OFF)'\n'
 	@$(RM) $(TARGET) *.o *.d *.~ gmon.out
-
-git-push-%: clean
-	@$(ECHO) -en "\n > "
-	git add .
-	@$(ECHO) -en "\n > "
-	git status
-	@$(ECHO) -en "\n > "
-	git commit -m "v"$(VERSION)-$(DATE)" $*"
-	@$(ECHO) -en "\n > "
-	git push
-
-backup: clean
-	@$(ECHO) '> > > > folder tar archiving ...'
-	@tar cfv ./$(TARGET)-$(VERSION)-`date +%d.%m.%y`.tar --exclude=$(TARGET)'-*.tar.gz' $(BACKUP)
-	@$(ECHO) '> > > > zip compressing ...'
-	@gzip -v9 -f -S .gz ./$(TARGET)-$(VERSION)-`date +%d.%m.%y`.tar
-
-include $(DFILES)
