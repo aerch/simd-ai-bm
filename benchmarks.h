@@ -216,13 +216,16 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, sse4_1_ai_pd64_cnt,  (char**)sse4_1_ai_pd64_instructions,  &sse4_1_ai_pd64_bm_thread,  &sse4_1_ai_pd64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "SSE4.1" );
 
+#ifdef __AVX__
 	if (__builtin_cpu_supports("avx")) {
 		make_title( "AVX" );
 		make_cpu_warmup( MULTIPLE_THREADS, _AVX_ );
 		bmu_threads( MULTIPLE_THREADS, avx_ai_ps32_cnt, (char**)avx_ai_ps32_instructions, &avx_ai_ps32_bm_thread, &avx_ai_ps32_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, avx_ai_pd64_cnt, (char**)avx_ai_pd64_instructions, &avx_ai_pd64_bm_thread, &avx_ai_pd64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "AVX" );
+#endif // __AVX__
 
+#ifdef __AVX2__
 	if (__builtin_cpu_supports("avx2")) {
 		make_title( "AVX2" );
 		make_cpu_warmup( MULTIPLE_THREADS, _AVX2_ );
@@ -231,13 +234,16 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, avx2_ai_epx32_cnt, (char**)avx2_ai_epx32_instructions, &avx2_ai_epx32_bm_thread, &avx2_ai_epx32_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, avx2_ai_epx64_cnt, (char**)avx2_ai_epx64_instructions, &avx2_ai_epx64_bm_thread, &avx2_ai_epx64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "AVX2" );
+#endif // __AVX2__
 
+#ifdef __FMA__
 	if (__builtin_cpu_supports("fma")) {
 		make_title( "FMA3" );
 		make_cpu_warmup( MULTIPLE_THREADS, _FMA3_ );
 		bmu_threads( MULTIPLE_THREADS, fma3_ai_ps32_cnt, (char**)fma3_ai_ps32_instructions, &fma3_ai_ps32_bm_thread, &fma3_ai_ps32_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, fma3_ai_pd64_cnt, (char**)fma3_ai_pd64_instructions, &fma3_ai_pd64_bm_thread, &fma3_ai_pd64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "FMA3" );
+#endif // __FMA__
 
 	make_message( _MT_BM_FINAL_MSG_ );
 

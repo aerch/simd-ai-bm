@@ -315,6 +315,7 @@ void* sse4_1_calibrating_and_warmup_thread( void *arg ) {
 	return NULL;
 }
 
+#ifdef __AVX__
 void* avx_calibrating_and_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 	td->vector_offset = 4;
@@ -366,7 +367,9 @@ void* avx_calibrating_and_warmup_thread( void *arg ) {
 
 	return NULL;
 }
+#endif // __AVX__
 
+#ifdef __AVX2__
 void* avx2_calibrating_and_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 	td->vector_offset = 32;
@@ -418,7 +421,9 @@ void* avx2_calibrating_and_warmup_thread( void *arg ) {
 
 	return NULL;
 }
+#endif // __AVX2__
 
+#ifdef __FMA__
 void* fma3_calibrating_and_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 	td->vector_offset = 8;
@@ -471,6 +476,7 @@ void* fma3_calibrating_and_warmup_thread( void *arg ) {
 
 	return NULL;
 }
+#endif // __FMA__
 
 inline void make_cpu_warmup( uint16_t th_cnt, instructions_e instr ) {
 	double best_total_time = 1000.0;
@@ -508,13 +514,19 @@ inline void make_cpu_warmup( uint16_t th_cnt, instructions_e instr ) {
 				bmu_threads( th_cnt, 1, NULL, &sse4_1_calibrating_and_warmup_thread, NULL );
 				break;
 			case _AVX_:
+#ifdef __AVX__
 				bmu_threads( th_cnt, 1, NULL, &avx_calibrating_and_warmup_thread, NULL );
+#endif // __AVX__
 				break;
 			case _AVX2_:
+#ifdef __AVX2__
 				bmu_threads( th_cnt, 1, NULL, &avx2_calibrating_and_warmup_thread, NULL );
+#endif // __AVX2__
 				break;
 			case _FMA3_:
+#ifdef __FMA__
 				bmu_threads( th_cnt, 1, NULL, &fma3_calibrating_and_warmup_thread, NULL );
+#endif // __FMA__
 				break;
 		}
 

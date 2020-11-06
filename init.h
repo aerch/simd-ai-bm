@@ -24,9 +24,9 @@ inline void make_inits() {
 	sprintf( _str_, "lscpu > \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 0" );
 
-	sprintf( _str_, "inxi -SMICfmsxxx -c 0 -t cm5 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
+	sprintf( _str_, "inxi -SMICGfmsxxx -c 0 -t cm5 >> \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 1" );
-	if ( system( "inxi -SMICfmsxxx -c 2 -t cm5" ) != 0 ) perror( "error due system call 10" );
+	if ( system( "inxi -SMICGfmsxxx -c 2 -t cm5" ) != 0 ) perror( "error due system call 10" );
 
 	// open resulting file
 	stream = fopen( current_path, "a+" );
