@@ -166,6 +166,7 @@ inline void make_mt_banchmarks() {
 
 	make_message( _MT_BM_START_MSG_ );
 
+#ifdef __MMX__
 	if (__builtin_cpu_supports("mmx")) {
 		make_title( "MMX" );
 		make_cpu_warmup( MULTIPLE_THREADS, _MMX_ );
@@ -173,7 +174,9 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, mmx_ai_epx16_cnt, (char**)mmx_ai_epx16_instructions, &mmx_ai_epx16_bm_thread, &mmx_ai_epx16_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, mmx_ai_epx32_cnt, (char**)mmx_ai_epx32_instructions, &mmx_ai_epx32_bm_thread, &mmx_ai_epx32_cpu_bm_thread );
 	} else make_unsupported_mode_title( "MMX" );
+#endif // __MMX__
 
+#ifdef __SSE__
 	if (__builtin_cpu_supports("sse")) {
 		make_title( "SSE" );
 		make_cpu_warmup( MULTIPLE_THREADS, _SSE_ );
@@ -181,7 +184,9 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, sse_ai_epx16_cnt, (char**)sse_ai_epx16_instructions, &sse_ai_epx16_bm_thread, &sse_ai_epx16_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, sse_ai_ps32_cnt,  (char**)sse_ai_ps32_instructions,  &sse_ai_ps32_bm_thread,  &sse_ai_ps32_cpu_bm_thread );
 	} else make_unsupported_mode_title( "SSE" );
+#endif // __SSE__
 
+#ifdef __SSE2__
 	if (__builtin_cpu_supports("sse2")) {
 		make_title( "SSE2" );
 		make_cpu_warmup( MULTIPLE_THREADS, _SSE2_ );
@@ -191,14 +196,18 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, sse2_ai_epx64_cnt, (char**)sse2_ai_epx64_instructions, &sse2_ai_epx64_bm_thread, &sse2_ai_epx64_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, sse2_ai_pd64_cnt,  (char**)sse2_ai_pd64_instructions,  &sse2_ai_pd64_bm_thread,  &sse2_ai_pd64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "SSE2" );
+#endif // __SSE2__
 
+#ifdef __SSE3__
 	if (__builtin_cpu_supports("sse3")) {
 		make_title( "SSE3" );
 		make_cpu_warmup( MULTIPLE_THREADS, _SSE3_ );
 		bmu_threads( MULTIPLE_THREADS, sse3_ai_ps32_cnt, (char**)sse3_ai_ps32_instructions, &sse3_ai_ps32_bm_thread, &sse3_ai_ps32_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, sse3_ai_pd64_cnt, (char**)sse3_ai_pd64_instructions, &sse3_ai_pd64_bm_thread, &sse3_ai_pd64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "SSE3" );
+#endif // __SSE3__
 
+#ifdef __SSSE3__
 	if (__builtin_cpu_supports("ssse3")) {
 		make_title( "SSSE3" );
 		make_cpu_warmup( MULTIPLE_THREADS, _SSSE3_ );
@@ -206,7 +215,9 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, ssse3_ai_epx16_cnt, (char**)ssse3_ai_epx16_instructions, &ssse3_ai_epx16_bm_thread, &ssse3_ai_epx16_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, ssse3_ai_epx32_cnt, (char**)ssse3_ai_epx32_instructions, &ssse3_ai_epx32_bm_thread, &ssse3_ai_epx32_cpu_bm_thread );
 	} else make_unsupported_mode_title( "SSSE3" );
+#endif // __SSSE3__
 
+#ifdef __SSE4_1__
 	if (__builtin_cpu_supports("sse4.1")) {
 		make_title( "SSE4.1" );
 		make_cpu_warmup( MULTIPLE_THREADS, _SSE4_1_ );
@@ -215,6 +226,7 @@ inline void make_mt_banchmarks() {
 		bmu_threads( MULTIPLE_THREADS, sse4_1_ai_ps32_cnt,  (char**)sse4_1_ai_ps32_instructions,  &sse4_1_ai_ps32_bm_thread,  &sse4_1_ai_ps32_cpu_bm_thread );
 		bmu_threads( MULTIPLE_THREADS, sse4_1_ai_pd64_cnt,  (char**)sse4_1_ai_pd64_instructions,  &sse4_1_ai_pd64_bm_thread,  &sse4_1_ai_pd64_cpu_bm_thread );
 	} else make_unsupported_mode_title( "SSE4.1" );
+#endif // __SSE4_1__
 
 #ifdef __AVX__
 	if (__builtin_cpu_supports("avx")) {
