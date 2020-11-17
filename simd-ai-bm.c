@@ -28,7 +28,7 @@ int main( int argc, char const *argv[] ) {
 	make_inits();
 
 	make_st_banchmarks();
-	// make_mt_banchmarks();
+	make_mt_banchmarks();
 
 	make_finits();
 

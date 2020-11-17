@@ -3,7 +3,7 @@
 
 uint32_t best_cpt;
 
-#ifdef _MMX_
+#ifdef __MMX__
 void* mmx_calibrating_and_warmup_thread( void *arg ) {
 	thread_data_t *td = (thread_data_t*)arg;
 	td->vector_offset = 8;
@@ -508,34 +508,34 @@ inline void make_cpu_warmup( uint16_t th_cnt, instructions_e instr ) {
 
 		switch ( instr ) {
 			case _MMX_:
-#ifdef _MMX_
+#ifdef __MMX__
 				bmu_threads( th_cnt, 1, NULL, &mmx_calibrating_and_warmup_thread, NULL );
-#endif // _MMX_
+#endif // __MMX__
 				break;
 			case _SSE_:
-#ifdef _SSE_
+#ifdef __SSE__
 				bmu_threads( th_cnt, 1, NULL, &sse_calibrating_and_warmup_thread, NULL );
-#endif // _SSE_
+#endif // __SSE__
 				break;
 			case _SSE2_:
-#ifdef _SSE2_
+#ifdef __SSE2__
 				bmu_threads( th_cnt, 1, NULL, &sse2_calibrating_and_warmup_thread, NULL );
-#endif // _SSE2_
+#endif // __SSE2__
 				break;
 			case _SSE3_:
-#ifdef _SSE3_
+#ifdef __SSE3__
 				bmu_threads( th_cnt, 1, NULL, &sse3_calibrating_and_warmup_thread, NULL );
-#endif // _SSE3_
+#endif // __SSE3__
 				break;
 			case _SSSE3_:
-#ifdef _SSSE3_
+#ifdef __SSSE3__
 				bmu_threads( th_cnt, 1, NULL, &ssse3_calibrating_and_warmup_thread, NULL );
-#endif // _SSSE3_
+#endif // __SSSE3__
 				break;
 			case _SSE4_1_:
-#ifdef _SSE4_1_
+#ifdef __SSE4_1__
 				bmu_threads( th_cnt, 1, NULL, &sse4_1_calibrating_and_warmup_thread, NULL );
-#endif // _SSE4_1_
+#endif // __SSE4_1__
 				break;
 			case _AVX_:
 #ifdef __AVX__
