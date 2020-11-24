@@ -25,327 +25,309 @@ NUMA node0 CPU(s):   0-11
 Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb cat_l3 cdp_l3 hw_pstate sme vmmcall fsgsbase bmi1 avx2 smep bmi2 cqm rdt_a rdseed adx smap clflushopt clwb sha_ni xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local clzero irperf xsaveerptr ibpb stibp arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif umip rdpid overflow_recov succor smca
 
 System:
-  Host: shelter Kernel: 4.15.0-20-generic x86_64 bits: 64 compiler: gcc 
-  v: 7.3.0 Desktop: Xfce 4.12.3 tk: Gtk 2.24.31 info: xfce4-panel wm: xfwm4 
-  dm: LightDM 1.26.0 Distro: Linux Mint 19.1 Tessa base: Ubuntu 18.04 bionic 
+  Host: shelter Kernel: 4.15.0-20-generic x86_64 bits: 64 compiler: gcc
+  v: 7.3.0 Desktop: Xfce 4.12.3 tk: Gtk 2.24.31 info: xfce4-panel wm: xfwm4
+  dm: LightDM 1.26.0 Distro: Linux Mint 19.1 Tessa base: Ubuntu 18.04 bionic
 Machine:
-  Type: Desktop Mobo: ASUSTeK model: PRIME B450-PLUS v: Rev X.0x 
-  serial: 200670086000446 UEFI: American Megatrends v: 2008 date: 12/06/2019 
+  Type: Desktop Mobo: ASUSTeK model: PRIME B450-PLUS v: Rev X.0x
+  serial: 200670086000446 UEFI: American Megatrends v: 2008 date: 12/06/2019
 Memory:
-  RAM: total: 15.65 GiB used: 588.7 MiB (3.7%) 
-  Array-1: capacity: 128 GiB slots: 4 EC: None max module size: 32 GiB 
-  note: est. 
-  Device-1: DIMM_A1 size: No Module Installed 
-  Device-2: DIMM_A2 size: 8 GiB speed: 3200 MT/s type: DDR4 
-  detail: synchronous unbuffered (unregistered) bus width: 64 bits 
-  total: 64 bits manufacturer: CRUCIAL part-no: BL8G32C16U4WL.M8FE 
-  serial: E3623CA1 
-  Device-3: DIMM_B1 size: No Module Installed 
-  Device-4: DIMM_B2 size: 8 GiB speed: 3200 MT/s type: DDR4 
-  detail: synchronous unbuffered (unregistered) bus width: 64 bits 
-  total: 64 bits manufacturer: CRUCIAL part-no: BL8G32C16U4WL.M8FE 
-  serial: E36240F9 
+  RAM: total: 15.65 GiB used: 588.7 MiB (3.7%)
+  Array-1: capacity: 128 GiB slots: 4 EC: None max module size: 32 GiB
+  note: est.
+  Device-1: DIMM_A1 size: No Module Installed
+  Device-2: DIMM_A2 size: 8 GiB speed: 3200 MT/s type: DDR4
+  detail: synchronous unbuffered (unregistered) bus width: 64 bits
+  total: 64 bits manufacturer: CRUCIAL part-no: BL8G32C16U4WL.M8FE
+  serial: E3623CA1
+  Device-3: DIMM_B1 size: No Module Installed
+  Device-4: DIMM_B2 size: 8 GiB speed: 3200 MT/s type: DDR4
+  detail: synchronous unbuffered (unregistered) bus width: 64 bits
+  total: 64 bits manufacturer: CRUCIAL part-no: BL8G32C16U4WL.M8FE
+  serial: E36240F9
 CPU:
-  Topology: 6-Core model: AMD Ryzen 5 3600 bits: 64 type: MT MCP arch: Zen 
-  L1 cache: 384 KiB L2 cache: 3072 KiB L3 cache: 32.0 MiB bogomips: 86238 
-  Speed: 2196 MHz min/max: 2200/3600 MHz boost: enabled Core speeds (MHz): 
-  1: 2194 2: 2196 3: 2189 4: 2191 5: 2194 6: 2194 7: 2196 8: 2194 9: 2200 
-  10: 2197 11: 2187 12: 2191 
-  Flags: 3dnowprefetch abm adx aes aperfmperf apic arat avic avx avx2 bmi1 
-  bmi2 bpext cat_l3 cdp_l3 clflush clflushopt clwb clzero cmov cmp_legacy 
-  constant_tsc cpb cpuid cqm cqm_llc cqm_mbm_local cqm_mbm_total 
-  cqm_occup_llc cr8_legacy cx16 cx8 de decodeassists extapic extd_apicid 
-  f16c flushbyasid fma fpu fsgsbase fxsr fxsr_opt ht hw_pstate ibpb ibs 
-  irperf lahf_lm lbrv lm mca mce misalignsse mmx mmxext monitor movbe msr 
-  mtrr mwaitx nonstop_tsc nopl npt nrip_save nx osvw overflow_recov pae pat 
-  pausefilter pclmulqdq pdpe1gb perfctr_core perfctr_llc perfctr_nb 
-  pfthreshold pge pni popcnt pse pse36 rdpid rdrand rdseed rdt_a rdtscp 
-  rep_good sep sha_ni skinit smap smca sme smep sse sse2 sse4_1 sse4_2 sse4a 
-  ssse3 stibp succor svm svm_lock syscall tce topoext tsc tsc_scale umip 
-  v_vmsave_vmload vgif vmcb_clean vme vmmcall wdt xgetbv1 xsave xsavec 
-  xsaveerptr xsaveopt xsaves 
+  Topology: 6-Core model: AMD Ryzen 5 3600 bits: 64 type: MT MCP arch: Zen
+  L1 cache: 384 KiB L2 cache: 3072 KiB L3 cache: 32.0 MiB bogomips: 86238
+  Speed: 2196 MHz min/max: 2200/3600 MHz boost: enabled Core speeds (MHz):
+  1: 2194 2: 2196 3: 2189 4: 2191 5: 2194 6: 2194 7: 2196 8: 2194 9: 2200
+  10: 2197 11: 2187 12: 2191
+  Flags: 3dnowprefetch abm adx aes aperfmperf apic arat avic avx avx2 bmi1
+  bmi2 bpext cat_l3 cdp_l3 clflush clflushopt clwb clzero cmov cmp_legacy
+  constant_tsc cpb cpuid cqm cqm_llc cqm_mbm_local cqm_mbm_total
+  cqm_occup_llc cr8_legacy cx16 cx8 de decodeassists extapic extd_apicid
+  f16c flushbyasid fma fpu fsgsbase fxsr fxsr_opt ht hw_pstate ibpb ibs
+  irperf lahf_lm lbrv lm mca mce misalignsse mmx mmxext monitor movbe msr
+  mtrr mwaitx nonstop_tsc nopl npt nrip_save nx osvw overflow_recov pae pat
+  pausefilter pclmulqdq pdpe1gb perfctr_core perfctr_llc perfctr_nb
+  pfthreshold pge pni popcnt pse pse36 rdpid rdrand rdseed rdt_a rdtscp
+  rep_good sep sha_ni skinit smap smca sme smep sse sse2 sse4_1 sse4_2 sse4a
+  ssse3 stibp succor svm svm_lock syscall tce topoext tsc tsc_scale umip
+  v_vmsave_vmload vgif vmcb_clean vme vmmcall wdt xgetbv1 xsave xsavec
+  xsaveerptr xsaveopt xsaves
 Sensors:
-  Message: No sensors data was found. Is sensors configured? 
+  Message: No sensors data was found. Is sensors configured?
 Processes:
-  CPU top: 5 
-  1: cpu: 1.4% command: xorg pid: 1105 mem: 65.0 MiB (0.4%) 
-  2: cpu: 0.6% command: libsystemload.so started by: wrapper-2.0 pid: 1822 
-  mem: 25.6 MiB (0.1%) 
-  3: cpu: 0.5% command: init pid: 1 mem: 9.21 MiB (0.0%) 
-  4: cpu: 0.5% command: flatpak-system-helper pid: 1933 mem: 23.2 MiB (0.1%) 
-  5: cpu: 0.5% command: xfce4-terminal pid: 2501 mem: 38.2 MiB (0.2%) 
-  Memory top: 5 
-  1: mem: 65.0 MiB (0.4%) command: xorg pid: 1105 cpu: 1.4% 
-  2: mem: 63.0 MiB (0.3%) command: mintupdate pid: 1701 cpu: 0.2% 
-  3: mem: 58.0 MiB (0.3%) command: xfdesktop pid: 1670 cpu: 0.1% 
-  4: mem: 39.1 MiB (0.2%) command: nm-applet pid: 1680 cpu: 0.1% 
-  5: mem: 38.2 MiB (0.2%) command: xfce4-terminal pid: 2501 cpu: 0.5% 
+  CPU top: 5
+  1: cpu: 1.4% command: xorg pid: 1105 mem: 65.0 MiB (0.4%)
+  2: cpu: 0.6% command: libsystemload.so started by: wrapper-2.0 pid: 1822
+  mem: 25.6 MiB (0.1%)
+  3: cpu: 0.5% command: init pid: 1 mem: 9.21 MiB (0.0%)
+  4: cpu: 0.5% command: flatpak-system-helper pid: 1933 mem: 23.2 MiB (0.1%)
+  5: cpu: 0.5% command: xfce4-terminal pid: 2501 mem: 38.2 MiB (0.2%)
+  Memory top: 5
+  1: mem: 65.0 MiB (0.4%) command: xorg pid: 1105 cpu: 1.4%
+  2: mem: 63.0 MiB (0.3%) command: mintupdate pid: 1701 cpu: 0.2%
+  3: mem: 58.0 MiB (0.3%) command: xfdesktop pid: 1670 cpu: 0.1%
+  4: mem: 39.1 MiB (0.2%) command: nm-applet pid: 1680 cpu: 0.1%
+  5: mem: 38.2 MiB (0.2%) command: xfce4-terminal pid: 2501 cpu: 0.5%
 Info:
-  Processes: 293 Uptime: 2m Init: systemd v: 237 runlevel: 5 Compilers: 
-  gcc: 7.5.0 alt: 7 Shell: bash (sudo) v: 4.4.20 running in: simd-ai-bm 
-  inxi: 3.0.27 
+  Processes: 293 Uptime: 2m Init: systemd v: 237 runlevel: 5 Compilers:
+  gcc: 7.5.0 alt: 7 Shell: bash (sudo) v: 4.4.20 running in: simd-ai-bm
+  inxi: 3.0.27
 
 Measure:   by 1000 megacycles
 
 SIMD Arithmetic Instructions Single-Thread Benchmark start ...
 
-MMX:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for MMX instructions (1 thread(s)) ... st_bm_cpt = 1048576 choosed, calibration done.
-
+MMX:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD MMX 8-bit Integer Arithmetic Instructions with 64-bit vectors ...
-	   paddb	_mm_add_pi8        	   8 values	 0.400634527206 sec	 4.01e-10 sec	 0.400635 sec	     19.97 gops
-	   paddsb	_mm_adds_pi8      	   8 values	 0.393544435501 sec	 3.94e-10 sec	 0.393544 sec	     20.33 gops
-	   paddusb	_mm_adds_pu8     	   8 values	 0.396908521652 sec	 3.97e-10 sec	 0.396909 sec	     20.16 gops
-	   psubb	_mm_sub_pi8        	   8 values	 0.397421121597 sec	 3.97e-10 sec	 0.397421 sec	     20.13 gops
-	   psubsb	_mm_subs_pi8      	   8 values	 0.397497653961 sec	 3.97e-10 sec	 0.397498 sec	     20.13 gops
-	   psubusb	_mm_subs_pu8     	   8 values	 0.398818731308 sec	 3.99e-10 sec	 0.398819 sec	     20.06 gops
-	   paddb	_m_paddb           	   8 values	 0.396830081940 sec	 3.97e-10 sec	 0.396830 sec	     20.16 gops
-	   paddsb	_m_paddsb         	   8 values	 0.396732091904 sec	 3.97e-10 sec	 0.396732 sec	     20.16 gops
-	   paddusb	_m_paddusb       	   8 values	 0.396536588669 sec	 3.97e-10 sec	 0.396537 sec	     20.17 gops
-	   psubb	_m_psubb           	   8 values	 0.397030830383 sec	 3.97e-10 sec	 0.397031 sec	     20.15 gops
-	   psubsb	_m_psubsb         	   8 values	 0.396975278854 sec	 3.97e-10 sec	 0.396975 sec	     20.15 gops
-	   psubusb	_m_psubusb       	   8 values	 0.397030353546 sec	 3.97e-10 sec	 0.397030 sec	     20.15 gops
+	   paddb	_mm_add_pi8        	   8 values	 0.315856218338 sec	 3.16e-10 sec	 0.315856 sec	     25.33 gops	    0.000013351440 sec	    599.186 tops
+	   paddsb	_mm_adds_pi8      	   8 values	 0.317024469376 sec	 3.17e-10 sec	 0.317024 sec	     25.23 gops	    0.000013113022 sec	    610.081 tops
+	   paddusb	_mm_adds_pu8     	   8 values	 0.319211721420 sec	 3.19e-10 sec	 0.319212 sec	     25.06 gops	    0.000016450882 sec	    486.296 tops
+	   psubb	_mm_sub_pi8        	   8 values	 0.316050767899 sec	 3.16e-10 sec	 0.316051 sec	     25.31 gops	    0.000013589859 sec	    588.674 tops
+	   psubsb	_mm_subs_pi8      	   8 values	 0.308345079422 sec	 3.08e-10 sec	 0.308345 sec	     25.94 gops	    0.000011205673 sec	    713.924 tops
+	   psubusb	_mm_subs_pu8     	   8 values	 0.307754278183 sec	 3.08e-10 sec	 0.307754 sec	     25.99 gops	    0.000013351440 sec	    599.186 tops
+	   paddb	_m_paddb           	   8 values	 0.307802915573 sec	 3.08e-10 sec	 0.307803 sec	     25.99 gops	    0.000018358231 sec	    435.772 tops
+	   paddsb	_m_paddsb         	   8 values	 0.306124448776 sec	 3.06e-10 sec	 0.306124 sec	     26.13 gops	    0.000007152557 sec	   1118.481 tops
+	   paddusb	_m_paddusb       	   8 values	 0.306673049927 sec	 3.07e-10 sec	 0.306673 sec	     26.09 gops	    0.000006675720 sec	   1198.373 tops
+	   psubb	_m_psubb           	   8 values	 0.315140724182 sec	 3.15e-10 sec	 0.315141 sec	     25.39 gops	    0.000011682510 sec	    684.784 tops
+	   psubsb	_m_psubsb         	   8 values	 0.316560983658 sec	 3.17e-10 sec	 0.316561 sec	     25.27 gops	    0.000008106232 sec	    986.895 tops
+	   psubusb	_m_psubusb       	   8 values	 0.311350107193 sec	 3.11e-10 sec	 0.311350 sec	     25.69 gops	    0.000013351440 sec	    599.186 tops
       SIMD MMX 16-bit Integer Arithmetic Instructions with 64-bit vectors ...
-	   paddw	_mm_add_pi16       	   4 values	 0.487910032272 sec	 4.88e-10 sec	 0.487910 sec	      8.20 gops
-	   paddsw	_mm_adds_pi16     	   4 values	 0.481462478638 sec	 4.81e-10 sec	 0.481462 sec	      8.31 gops
-	   paddusw	_mm_adds_pu16    	   4 values	 0.481444597244 sec	 4.81e-10 sec	 0.481445 sec	      8.31 gops
-	   pmaddwd	_mm_madd_pi16    	   4 values	 0.481792688370 sec	 4.82e-10 sec	 0.481793 sec	      8.30 gops
-	   pmulhw	_mm_mulhi_pi16    	   4 values	 0.481835842133 sec	 4.82e-10 sec	 0.481836 sec	      8.30 gops
-	   pmullw	_mm_mullo_pi16    	   4 values	 0.481628656387 sec	 4.82e-10 sec	 0.481629 sec	      8.31 gops
-	   psubw	_mm_sub_pi16       	   4 values	 0.481300592422 sec	 4.81e-10 sec	 0.481301 sec	      8.31 gops
-	   psubsw	_mm_subs_pi16     	   4 values	 0.481280803680 sec	 4.81e-10 sec	 0.481281 sec	      8.31 gops
-	   psubusw	_mm_subs_pu16    	   4 values	 0.481375694275 sec	 4.81e-10 sec	 0.481376 sec	      8.31 gops
-	   paddsw	_m_paddsw         	   4 values	 0.481375694275 sec	 4.81e-10 sec	 0.481376 sec	      8.31 gops
-	   paddusw	_m_paddusw       	   4 values	 0.481269836426 sec	 4.81e-10 sec	 0.481270 sec	      8.31 gops
-	   paddw	_m_paddw           	   4 values	 0.481429815292 sec	 4.81e-10 sec	 0.481430 sec	      8.31 gops
-	   psubsw	_m_psubsw         	   4 values	 0.481297731400 sec	 4.81e-10 sec	 0.481298 sec	      8.31 gops
-	   psubusw	_m_psubusw       	   4 values	 0.481205224991 sec	 4.81e-10 sec	 0.481205 sec	      8.31 gops
-	   psubw	_m_psubw           	   4 values	 0.481347560883 sec	 4.81e-10 sec	 0.481348 sec	      8.31 gops
-	   pmaddwd	_m_pmaddwd       	   4 values	 0.481628179550 sec	 4.82e-10 sec	 0.481628 sec	      8.31 gops
-	   pmulhw	_m_pmulhw         	   4 values	 0.481559276581 sec	 4.82e-10 sec	 0.481559 sec	      8.31 gops
-	   pmullw	_m_pmullw         	   4 values	 0.481411218643 sec	 4.81e-10 sec	 0.481411 sec	      8.31 gops
+	   paddw	_mm_add_pi16       	   4 values	 0.312109708786 sec	 3.12e-10 sec	 0.312110 sec	     12.82 gops	    0.000013589859 sec	    294.337 tops
+	   paddsw	_mm_adds_pi16     	   4 values	 0.306884765625 sec	 3.07e-10 sec	 0.306885 sec	     13.03 gops	    0.000015735626 sec	    254.200 tops
+	   paddusw	_mm_adds_pu16    	   4 values	 0.306162595749 sec	 3.06e-10 sec	 0.306163 sec	     13.06 gops	    0.000008821487 sec	    453.438 tops
+	   pmaddwd	_mm_madd_pi16    	   4 values	 0.325078010559 sec	 3.25e-10 sec	 0.325078 sec	     12.30 gops	    0.000011205673 sec	    356.962 tops
+	   pmulhw	_mm_mulhi_pi16    	   4 values	 0.336402654648 sec	 3.36e-10 sec	 0.336403 sec	     11.89 gops	    0.000012397766 sec	    322.639 tops
+	   pmullw	_mm_mullo_pi16    	   4 values	 0.323762655258 sec	 3.24e-10 sec	 0.323763 sec	     12.35 gops	    0.000014066696 sec	    284.360 tops
+	   psubw	_mm_sub_pi16       	   4 values	 0.311530351639 sec	 3.12e-10 sec	 0.311530 sec	     12.84 gops	    0.000012159348 sec	    328.965 tops
+	   psubsw	_mm_subs_pi16     	   4 values	 0.311235189438 sec	 3.11e-10 sec	 0.311235 sec	     12.85 gops	    0.000012397766 sec	    322.639 tops
+	   psubusw	_mm_subs_pu16    	   4 values	 0.312540531158 sec	 3.13e-10 sec	 0.312541 sec	     12.80 gops	    0.000013828278 sec	    289.262 tops
+	   paddsw	_m_paddsw         	   4 values	 0.306732416153 sec	 3.07e-10 sec	 0.306732 sec	     13.04 gops	    0.000017881393 sec	    223.696 tops
+	   paddusw	_m_paddusw       	   4 values	 0.305974960327 sec	 3.06e-10 sec	 0.305975 sec	     13.07 gops	    0.000016689301 sec	    239.675 tops
+	   paddw	_m_paddw           	   4 values	 0.309322357178 sec	 3.09e-10 sec	 0.309322 sec	     12.93 gops	    0.000016450882 sec	    243.148 tops
+	   psubsw	_m_psubsw         	   4 values	 0.315110206604 sec	 3.15e-10 sec	 0.315110 sec	     12.69 gops	    0.000008821487 sec	    453.438 tops
+	   psubusw	_m_psubusw       	   4 values	 0.311286926270 sec	 3.11e-10 sec	 0.311287 sec	     12.85 gops	    0.000012397766 sec	    322.639 tops
+	   psubw	_m_psubw           	   4 values	 0.309443473816 sec	 3.09e-10 sec	 0.309443 sec	     12.93 gops	    0.000013113022 sec	    305.040 tops
+	   pmaddwd	_m_pmaddwd       	   4 values	 0.314777612686 sec	 3.15e-10 sec	 0.314778 sec	     12.71 gops	    0.000009775162 sec	    409.200 tops
+	   pmulhw	_m_pmulhw         	   4 values	 0.317692518234 sec	 3.18e-10 sec	 0.317693 sec	     12.59 gops	    0.000007152557 sec	    559.241 tops
+	   pmullw	_m_pmullw         	   4 values	 0.309413909912 sec	 3.09e-10 sec	 0.309414 sec	     12.93 gops	    0.000010013580 sec	    399.458 tops
       SIMD MMX 32-bit Integer Arithmetic Instructions with 64-bit vectors ...
-	   paddd	_mm_add_pi32    	   2 values	 0.324527263641 sec	 3.25e-10 sec	 0.324527 sec	      6.16 gops
-	   paddd	_m_paddd        	   2 values	 0.295483350754 sec	 2.95e-10 sec	 0.295483 sec	      6.77 gops
-	   psubd	_mm_sub_pi32    	   2 values	 0.481388568878 sec	 4.81e-10 sec	 0.481389 sec	      4.15 gops
-	   psubd	_m_psubd        	   2 values	 0.295164585114 sec	 2.95e-10 sec	 0.295165 sec	      6.78 gops
+	   paddd	_mm_add_pi32    	   2 values	 0.318404674530 sec	 3.18e-10 sec	 0.318405 sec	      6.28 gops	    0.000012159348 sec	    164.483 tops
+	   paddd	_m_paddd        	   2 values	 0.308856487274 sec	 3.09e-10 sec	 0.308856 sec	      6.48 gops	    0.000023126602 sec	     86.480 tops
+	   psubd	_mm_sub_pi32    	   2 values	 0.306389331818 sec	 3.06e-10 sec	 0.306389 sec	      6.53 gops	    0.000011920929 sec	    167.772 tops
+	   psubd	_m_psubd        	   2 values	 0.502414703369 sec	 5.02e-10 sec	 0.502415 sec	      3.98 gops	    0.000011205673 sec	    178.481 tops
 
-SSE:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for SSE instructions (1 thread(s)) ... st_bm_cpt = 524288 choosed, calibration done.
-
+SSE:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD SSE 8-bit Integer Arithmetic Instructions with 64-bit vectors ...
-	   psadbw	_m_psadbw()        	   8 values	 0.285121679306 sec	 2.85e-10 sec	 0.285122 sec	     28.06 gops
-	   psadbw	_mm_sad_pu8()      	   8 values	 0.283256530762 sec	 2.83e-10 sec	 0.283257 sec	     28.24 gops
+	   psadbw	_m_psadbw()        	   8 values	 0.299969434738 sec	 3.00e-10 sec	 0.299969 sec	     26.67 gops	    0.000010013580 sec	    798.915 tops
+	   psadbw	_mm_sad_pu8()      	   8 values	 0.295430660248 sec	 2.95e-10 sec	 0.295431 sec	     27.08 gops	    0.000006437302 sec	   1242.757 tops
       SIMD SSE 16-bit Integer Arithmetic Instructions with 64-bit vectors ...
-	   pmulhuw	_m_pmulhuw()      	   4 values	 0.291043281555 sec	 2.91e-10 sec	 0.291043 sec	     13.74 gops
-	   pmulhuw	_mm_mulhi_pu16()  	   4 values	 0.282251358032 sec	 2.82e-10 sec	 0.282251 sec	     14.17 gops
+	   pmulhuw	_m_pmulhuw()      	   4 values	 0.496263504028 sec	 4.96e-10 sec	 0.496264 sec	      8.06 gops	    0.000022888184 sec	    174.763 tops
+	   pmulhuw	_mm_mulhi_pu16()  	   4 values	 0.501634359360 sec	 5.02e-10 sec	 0.501634 sec	      7.97 gops	    0.000018358231 sec	    217.886 tops
       SIMD SSE 32-bit Single-Precision Arithmetic Instructions with 128-bit vectors ...
-	   addps   	_mm_add_ps()     	   4 values	 0.329459905624 sec	 3.29e-10 sec	 0.329460 sec	     12.14 gops
-	   addss   	_mm_add_ss()     	   4 values	 0.343334436417 sec	 3.43e-10 sec	 0.343334 sec	     11.65 gops
-	   divps   	_mm_div_ps()     	   4 values	 0.324093341827 sec	 3.24e-10 sec	 0.324093 sec	     12.34 gops
-	   divss   	_mm_div_ss()     	   4 values	 0.840152025223 sec	 8.40e-10 sec	 0.840152 sec	      4.76 gops
-	   mulps   	_mm_mul_ps()     	   4 values	 0.324071168900 sec	 3.24e-10 sec	 0.324071 sec	     12.34 gops
-	   mulss   	_mm_mul_ss()     	   4 values	 0.363596439362 sec	 3.64e-10 sec	 0.363596 sec	     11.00 gops
-	   subps   	_mm_sub_ps()     	   4 values	 0.324345588684 sec	 3.24e-10 sec	 0.324346 sec	     12.33 gops
-	   subss   	_mm_sub_ss()     	   4 values	 0.491079807281 sec	 4.91e-10 sec	 0.491080 sec	      8.15 gops
+	   addps   	_mm_add_ps()     	   4 values	 0.354749202728 sec	 3.55e-10 sec	 0.354749 sec	     11.28 gops	    0.000015020370 sec	    266.305 tops
+	   addss   	_mm_add_ss()     	   4 values	 0.520327329636 sec	 5.20e-10 sec	 0.520327 sec	      7.69 gops	    0.000018358231 sec	    217.886 tops
+	   divps   	_mm_div_ps()     	   4 values	 0.340930461884 sec	 3.41e-10 sec	 0.340930 sec	     11.73 gops	    0.000009298325 sec	    430.185 tops
+	   divss   	_mm_div_ss()     	   4 values	 0.852185726166 sec	 8.52e-10 sec	 0.852186 sec	      4.69 gops	    0.000013351440 sec	    299.593 tops
+	   mulps   	_mm_mul_ps()     	   4 values	 0.341251611710 sec	 3.41e-10 sec	 0.341252 sec	     11.72 gops	    0.000009536743 sec	    419.430 tops
+	   mulss   	_mm_mul_ss()     	   4 values	 0.379517793655 sec	 3.80e-10 sec	 0.379518 sec	     10.54 gops	    0.000011205673 sec	    356.962 tops
+	   subps   	_mm_sub_ps()     	   4 values	 0.340291738510 sec	 3.40e-10 sec	 0.340292 sec	     11.75 gops	    0.000010251999 sec	    390.168 tops
+	   subss   	_mm_sub_ss()     	   4 values	 0.380036115646 sec	 3.80e-10 sec	 0.380036 sec	     10.53 gops	    0.000007390976 sec	    541.201 tops
 
-SSE2:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for SSE2 instructions (1 thread(s)) ... st_bm_cpt = 262144 choosed, calibration done.
-
+SSE2:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD SSE2 8-bit Integer Arithmetic Instructions with 128-bit vectors ...
-	   paddb  	_mm_add_epi8    	  16 values	 0.317072629929 sec	 3.17e-10 sec	 0.317073 sec	     50.46 gops
-	   paddsb 	_mm_adds_epi8   	  16 values	 0.316907644272 sec	 3.17e-10 sec	 0.316908 sec	     50.49 gops
-	   paddusb	_mm_adds_epu8   	  16 values	 0.489127159119 sec	 4.89e-10 sec	 0.489127 sec	     32.71 gops
-	   psadbw 	_mm_sad_epu8    	  16 values	 0.364154577255 sec	 3.64e-10 sec	 0.364155 sec	     43.94 gops
-	   psubb  	_mm_sub_epi8    	  16 values	 0.317383766174 sec	 3.17e-10 sec	 0.317384 sec	     50.41 gops
-	   psubsb 	_mm_subs_epi8   	  16 values	 0.491161584854 sec	 4.91e-10 sec	 0.491162 sec	     32.58 gops
-	   psubusb	_mm_subs_epu8   	  16 values	 0.491411447525 sec	 4.91e-10 sec	 0.491411 sec	     32.56 gops
+	   paddb  	_mm_add_epi8    	  16 values	 0.349127292633 sec	 3.49e-10 sec	 0.349127 sec	     45.83 gops	    0.000019788742 sec	    808.541 tops
+	   paddsb 	_mm_adds_epi8   	  16 values	 0.334248542786 sec	 3.34e-10 sec	 0.334249 sec	     47.87 gops	    0.000010251999 sec	   1560.671 tops
+	   paddusb	_mm_adds_epu8   	  16 values	 0.335228681564 sec	 3.35e-10 sec	 0.335229 sec	     47.73 gops	    0.000010013580 sec	   1597.830 tops
+	   psadbw 	_mm_sad_epu8    	  16 values	 0.386704921722 sec	 3.87e-10 sec	 0.386705 sec	     41.38 gops	    0.000013589859 sec	   1177.348 tops
+	   psubb  	_mm_sub_epi8    	  16 values	 0.335420131683 sec	 3.35e-10 sec	 0.335420 sec	     47.70 gops	    0.000016450882 sec	    972.592 tops
+	   psubsb 	_mm_subs_epi8   	  16 values	 0.414517402649 sec	 4.15e-10 sec	 0.414517 sec	     38.60 gops	    0.000021457672 sec	    745.654 tops
+	   psubusb	_mm_subs_epu8   	  16 values	 0.380482912064 sec	 3.80e-10 sec	 0.380483 sec	     42.05 gops	    0.000010728836 sec	   1491.308 tops
       SIMD SSE2 16-bit Integer Arithmetic Instructions with 128-bit vectors ...
-	   paddw  	_mm_add_epi16()    	   8 values	 0.351966857910 sec	 3.52e-10 sec	 0.351967 sec	     22.73 gops
-	   paddsw 	_mm_adds_epi16()   	   8 values	 0.344375848770 sec	 3.44e-10 sec	 0.344376 sec	     23.23 gops
-	   paddusw	_mm_adds_epu16()   	   8 values	 0.344381332397 sec	 3.44e-10 sec	 0.344381 sec	     23.23 gops
-	   pmaddwd	_mm_madd_epi16()   	   8 values	 0.347472667694 sec	 3.47e-10 sec	 0.347473 sec	     23.02 gops
-	   pmulhw 	_mm_mulhi_epi16()  	   8 values	 0.347772121429 sec	 3.48e-10 sec	 0.347772 sec	     23.00 gops
-	   pmulhuw	_mm_mulhi_epu16()  	   8 values	 0.347319602966 sec	 3.47e-10 sec	 0.347320 sec	     23.03 gops
-	   pmullw 	_mm_mullo_epi16()  	   8 values	 0.347122430801 sec	 3.47e-10 sec	 0.347122 sec	     23.05 gops
-	   psubw  	_mm_sub_epi16()    	   8 values	 0.344448089600 sec	 3.44e-10 sec	 0.344448 sec	     23.23 gops
-	   psubsw 	_mm_subs_epi16()   	   8 values	 0.489280462265 sec	 4.89e-10 sec	 0.489280 sec	     16.35 gops
-	   psubusw	_mm_subs_epu16()   	   8 values	 0.449207782745 sec	 4.49e-10 sec	 0.449208 sec	     17.81 gops
+	   paddw  	_mm_add_epi16()    	   8 values	 0.350796699524 sec	 3.51e-10 sec	 0.350797 sec	     22.81 gops	    0.000015020370 sec	    532.610 tops
+	   paddsw 	_mm_adds_epi16()   	   8 values	 0.344971179962 sec	 3.45e-10 sec	 0.344971 sec	     23.19 gops	    0.000012159348 sec	    657.930 tops
+	   paddusw	_mm_adds_epu16()   	   8 values	 0.341518402100 sec	 3.42e-10 sec	 0.341518 sec	     23.42 gops	    0.000014066696 sec	    568.719 tops
+	   pmaddwd	_mm_madd_epi16()   	   8 values	 0.344071149826 sec	 3.44e-10 sec	 0.344071 sec	     23.25 gops	    0.000016689301 sec	    479.349 tops
+	   pmulhw 	_mm_mulhi_epi16()  	   8 values	 0.509933710098 sec	 5.10e-10 sec	 0.509934 sec	     15.69 gops	    0.000015020370 sec	    532.610 tops
+	   pmulhuw	_mm_mulhi_epu16()  	   8 values	 0.345184564590 sec	 3.45e-10 sec	 0.345185 sec	     23.18 gops	    0.000017642975 sec	    453.438 tops
+	   pmullw 	_mm_mullo_epi16()  	   8 values	 0.344789743423 sec	 3.45e-10 sec	 0.344790 sec	     23.20 gops	    0.000006198883 sec	   1290.555 tops
+	   psubw  	_mm_sub_epi16()    	   8 values	 0.339557886124 sec	 3.40e-10 sec	 0.339558 sec	     23.56 gops	    0.000008583069 sec	    932.068 tops
+	   psubsw 	_mm_subs_epi16()   	   8 values	 0.385126590729 sec	 3.85e-10 sec	 0.385127 sec	     20.77 gops	    0.000010967255 sec	    729.444 tops
+	   psubusw	_mm_subs_epu16()   	   8 values	 0.388806819916 sec	 3.89e-10 sec	 0.388807 sec	     20.58 gops	    0.000010251999 sec	    780.336 tops
       SIMD SSE2 32-bit Integer Arithmetic Instructions with 64-bit & 128-bit vectors ...
-	   paddd  	_mm_add_epi32() 	   4 values	 0.328223705292 sec	 3.28e-10 sec	 0.328224 sec	     12.19 gops
-	   pmuludq	_mm_mul_epu32() 	   4 values	 0.504843711853 sec	 5.05e-10 sec	 0.504844 sec	      7.92 gops
-	   pmuludq	_mm_mul_su32()  	   2 values	 0.373255491257 sec	 3.73e-10 sec	 0.373255 sec	      5.36 gops
-	   psubd  	_mm_sub_epi32() 	   4 values	 0.323542118073 sec	 3.24e-10 sec	 0.323542 sec	     12.36 gops
+	   paddd  	_mm_add_epi32() 	   4 values	 0.351787090302 sec	 3.52e-10 sec	 0.351787 sec	     11.37 gops	    0.000011444092 sec	    349.525 tops
+	   pmuludq	_mm_mul_epu32() 	   4 values	 0.513079643250 sec	 5.13e-10 sec	 0.513080 sec	      7.80 gops	    0.000007867813 sec	    508.400 tops
+	   pmuludq	_mm_mul_su32()  	   2 values	 0.387045860291 sec	 3.87e-10 sec	 0.387046 sec	      5.17 gops	    0.000011920929 sec	    167.772 tops
+	   psubd  	_mm_sub_epi32() 	   4 values	 0.337824344635 sec	 3.38e-10 sec	 0.337824 sec	     11.84 gops	    0.000012636185 sec	    316.551 tops
       SIMD SSE2 64-bit Integer Arithmetic Instructions with 64-bit & 128-bit vectors ...
-	   paddq	_mm_add_epi64()   	   2 values	 0.323374032974 sec	 3.23e-10 sec	 0.323374 sec	      6.18 gops
-	   paddq	_mm_add_si64()    	   1 values	 0.357807159424 sec	 3.58e-10 sec	 0.357807 sec	      2.79 gops
-	   psubq	_mm_sub_epi64()   	   2 values	 0.315891742706 sec	 3.16e-10 sec	 0.315892 sec	      6.33 gops
-	   psubq	_mm_sub_si64()    	   1 values	 0.358314275742 sec	 3.58e-10 sec	 0.358314 sec	      2.79 gops
+	   paddq	_mm_add_epi64()   	   2 values	 0.520017623901 sec	 5.20e-10 sec	 0.520018 sec	      3.85 gops	    0.000015735626 sec	    127.100 tops
+	   paddq	_mm_add_si64()    	   1 values	 0.516015291214 sec	 5.16e-10 sec	 0.516015 sec	      1.94 gops	    0.000010728836 sec	     93.207 tops
+	   psubq	_mm_sub_epi64()   	   2 values	 0.339315414429 sec	 3.39e-10 sec	 0.339315 sec	      5.89 gops	    0.000013828278 sec	    144.631 tops
+	   psubq	_mm_sub_si64()    	   1 values	 0.380518436432 sec	 3.81e-10 sec	 0.380518 sec	      2.63 gops	    0.000009775162 sec	    102.300 tops
       SIMD SSE2 64-bit Double-Precision Arithmetic Instructions with 128-bit vectors ...
-	   addpd   	_mm_add_pd()    	   2 values	 0.337121248245 sec	 3.37e-10 sec	 0.337121 sec	      5.93 gops
-	   addsd   	_mm_add_sd()    	   2 values	 0.354248046875 sec	 3.54e-10 sec	 0.354248 sec	      5.65 gops
-	   divpd   	_mm_div_pd()    	   2 values	 0.331436157227 sec	 3.31e-10 sec	 0.331436 sec	      6.03 gops
-	   divsd   	_mm_div_sd()    	   2 values	 1.202302694321 sec	 1.20e-09 sec	 1.202303 sec	      1.66 gops
-	   mulpd   	_mm_mul_pd()    	   2 values	 0.331186056137 sec	 3.31e-10 sec	 0.331186 sec	      6.04 gops
-	   mulsd   	_mm_mul_sd()    	   2 values	 0.384098052979 sec	 3.84e-10 sec	 0.384098 sec	      5.21 gops
-	   subpd   	_mm_sub_pd()    	   2 values	 0.335356712341 sec	 3.35e-10 sec	 0.335357 sec	      5.96 gops
-	   subsd   	_mm_sub_sd()    	   2 values	 0.507097244263 sec	 5.07e-10 sec	 0.507097 sec	      3.94 gops
+	   addpd   	_mm_add_pd()    	   2 values	 0.513790845871 sec	 5.14e-10 sec	 0.513791 sec	      3.89 gops	    0.000011444092 sec	    174.763 tops
+	   addsd   	_mm_add_sd()    	   2 values	 0.364524841309 sec	 3.65e-10 sec	 0.364525 sec	      5.49 gops	    0.000010251999 sec	    195.084 tops
+	   divpd   	_mm_div_pd()    	   2 values	 0.345092058182 sec	 3.45e-10 sec	 0.345092 sec	      5.80 gops	    0.000010490417 sec	    190.650 tops
+	   divsd   	_mm_div_sd()    	   2 values	 1.215905427933 sec	 1.22e-09 sec	 1.215905 sec	      1.64 gops	    0.000013828278 sec	    144.631 tops
+	   mulpd   	_mm_mul_pd()    	   2 values	 0.533504962921 sec	 5.34e-10 sec	 0.533505 sec	      3.75 gops	    0.000013113022 sec	    152.520 tops
+	   mulsd   	_mm_mul_sd()    	   2 values	 0.384473800659 sec	 3.84e-10 sec	 0.384474 sec	      5.20 gops	    0.000011682510 sec	    171.196 tops
+	   subpd   	_mm_sub_pd()    	   2 values	 0.350390195847 sec	 3.50e-10 sec	 0.350390 sec	      5.71 gops	    0.000009536743 sec	    209.715 tops
+	   subsd   	_mm_sub_sd()    	   2 values	 0.384327411652 sec	 3.84e-10 sec	 0.384327 sec	      5.20 gops	    0.000006914139 sec	    289.262 tops
 
-SSE3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for SSE3 instructions (1 thread(s)) ... st_bm_cpt = 262144 choosed, calibration done.
-
+SSE3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD SSE3 32-bit Single-Precision Arithmetic Instructions with 128-bit vectors ...
-	   addsubps	_mm_addsub_ps()  	   4 values	 0.373181343079 sec	 3.73e-10 sec	 0.373181 sec	     10.72 gops
-	   haddps  	_mm_hadd_ps()    	   4 values	 0.645287990570 sec	 6.45e-10 sec	 0.645288 sec	      6.20 gops
-	   hsubps  	_mm_hsub_ps()    	   4 values	 0.649486064911 sec	 6.49e-10 sec	 0.649486 sec	      6.16 gops
+	   addsubps	_mm_addsub_ps()  	   4 values	 0.514651775360 sec	 5.15e-10 sec	 0.514652 sec	      7.77 gops	    0.000018596649 sec	    215.093 tops
+	   haddps  	_mm_hadd_ps()    	   4 values	 0.665215492249 sec	 6.65e-10 sec	 0.665215 sec	      6.01 gops	    0.000013113022 sec	    305.040 tops
+	   hsubps  	_mm_hsub_ps()    	   4 values	 0.671892642975 sec	 6.72e-10 sec	 0.671893 sec	      5.95 gops	    0.000009536743 sec	    419.430 tops
       SIMD SSE3 64-bit Double-Precision Arithmetic Instructions with 128-bit vectors ...
-	   addsubpd	_mm_addsub_pd()  	   2 values	 0.497534275055 sec	 4.98e-10 sec	 0.497534 sec	      4.02 gops
-	   haddpd  	_mm_hadd_pd()    	   2 values	 0.641355514526 sec	 6.41e-10 sec	 0.641356 sec	      3.12 gops
-	   hsubpd  	_mm_hsub_pd()    	   2 values	 0.641957759857 sec	 6.42e-10 sec	 0.641958 sec	      3.12 gops
+	   addsubpd	_mm_addsub_pd()  	   2 values	 0.535021781921 sec	 5.35e-10 sec	 0.535022 sec	      3.74 gops	    0.000011205673 sec	    178.481 tops
+	   haddpd  	_mm_hadd_pd()    	   2 values	 0.668954372406 sec	 6.69e-10 sec	 0.668954 sec	      2.99 gops	    0.000009775162 sec	    204.600 tops
+	   hsubpd  	_mm_hsub_pd()    	   2 values	 0.670571804047 sec	 6.71e-10 sec	 0.670572 sec	      2.98 gops	    0.000013113022 sec	    152.520 tops
 
-SSSE3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for SSSE3 instructions (1 thread(s)) ... st_bm_cpt = 262144 choosed, calibration done.
-
+SSSE3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD SSSE3 8-bit Integer Arithmetic Instructions with 64-bit & 128-bit vectors ...
-	   psignb	_mm_sign_epi8()     	  16 values	 0.372078418732 sec	 3.72e-10 sec	 0.372078 sec	     43.00 gops
-	   psignb	_mm_sign_pi8()      	   8 values	 0.491935253143 sec	 4.92e-10 sec	 0.491935 sec	     16.26 gops
+	   psignb	_mm_sign_epi8()     	  16 values	 0.387242317200 sec	 3.87e-10 sec	 0.387242 sec	     41.32 gops	    0.000009775162 sec	   1636.802 tops
+	   psignb	_mm_sign_pi8()      	   8 values	 0.381098985672 sec	 3.81e-10 sec	 0.381099 sec	     20.99 gops	    0.000007390976 sec	   1082.401 tops
       SIMD SSSE3 16-bit Integer Arithmetic Instructions with 64-bit & 128-bit vectors ...
-	   phaddw	_mm_hadd_epi16()      	   8 values	 0.650356292725 sec	 6.50e-10 sec	 0.650356 sec	     12.30 gops
-	   phaddsw	_mm_hadds_epi16()    	   8 values	 0.642660617828 sec	 6.43e-10 sec	 0.642661 sec	     12.45 gops
-	   phsubw	_mm_hsub_epi16()      	   8 values	 0.648427486420 sec	 6.48e-10 sec	 0.648427 sec	     12.34 gops
-	   phsubsw	_mm_hsubs_epi16()    	   8 values	 0.641687631607 sec	 6.42e-10 sec	 0.641688 sec	     12.47 gops
-	   pmaddubsw	_mm_maddubs_epi16()	   8 values	 0.447355508804 sec	 4.47e-10 sec	 0.447356 sec	     17.88 gops
-	   pmulhrsw	_mm_mulhrs_epi16()  	   8 values	 0.349639177322 sec	 3.50e-10 sec	 0.349639 sec	     22.88 gops
-	   psignw	_mm_sign_epi16()      	   8 values	 0.492954254150 sec	 4.93e-10 sec	 0.492954 sec	     16.23 gops
-	   phaddw	_mm_hadd_pi16()       	   4 values	 0.959673881531 sec	 9.60e-10 sec	 0.959674 sec	      4.17 gops
-	   phaddsw	_mm_hadds_pi16()     	   4 values	 0.641444206238 sec	 6.41e-10 sec	 0.641444 sec	      6.24 gops
-	   phsubw	_mm_hsub_pi16()       	   4 values	 0.641633033752 sec	 6.42e-10 sec	 0.641633 sec	      6.23 gops
-	   phsubsw	_mm_hsubs_pi16()     	   4 values	 0.641496896744 sec	 6.41e-10 sec	 0.641497 sec	      6.24 gops
-	   pmaddubsw	_mm_maddubs_pi16() 	   4 values	 0.493750810623 sec	 4.94e-10 sec	 0.493751 sec	      8.10 gops
-	   pmulhrsw	_mm_mulhrs_pi16()   	   4 values	 0.354601383209 sec	 3.55e-10 sec	 0.354601 sec	     11.28 gops
-	   psignw	_mm_sign_pi16()       	   4 values	 0.349351406097 sec	 3.49e-10 sec	 0.349351 sec	     11.45 gops
+	   phaddw	_mm_hadd_epi16()      	   8 values	 0.674633979797 sec	 6.75e-10 sec	 0.674634 sec	     11.86 gops	    0.000009775162 sec	    818.401 tops
+	   phaddsw	_mm_hadds_epi16()    	   8 values	 0.669592857361 sec	 6.70e-10 sec	 0.669593 sec	     11.95 gops	    0.000018358231 sec	    435.772 tops
+	   phsubw	_mm_hsub_epi16()      	   8 values	 0.668512344360 sec	 6.69e-10 sec	 0.668512 sec	     11.97 gops	    0.000015974045 sec	    500.812 tops
+	   phsubsw	_mm_hsubs_epi16()    	   8 values	 0.675280332565 sec	 6.75e-10 sec	 0.675280 sec	     11.85 gops	    0.000010251999 sec	    780.336 tops
+	   pmaddubsw	_mm_maddubs_epi16()	   8 values	 0.394221544266 sec	 3.94e-10 sec	 0.394222 sec	     20.29 gops	    0.000008344650 sec	    958.698 tops
+	   pmulhrsw	_mm_mulhrs_epi16()  	   8 values	 0.516073465347 sec	 5.16e-10 sec	 0.516073 sec	     15.50 gops	    0.000008344650 sec	    958.698 tops
+	   psignw	_mm_sign_epi16()      	   8 values	 0.385215997696 sec	 3.85e-10 sec	 0.385216 sec	     20.77 gops	    0.000011444092 sec	    699.051 tops
+	   phaddw	_mm_hadd_pi16()       	   4 values	 0.667726755142 sec	 6.68e-10 sec	 0.667727 sec	      5.99 gops	    0.000008583069 sec	    466.034 tops
+	   phaddsw	_mm_hadds_pi16()     	   4 values	 0.665049552917 sec	 6.65e-10 sec	 0.665050 sec	      6.01 gops	    0.000012397766 sec	    322.639 tops
+	   phsubw	_mm_hsub_pi16()       	   4 values	 0.667869806290 sec	 6.68e-10 sec	 0.667870 sec	      5.99 gops	    0.000012397766 sec	    322.639 tops
+	   phsubsw	_mm_hsubs_pi16()     	   4 values	 0.662815570831 sec	 6.63e-10 sec	 0.662816 sec	      6.03 gops	    0.000013351440 sec	    299.593 tops
+	   pmaddubsw	_mm_maddubs_pi16() 	   4 values	 0.367478609085 sec	 3.67e-10 sec	 0.367479 sec	     10.88 gops	    0.000010728836 sec	    372.827 tops
+	   pmulhrsw	_mm_mulhrs_pi16()   	   4 values	 0.372358798981 sec	 3.72e-10 sec	 0.372359 sec	     10.74 gops	    0.000015974045 sec	    250.406 tops
+	   psignw	_mm_sign_pi16()       	   4 values	 0.381539106369 sec	 3.82e-10 sec	 0.381539 sec	     10.48 gops	    0.000018358231 sec	    217.886 tops
       SIMD SSSE3 32-bit Integer Arithmetic Instructions with 64-bit & 128-bit vectors ...
-	   phaddd	_mm_hadd_epi32()	   4 values	 0.649627208710 sec	 6.50e-10 sec	 0.649627 sec	      6.16 gops
-	   phsubd	_mm_hsub_epi32()	   4 values	 0.642202377319 sec	 6.42e-10 sec	 0.642202 sec	      6.23 gops
-	   psignd	_mm_sign_epi32()	   4 values	 0.488855123520 sec	 4.89e-10 sec	 0.488855 sec	      8.18 gops
-	   phaddw	_mm_hadd_pi32() 	   2 values	 0.642347812653 sec	 6.42e-10 sec	 0.642348 sec	      3.11 gops
-	   phsubd	_mm_hsub_pi32() 	   2 values	 0.642337083817 sec	 6.42e-10 sec	 0.642337 sec	      3.11 gops
-	   psignd	_mm_sign_pi32() 	   2 values	 0.357726812363 sec	 3.58e-10 sec	 0.357727 sec	      5.59 gops
+	   phaddd	_mm_hadd_epi32()	   4 values	 0.667868137360 sec	 6.68e-10 sec	 0.667868 sec	      5.99 gops	    0.000011205673 sec	    356.962 tops
+	   phsubd	_mm_hsub_epi32()	   4 values	 0.660464048386 sec	 6.60e-10 sec	 0.660464 sec	      6.06 gops	    0.000009775162 sec	    409.200 tops
+	   psignd	_mm_sign_epi32()	   4 values	 0.380224943161 sec	 3.80e-10 sec	 0.380225 sec	     10.52 gops	    0.000010728836 sec	    372.827 tops
+	   phaddw	_mm_hadd_pi32() 	   2 values	 0.661833286285 sec	 6.62e-10 sec	 0.661833 sec	      3.02 gops	    0.000012874603 sec	    155.345 tops
+	   phsubd	_mm_hsub_pi32() 	   2 values	 0.669402599335 sec	 6.69e-10 sec	 0.669403 sec	      2.99 gops	    0.000007152557 sec	    279.620 tops
+	   psignd	_mm_sign_pi32() 	   2 values	 0.378500461578 sec	 3.79e-10 sec	 0.378500 sec	      5.28 gops	    0.000006437302 sec	    310.689 tops
 
-SSE4.1:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for SSE4_1 instructions (1 thread(s)) ... st_bm_cpt = 262144 choosed, calibration done.
-
+SSE4.1:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD SSE4.1 8-bit Integer Arithmetic Instructions with 128-bit vectors ...
-	   mpsadbw	_mm_mpsadbw_epu8()	  16 values	 0.730155944824 sec	 7.30e-10 sec	 0.730156 sec	     21.91 gops
+	   mpsadbw	_mm_mpsadbw_epu8()	  16 values	 0.752978324890 sec	 7.53e-10 sec	 0.752978 sec	     21.25 gops	    0.000010013580 sec	   1597.830 tops
       SIMD SSE4.1 32-bit Integer Arithmetic Instructions with 128-bit vectors ...
-	   pmuldq 	_mm_mul_epi32()    	   4 values	 0.331575155258 sec	 3.32e-10 sec	 0.331575 sec	     12.06 gops
-	   pmulld 	_mm_mullo_epi32()    	   4 values	 0.483016490936 sec	 4.83e-10 sec	 0.483016 sec	      8.28 gops
+	   pmuldq 	_mm_mul_epi32()    	   4 values	 0.507028579712 sec	 5.07e-10 sec	 0.507029 sec	      7.89 gops	    0.000022411346 sec	    178.481 tops
+	   pmulld 	_mm_mullo_epi32()    	   4 values	 0.498700618744 sec	 4.99e-10 sec	 0.498701 sec	      8.02 gops	    0.000016927719 sec	    236.299 tops
       SIMD SSE4.1 32-bit Single-Precision Arithmetic Instructions with 128-bit vectors ...
-	   dpps   	_mm_dp_ps()         	   4 values	 1.206890583038 sec	 1.21e-09 sec	 1.206891 sec	      3.31 gops
+	   dpps   	_mm_dp_ps()         	   4 values	 1.234891176224 sec	 1.23e-09 sec	 1.234891 sec	      3.24 gops	    0.000009059906 sec	    441.506 tops
       SIMD SSE4.1 64-bit Double-Precision Arithmetic Instructions with 128-bit vectors ...
-	   dppd   	_mm_dp_pd()         	   2 values	 0.966773748398 sec	 9.67e-10 sec	 0.966774 sec	      2.07 gops
+	   dppd   	_mm_dp_pd()         	   2 values	 0.986668348312 sec	 9.87e-10 sec	 0.986668 sec	      2.03 gops	    0.000027894974 sec	     71.698 tops
 
-AVX:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for AVX instructions (1 thread(s)) ... st_bm_cpt = 4096 choosed, calibration done.
-
+AVX:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD AVX 32-bit Single-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddps	_mm256_add_ps()      	   8 values	 0.420762062073 sec	 4.21e-10 sec	 0.420762 sec	     19.01 gops
-	   vaddsubps	_mm256_addsub_ps()	   8 values	 0.824282407761 sec	 8.24e-10 sec	 0.824282 sec	      9.71 gops
-	   vdivps	_mm256_div_ps()      	   8 values	 0.593871116638 sec	 5.94e-10 sec	 0.593871 sec	     13.47 gops
-	   vdpps	_mm256_dp_ps()        	   8 values	 1.081232070923 sec	 1.08e-09 sec	 1.081232 sec	      7.40 gops
-	   vhaddps	_mm256_hadd_ps()    	   8 values	 0.808017492294 sec	 8.08e-10 sec	 0.808017 sec	      9.90 gops
-	   vhsubps	_mm256_hsub_ps()    	   8 values	 0.964008092880 sec	 9.64e-10 sec	 0.964008 sec	      8.30 gops
-	   vmulps	_mm256_mul_ps()      	   8 values	 0.746209144592 sec	 7.46e-10 sec	 0.746209 sec	     10.72 gops
-	   vsubps	_mm256_sub_ps()      	   8 values	 0.422710180283 sec	 4.23e-10 sec	 0.422710 sec	     18.93 gops
+	   vaddps	_mm256_add_ps()      	   8 values	 0.422241210938 sec	 4.22e-10 sec	 0.422241 sec	     18.95 gops	    0.000015735626 sec	    508.400 tops
+	   vaddsubps	_mm256_addsub_ps()	   8 values	 0.535835981369 sec	 5.36e-10 sec	 0.535836 sec	     14.93 gops	    0.000023365021 sec	    342.392 tops
+	   vdivps	_mm256_div_ps()      	   8 values	 0.414895534515 sec	 4.15e-10 sec	 0.414896 sec	     19.28 gops	    0.000011205673 sec	    713.924 tops
+	   vdpps	_mm256_dp_ps()        	   8 values	 0.997213840485 sec	 9.97e-10 sec	 0.997214 sec	      8.02 gops	    0.000017642975 sec	    453.438 tops
+	   vhaddps	_mm256_hadd_ps()    	   8 values	 0.676352024078 sec	 6.76e-10 sec	 0.676352 sec	     11.83 gops	    0.000008821487 sec	    906.877 tops
+	   vhsubps	_mm256_hsub_ps()    	   8 values	 0.675035476685 sec	 6.75e-10 sec	 0.675035 sec	     11.85 gops	    0.000019788742 sec	    404.270 tops
+	   vmulps	_mm256_mul_ps()      	   8 values	 0.412054538727 sec	 4.12e-10 sec	 0.412055 sec	     19.41 gops	    0.000013113022 sec	    610.081 tops
+	   vsubps	_mm256_sub_ps()      	   8 values	 0.416702747345 sec	 4.17e-10 sec	 0.416703 sec	     19.20 gops	    0.000017404556 sec	    459.650 tops
       SIMD AVX 64-bit Double-Precision Arithmetic Instructions with 256-bit vectors ...
-	   vaddpd	_mm256_add_pd()      	   4 values	 0.952128648758 sec	 9.52e-10 sec	 0.952129 sec	      4.20 gops
-	   vaddsubpd	_mm256_addsub_pd()	   4 values	 0.725240945816 sec	 7.25e-10 sec	 0.725241 sec	      5.52 gops
-	   vdivpd	_mm256_div_pd()      	   4 values	 0.395508766174 sec	 3.96e-10 sec	 0.395509 sec	     10.11 gops
-	   vhaddpd	_mm256_hadd_pd()    	   4 values	 0.852099180222 sec	 8.52e-10 sec	 0.852099 sec	      4.69 gops
-	   vhsubpd	_mm256_hsub_pd()    	   4 values	 0.856550216675 sec	 8.57e-10 sec	 0.856550 sec	      4.67 gops
-	   vmulpd	_mm256_mul_pd()      	   4 values	 0.392091989517 sec	 3.92e-10 sec	 0.392092 sec	     10.20 gops
-	   vsubpd	_mm256_sub_pd()      	   4 values	 0.392107486725 sec	 3.92e-10 sec	 0.392107 sec	     10.20 gops
+	   vaddpd	_mm256_add_pd()      	   4 values	 0.424599409103 sec	 4.25e-10 sec	 0.424599 sec	      9.42 gops	    0.000025987625 sec	    153.919 tops
+	   vaddsubpd	_mm256_addsub_pd()	   4 values	 0.535735607147 sec	 5.36e-10 sec	 0.535736 sec	      7.47 gops	    0.000025272369 sec	    158.276 tops
+	   vdivpd	_mm256_div_pd()      	   4 values	 0.426365613937 sec	 4.26e-10 sec	 0.426366 sec	      9.38 gops	    0.000027179718 sec	    147.169 tops
+	   vhaddpd	_mm256_hadd_pd()    	   4 values	 0.676679611206 sec	 6.77e-10 sec	 0.676680 sec	      5.91 gops	    0.000022411346 sec	    178.481 tops
+	   vhsubpd	_mm256_hsub_pd()    	   4 values	 0.681890487671 sec	 6.82e-10 sec	 0.681890 sec	      5.87 gops	    0.000010251999 sec	    390.168 tops
+	   vmulpd	_mm256_mul_pd()      	   4 values	 0.523792266846 sec	 5.24e-10 sec	 0.523792 sec	      7.64 gops	    0.000026702881 sec	    149.797 tops
+	   vsubpd	_mm256_sub_pd()      	   4 values	 0.424849271774 sec	 4.25e-10 sec	 0.424849 sec	      9.42 gops	    0.000010967255 sec	    364.722 tops
 
-AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for AVX2 instructions (1 thread(s)) ... st_bm_cpt = 262144 choosed, calibration done.
-
+AVX2:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD AVX2 8-bit Integer Arithmetic Instructions with 256-bit vectors ...
-	   vpaddb	_mm256_add_epi8()	  32 values	 0.497167587280 sec	 4.97e-10 sec	 0.497168 sec	     64.36 gops
-	   vpaddsb	_mm256_adds_epi8()	  32 values	 0.491293907166 sec	 4.91e-10 sec	 0.491294 sec	     65.13 gops
-	   vpaddusb	_mm256_adds_epu8()	  32 values	 0.531586170197 sec	 5.32e-10 sec	 0.531586 sec	     60.20 gops
-	   vpsubb	_mm256_sub_epi8()	  32 values	 0.491595745087 sec	 4.92e-10 sec	 0.491596 sec	     65.09 gops
-	   vpsubsb	_mm256_adds_epi8()	  32 values	 0.570001840591 sec	 5.70e-10 sec	 0.570002 sec	     56.14 gops
-	   vpsubusb	_mm256_adds_epu8()	  32 values	 0.571715831757 sec	 5.72e-10 sec	 0.571716 sec	     55.97 gops
-	   vpsignb	_mm256_sign_epi8()	  32 values	 0.570985078812 sec	 5.71e-10 sec	 0.570985 sec	     56.04 gops
-	   vpsadbw	_mm256_sad_epu8()	  32 values	 0.572501182556 sec	 5.73e-10 sec	 0.572501 sec	     55.90 gops
+	   vpaddb	_mm256_add_epi8()	  32 values	 0.542258024216 sec	 5.42e-10 sec	 0.542258 sec	     59.01 gops	    0.000010490417 sec	   3050.403 tops
+	   vpaddsb	_mm256_adds_epi8()	  32 values	 0.416593313217 sec	 4.17e-10 sec	 0.416593 sec	     76.81 gops	    0.000014781952 sec	   2164.802 tops
+	   vpaddusb	_mm256_adds_epu8()	  32 values	 0.418228387833 sec	 4.18e-10 sec	 0.418228 sec	     76.51 gops	    0.000015497208 sec	   2064.888 tops
+	   vpsubb	_mm256_sub_epi8()	  32 values	 0.423849821091 sec	 4.24e-10 sec	 0.423850 sec	     75.50 gops	    0.000011920929 sec	   2684.355 tops
+	   vpsubsb	_mm256_adds_epi8()	  32 values	 0.535239219666 sec	 5.35e-10 sec	 0.535239 sec	     59.79 gops	    0.000024080276 sec	   1328.888 tops
+	   vpsubusb	_mm256_adds_epu8()	  32 values	 0.539245367050 sec	 5.39e-10 sec	 0.539245 sec	     59.34 gops	    0.000015735626 sec	   2033.602 tops
+	   vpsignb	_mm256_sign_epi8()	  32 values	 0.539164304733 sec	 5.39e-10 sec	 0.539164 sec	     59.35 gops	    0.000011205673 sec	   2855.696 tops
+	   vpsadbw	_mm256_sad_epu8()	  32 values	 0.587419748306 sec	 5.87e-10 sec	 0.587420 sec	     54.48 gops	    0.000010967255 sec	   2917.777 tops
       SIMD AVX2 16-bit Integer Arithmetic Instructions with 256-bit vectors ...
-	   vpaddw	_mm256_add_epi16()	  16 values	 0.503365516663 sec	 5.03e-10 sec	 0.503366 sec	     31.79 gops
-	   vpaddsw	_mm256_adds_epi16()	  16 values	 0.495045423508 sec	 4.95e-10 sec	 0.495045 sec	     32.32 gops
-	   vpaddusw	_mm256_adds_epu16()	  16 values	 0.494891405106 sec	 4.95e-10 sec	 0.494891 sec	     32.33 gops
-	   vphaddw	_mm256_hadd_epi16()	  16 values	 0.654673337936 sec	 6.55e-10 sec	 0.654673 sec	     24.44 gops
-	   vphaddsw	_mm256_hadds_epi16()	  16 values	 0.801593780518 sec	 8.02e-10 sec	 0.801594 sec	     19.96 gops
-	   vpmaddwd	_mm256_madd_epi16()	  16 values	 0.536845922470 sec	 5.37e-10 sec	 0.536846 sec	     29.80 gops
-	   vpmaddubsw	_mm256_maddubs_epi16()	  16 values	 0.579457759857 sec	 5.79e-10 sec	 0.579458 sec	     27.61 gops
-	   vpsubw	_mm256_sub_epi16()	  16 values	 0.495875120163 sec	 4.96e-10 sec	 0.495875 sec	     32.27 gops
-	   vpsubsw	_mm256_subs_epi16()	  16 values	 0.575032234192 sec	 5.75e-10 sec	 0.575032 sec	     27.82 gops
-	   vpsubusw	_mm256_subs_epu16()	  16 values	 0.574830532074 sec	 5.75e-10 sec	 0.574831 sec	     27.83 gops
-	   vphsubw	_mm256_hsub_epi16()	  16 values	 0.658636569977 sec	 6.59e-10 sec	 0.658637 sec	     24.29 gops
-	   vphsubsw	_mm256_hsubs_epi16()	  16 values	 0.655418872833 sec	 6.55e-10 sec	 0.655419 sec	     24.41 gops
-	   vpmulhw	_mm256_mulhi_epi16()	  16 values	 0.495891332626 sec	 4.96e-10 sec	 0.495891 sec	     32.27 gops
-	   vpmullw	_mm256_mullo_epi16()	  16 values	 0.495856285095 sec	 4.96e-10 sec	 0.495856 sec	     32.27 gops
-	   vpmulhrsw	_mm256_mulhrs_epi16()	  16 values	 0.500783443451 sec	 5.01e-10 sec	 0.500783 sec	     31.95 gops
-	   vpmulhuw	_mm256_mulhi_epu16()	  16 values	 0.495973110199 sec	 4.96e-10 sec	 0.495973 sec	     32.26 gops
-	   vpsignw	_mm256_sign_epi16()	  16 values	 0.575240373611 sec	 5.75e-10 sec	 0.575240 sec	     27.81 gops
+	   vpaddw	_mm256_add_epi16()	  16 values	 0.527888059616 sec	 5.28e-10 sec	 0.527888 sec	     30.31 gops	    0.000014305115 sec	   1118.481 tops
+	   vpaddsw	_mm256_adds_epi16()	  16 values	 0.416885852814 sec	 4.17e-10 sec	 0.416886 sec	     38.38 gops	    0.000008583069 sec	   1864.135 tops
+	   vpaddusw	_mm256_adds_epu16()	  16 values	 0.423094987869 sec	 4.23e-10 sec	 0.423095 sec	     37.82 gops	    0.000008821487 sec	   1813.753 tops
+	   vphaddw	_mm256_hadd_epi16()	  16 values	 0.681571483612 sec	 6.82e-10 sec	 0.681571 sec	     23.48 gops	    0.000012397766 sec	   1290.555 tops
+	   vphaddsw	_mm256_hadds_epi16()	  16 values	 0.678680896759 sec	 6.79e-10 sec	 0.678681 sec	     23.58 gops	    0.000008583069 sec	   1864.135 tops
+	   vpmaddwd	_mm256_madd_epi16()	  16 values	 0.422001600266 sec	 4.22e-10 sec	 0.422002 sec	     37.91 gops	    0.000009298325 sec	   1720.740 tops
+	   vpmaddubsw	_mm256_maddubs_epi16()	  16 values	 0.547643184662 sec	 5.48e-10 sec	 0.547643 sec	     29.22 gops	    0.000011444092 sec	   1398.101 tops
+	   vpsubw	_mm256_sub_epi16()	  16 values	 0.421948909760 sec	 4.22e-10 sec	 0.421949 sec	     37.92 gops	    0.000008106232 sec	   1973.790 tops
+	   vpsubsw	_mm256_subs_epi16()	  16 values	 0.538846969604 sec	 5.39e-10 sec	 0.538847 sec	     29.69 gops	    0.000011205673 sec	   1427.848 tops
+	   vpsubusw	_mm256_subs_epu16()	  16 values	 0.539927721024 sec	 5.40e-10 sec	 0.539928 sec	     29.63 gops	    0.000010728836 sec	   1491.308 tops
+	   vphsubw	_mm256_hsub_epi16()	  16 values	 0.688589811325 sec	 6.89e-10 sec	 0.688590 sec	     23.24 gops	    0.000011920929 sec	   1342.177 tops
+	   vphsubsw	_mm256_hsubs_epi16()	  16 values	 0.691592454910 sec	 6.92e-10 sec	 0.691592 sec	     23.14 gops	    0.000008821487 sec	   1813.753 tops
+	   vpmulhw	_mm256_mulhi_epi16()	  16 values	 0.535234689713 sec	 5.35e-10 sec	 0.535235 sec	     29.89 gops	    0.000022649765 sec	    706.409 tops
+	   vpmullw	_mm256_mullo_epi16()	  16 values	 0.425300598145 sec	 4.25e-10 sec	 0.425301 sec	     37.62 gops	    0.000013113022 sec	   1220.161 tops
+	   vpmulhrsw	_mm256_mulhrs_epi16()	  16 values	 0.429386377335 sec	 4.29e-10 sec	 0.429386 sec	     37.26 gops	    0.000017166138 sec	    932.068 tops
+	   vpmulhuw	_mm256_mulhi_epu16()	  16 values	 0.427155971527 sec	 4.27e-10 sec	 0.427156 sec	     37.46 gops	    0.000007390976 sec	   2164.802 tops
+	   vpsignw	_mm256_sign_epi16()	  16 values	 0.537629127502 sec	 5.38e-10 sec	 0.537629 sec	     29.76 gops	    0.000012874603 sec	   1242.757 tops
       SIMD AVX2 32-bit Integer Arithmetic Instructions with 256-bit vectors ...
-	   vpaddd	_mm256_add_epi32()	   8 values	 0.417702913284 sec	 4.18e-10 sec	 0.417703 sec	     19.15 gops
-	   vphaddd	_mm256_hadd_epi32()	   8 values	 0.652655601501 sec	 6.53e-10 sec	 0.652656 sec	     12.26 gops
-	   vpsubd	_mm256_sub_epi32()	   8 values	 0.409440517426 sec	 4.09e-10 sec	 0.409441 sec	     19.54 gops
-	   vphsubd	_mm256_hsub_epi32()	   8 values	 0.652671813965 sec	 6.53e-10 sec	 0.652672 sec	     12.26 gops
-	   vpmuldq	_mm256_mul_epi32()	   8 values	 0.418948411942 sec	 4.19e-10 sec	 0.418948 sec	     19.10 gops
-	   vpmuludq	_mm256_mul_epu32()	   8 values	 0.426537036896 sec	 4.27e-10 sec	 0.426537 sec	     18.76 gops
-	   vpmulld	_mm256_mullo_epi32()	   8 values	 0.485154390335 sec	 4.85e-10 sec	 0.485154 sec	     16.49 gops
-	   vpsignd	_mm256_sign_epi32()	   8 values	 0.514167308807 sec	 5.14e-10 sec	 0.514167 sec	     15.56 gops
+	   vpaddd	_mm256_add_epi32()	   8 values	 0.550153493881 sec	 5.50e-10 sec	 0.550153 sec	     14.54 gops	    0.000021696091 sec	    368.730 tops
+	   vphaddd	_mm256_hadd_epi32()	   8 values	 0.682905197144 sec	 6.83e-10 sec	 0.682905 sec	     11.71 gops	    0.000007390976 sec	   1082.401 tops
+	   vpsubd	_mm256_sub_epi32()	   8 values	 0.422550439835 sec	 4.23e-10 sec	 0.422550 sec	     18.93 gops	    0.000013351440 sec	    599.186 tops
+	   vphsubd	_mm256_hsub_epi32()	   8 values	 0.695611715317 sec	 6.96e-10 sec	 0.695612 sec	     11.50 gops	    0.000010728836 sec	    745.654 tops
+	   vpmuldq	_mm256_mul_epi32()	   8 values	 0.543262481689 sec	 5.43e-10 sec	 0.543262 sec	     14.73 gops	    0.000010251999 sec	    780.336 tops
+	   vpmuludq	_mm256_mul_epu32()	   8 values	 0.422490596771 sec	 4.22e-10 sec	 0.422491 sec	     18.94 gops	    0.000010251999 sec	    780.336 tops
+	   vpmulld	_mm256_mullo_epi32()	   8 values	 0.516248941422 sec	 5.16e-10 sec	 0.516249 sec	     15.50 gops	    0.000010251999 sec	    780.336 tops
+	   vpsignd	_mm256_sign_epi32()	   8 values	 0.579942941666 sec	 5.80e-10 sec	 0.579943 sec	     13.79 gops	    0.000009536743 sec	    838.861 tops
       SIMD AVX2 64-bit Integer Arithmetic Instructions with 256-bit vectors ...
-	   vpaddq	_mm256_add_epi64()	   4 values	 0.425292015076 sec	 4.25e-10 sec	 0.425292 sec	      9.41 gops
-	   vpsubq	_mm256_sub_epi64()	   4 values	 0.426485061646 sec	 4.26e-10 sec	 0.426485 sec	      9.38 gops
+	   vpaddq	_mm256_add_epi64()	   4 values	 0.567917346954 sec	 5.68e-10 sec	 0.567917 sec	      7.04 gops	    0.000009775162 sec	    409.200 tops
+	   vpsubq	_mm256_sub_epi64()	   4 values	 0.521950244904 sec	 5.22e-10 sec	 0.521950 sec	      7.66 gops	    0.000009298325 sec	    430.185 tops
 
-FMA3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED
-	   cpu, cache, memory calibrating & warming up for FMA3 instructions (1 thread(s)) ... st_bm_cpt = 131072 choosed, calibration done.
-
+FMA3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE CYCLE	PER GIGACYCLE	OPERATING SPEED	   TOTAL CPU EVAL TIME	  PURE CPU SPEED
       SIMD FMA3 32-bit Single-Precision Arithmetic Instructions with 128-bit & 256-bit vectors ...
-	   vfmaddXps	_mm_fmadd_ps         	   4 values	 0.586338758469 sec	 5.86e-10 sec	 0.586339 sec	      6.82 gops
-	   vfmaddXss	_mm_fmadd_ss         	   4 values	 0.576625823975 sec	 5.77e-10 sec	 0.576626 sec	      6.94 gops
-	   vfmaddsubXps	_mm_fmaddsub_ps   	   4 values	 0.578510999680 sec	 5.79e-10 sec	 0.578511 sec	      6.91 gops
-	   vfmsubXps	_mm_fmsub_ps         	   4 values	 0.578279495239 sec	 5.78e-10 sec	 0.578279 sec	      6.92 gops
-	   vfmsubXss	_mm_fmsub_ss         	   4 values	 0.577685832977 sec	 5.78e-10 sec	 0.577686 sec	      6.92 gops
-	   vfmsubaddXps	_mm_fmsubadd_ps   	   4 values	 0.575443744659 sec	 5.75e-10 sec	 0.575444 sec	      6.95 gops
-	   vfnmaddXps	_mm_fnmadd_ps       	   4 values	 0.577726364136 sec	 5.78e-10 sec	 0.577726 sec	      6.92 gops
-	   vfnmaddXss	_mm_fnmadd_ss       	   4 values	 0.578745841980 sec	 5.79e-10 sec	 0.578746 sec	      6.91 gops
-	   vfnmsubXps	_mm_fnmsub_ps       	   4 values	 0.573940515518 sec	 5.74e-10 sec	 0.573941 sec	      6.97 gops
-	   vfnmsubXss	_mm_fnmsub_ss       	   4 values	 0.576564550400 sec	 5.77e-10 sec	 0.576565 sec	      6.94 gops
-	   vfmaddXps	_mm256_fmadd_ps      	   8 values	 0.574839353561 sec	 5.75e-10 sec	 0.574839 sec	     13.92 gops
-	   vfmaddsubXps	_mm256_fmaddsub_ps	   8 values	 0.573648452759 sec	 5.74e-10 sec	 0.573648 sec	     13.95 gops
-	   vfmsubXps	_mm256_fmsub_ps      	   8 values	 0.574887037277 sec	 5.75e-10 sec	 0.574887 sec	     13.92 gops
-	   vfmsubaddXps	_mm256_fmsubadd_ps	   8 values	 0.574414730072 sec	 5.74e-10 sec	 0.574415 sec	     13.93 gops
-	   vfnmaddXps	_mm256_fnmadd_ps    	   8 values	 0.574514150620 sec	 5.75e-10 sec	 0.574514 sec	     13.92 gops
-	   vfnmsubXps	_mm256_fnmsub_ps    	   8 values	 0.574436903000 sec	 5.74e-10 sec	 0.574437 sec	     13.93 gops
+	   vfmaddXps	_mm_fmadd_ps         	   4 values	 0.553888797760 sec	 5.54e-10 sec	 0.553889 sec	      7.22 gops	    0.000009536743 sec	    419.430 tops
+	   vfmaddXss	_mm_fmadd_ss         	   4 values	 0.585596084595 sec	 5.86e-10 sec	 0.585596 sec	      6.83 gops	    0.000015258789 sec	    262.144 tops
+	   vfmaddsubXps	_mm_fmaddsub_ps   	   4 values	 0.538035154343 sec	 5.38e-10 sec	 0.538035 sec	      7.43 gops	    0.000010490417 sec	    381.300 tops
+	   vfmsubXps	_mm_fmsub_ps         	   4 values	 0.595392704010 sec	 5.95e-10 sec	 0.595393 sec	      6.72 gops	    0.000011205673 sec	    356.962 tops
+	   vfmsubXss	_mm_fmsub_ss         	   4 values	 0.549895048141 sec	 5.50e-10 sec	 0.549895 sec	      7.27 gops	    0.000011920929 sec	    335.544 tops
+	   vfmsubaddXps	_mm_fmsubadd_ps   	   4 values	 0.582071304321 sec	 5.82e-10 sec	 0.582071 sec	      6.87 gops	    0.000009059906 sec	    441.506 tops
+	   vfnmaddXps	_mm_fnmadd_ps       	   4 values	 0.552587747574 sec	 5.53e-10 sec	 0.552588 sec	      7.24 gops	    0.000010013580 sec	    399.458 tops
+	   vfnmaddXss	_mm_fnmadd_ss       	   4 values	 0.581080436707 sec	 5.81e-10 sec	 0.581080 sec	      6.88 gops	    0.000008821487 sec	    453.438 tops
+	   vfnmsubXps	_mm_fnmsub_ps       	   4 values	 0.552361011505 sec	 5.52e-10 sec	 0.552361 sec	      7.24 gops	    0.000012397766 sec	    322.639 tops
+	   vfnmsubXss	_mm_fnmsub_ss       	   4 values	 0.583950757980 sec	 5.84e-10 sec	 0.583951 sec	      6.85 gops	    0.000019073486 sec	    209.715 tops
+	   vfmaddXps	_mm256_fmadd_ps      	   8 values	 0.552868127823 sec	 5.53e-10 sec	 0.552868 sec	     14.47 gops	    0.000013113022 sec	    610.081 tops
+	   vfmaddsubXps	_mm256_fmaddsub_ps	   8 values	 0.583992958069 sec	 5.84e-10 sec	 0.583993 sec	     13.70 gops	    0.000008106232 sec	    986.895 tops
+	   vfmsubXps	_mm256_fmsub_ps      	   8 values	 0.550356864929 sec	 5.50e-10 sec	 0.550357 sec	     14.54 gops	    0.000011682510 sec	    684.784 tops
+	   vfmsubaddXps	_mm256_fmsubadd_ps	   8 values	 0.583627939224 sec	 5.84e-10 sec	 0.583628 sec	     13.71 gops	    0.000011444092 sec	    699.051 tops
+	   vfnmaddXps	_mm256_fnmadd_ps    	   8 values	 0.550660133362 sec	 5.51e-10 sec	 0.550660 sec	     14.53 gops	    0.000007867813 sec	   1016.801 tops
+	   vfnmsubXps	_mm256_fnmsub_ps    	   8 values	 0.550382375717 sec	 5.50e-10 sec	 0.550382 sec	     14.54 gops	    0.000010013580 sec	    798.915 tops
       SIMD FMA3 64-bit Double-Precision Arithmetic Instructions with 128-bit & 256-bit vectors ...
-	   vfmaddXpd	_mm_fmadd_pd         	   2 values	 0.578176259995 sec	 5.78e-10 sec	 0.578176 sec	      3.46 gops
-	   vfmaddXsd	_mm_fmadd_sd         	   2 values	 0.571395635605 sec	 5.71e-10 sec	 0.571396 sec	      3.50 gops
-	   vfmaddsubXpd	_mm_fmaddsub_pd   	   2 values	 0.571378946304 sec	 5.71e-10 sec	 0.571379 sec	      3.50 gops
-	   vfmsubXpd	_mm_fmsub_pd         	   2 values	 0.573634147644 sec	 5.74e-10 sec	 0.573634 sec	      3.49 gops
-	   vfmsubXsd	_mm_fmsub_sd         	   2 values	 0.571685791016 sec	 5.72e-10 sec	 0.571686 sec	      3.50 gops
-	   vfmsubaddXpd	_mm_fmsubadd_pd   	   2 values	 0.571328639984 sec	 5.71e-10 sec	 0.571329 sec	      3.50 gops
-	   vfnmaddXpd	_mm_fnmadd_pd       	   2 values	 0.571739196777 sec	 5.72e-10 sec	 0.571739 sec	      3.50 gops
-	   vfnmaddXsd	_mm_fnmadd_sd       	   2 values	 0.572833299637 sec	 5.73e-10 sec	 0.572833 sec	      3.49 gops
-	   vfnmsubXpd	_mm_fnmsub_pd       	   2 values	 0.571872949600 sec	 5.72e-10 sec	 0.571873 sec	      3.50 gops
-	   vfnmsubXsd	_mm_fnmsub_sd       	   2 values	 0.572697877884 sec	 5.73e-10 sec	 0.572698 sec	      3.49 gops
-	   vfmaddXpd	_mm256_fmadd_pd      	   4 values	 0.575361490250 sec	 5.75e-10 sec	 0.575361 sec	      6.95 gops
-	   vfmaddsubXpd	_mm256_fmaddsub_pd	   4 values	 0.573266506195 sec	 5.73e-10 sec	 0.573267 sec	      6.98 gops
-	   vfmsubXpd	_mm256_fmsub_pd      	   4 values	 0.575978040695 sec	 5.76e-10 sec	 0.575978 sec	      6.94 gops
-	   vfmsubaddXpd	_mm256_fmsubadd_pd	   4 values	 0.576328754425 sec	 5.76e-10 sec	 0.576329 sec	      6.94 gops
-	   vfnmaddXpd	_mm256_fnmadd_pd    	   4 values	 0.572750329971 sec	 5.73e-10 sec	 0.572750 sec	      6.98 gops
-	   vfnmsubXpd	_mm256_fnmsub_pd    	   4 values	 0.572834968567 sec	 5.73e-10 sec	 0.572835 sec	      6.98 gops
+	   vfmaddXpd	_mm_fmadd_pd         	   2 values	 0.556370258331 sec	 5.56e-10 sec	 0.556370 sec	      3.59 gops	    0.000023603439 sec	     84.733 tops
+	   vfmaddXsd	_mm_fmadd_sd         	   2 values	 0.558267593384 sec	 5.58e-10 sec	 0.558268 sec	      3.58 gops	    0.000012159348 sec	    164.483 tops
+	   vfmaddsubXpd	_mm_fmaddsub_pd   	   2 values	 0.546838760376 sec	 5.47e-10 sec	 0.546839 sec	      3.66 gops	    0.000012159348 sec	    164.483 tops
+	   vfmsubXpd	_mm_fmsub_pd         	   2 values	 0.548734664917 sec	 5.49e-10 sec	 0.548735 sec	      3.64 gops	    0.000008821487 sec	    226.719 tops
+	   vfmsubXsd	_mm_fmsub_sd         	   2 values	 0.548468351364 sec	 5.48e-10 sec	 0.548468 sec	      3.65 gops	    0.000010967255 sec	    182.361 tops
+	   vfmsubaddXpd	_mm_fmsubadd_pd   	   2 values	 0.546633720398 sec	 5.47e-10 sec	 0.546634 sec	      3.66 gops	    0.000009059906 sec	    220.753 tops
+	   vfnmaddXpd	_mm_fnmadd_pd       	   2 values	 0.548938512802 sec	 5.49e-10 sec	 0.548939 sec	      3.64 gops	    0.000011444092 sec	    174.763 tops
+	   vfnmaddXsd	_mm_fnmadd_sd       	   2 values	 0.538899183273 sec	 5.39e-10 sec	 0.538899 sec	      3.71 gops	    0.000017166138 sec	    116.508 tops
+	   vfnmsubXpd	_mm_fnmsub_pd       	   2 values	 0.554820299149 sec	 5.55e-10 sec	 0.554820 sec	      3.60 gops	    0.000008106232 sec	    246.724 tops
+	   vfnmsubXsd	_mm_fnmsub_sd       	   2 values	 0.546015262604 sec	 5.46e-10 sec	 0.546015 sec	      3.66 gops	    0.000006914139 sec	    289.262 tops
+	   vfmaddXpd	_mm256_fmadd_pd      	   4 values	 0.548608541489 sec	 5.49e-10 sec	 0.548609 sec	      7.29 gops	    0.000013113022 sec	    305.040 tops
+	   vfmaddsubXpd	_mm256_fmaddsub_pd	   4 values	 0.547224283218 sec	 5.47e-10 sec	 0.547224 sec	      7.31 gops	    0.000011920929 sec	    335.544 tops
+	   vfmsubXpd	_mm256_fmsub_pd      	   4 values	 0.547524213791 sec	 5.48e-10 sec	 0.547524 sec	      7.31 gops	    0.000011205673 sec	    356.962 tops
+	   vfmsubaddXpd	_mm256_fmsubadd_pd	   4 values	 0.551492452621 sec	 5.51e-10 sec	 0.551492 sec	      7.25 gops	    0.000009059906 sec	    441.506 tops
+	   vfnmaddXpd	_mm256_fnmadd_pd    	   4 values	 0.549321651459 sec	 5.49e-10 sec	 0.549322 sec	      7.28 gops	    0.000009536743 sec	    419.430 tops
+	   vfnmsubXpd	_mm256_fnmsub_pd    	   4 values	 0.586300611496 sec	 5.86e-10 sec	 0.586301 sec	      6.82 gops	    0.000007390976 sec	    541.201 tops
 
 SIMD Arithmetic Instructions Single-Thread Benchmark finished
 
@@ -611,6 +593,6 @@ FMA3:	   ASM INSTR	INTRINSIC FUNC CALL	SIMD CAPACITY	TOTAL EVALUATE TIME	PER ONE
 
 SIMD Arithmetic Instructions Multi-Thread Benchmark finished
 
-SIMD-AI-ST-BM        3023.7
+SIMD-AI-ST-BM        3262.2
 SIMD-AI-MT-BM       17741.2
-SIMD-AI-MT-RATE      ~  5.9
+SIMD-AI-MT-RATE      ~  5.4
