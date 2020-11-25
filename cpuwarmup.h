@@ -497,14 +497,14 @@ inline void make_cpu_warmup( uint16_t th_cnt, instructions_e instr ) {
 	fprintf( stream, "\t   cpu, cache, memory calibrating & warming up for %s instructions (%d thread(s)) ... ", instructions_s[ instr ], th_cnt );
 
 	if ( th_cnt >> 1 ) {
-		mt_bm_cpt = 128;
+		mt_bm_cpt = 1024;
 		best_cpt = mt_bm_cpt;
 	} else {
-		st_bm_cpt = 128;
+		st_bm_cpt = 1024;
 		best_cpt = st_bm_cpt;
 	}
 
-	for ( int32_t i = 0; i < 14; i++ ) {
+	for ( int32_t i = 0; i < 11; i++ ) {
 
 		switch ( instr ) {
 			case _MMX_:
