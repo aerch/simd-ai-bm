@@ -5,7 +5,6 @@ SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
         2549.0		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3600MHz
         2497.9		AMD Ryzen Threadripper 2990WX 32-Core Processor @ 3.00GHz DDR4 @ 2133MHz
         2464.0		Intel(R) Core(TM) i7-8700K CPU @ 4.70GHz DDR4 @ 3600MHz
-        2322.8		Intel(R) Core(TM) i7-8700K CPU @ 5.00GHz DDR4 @ 3600MHz
         2131.7		Intel(R) Core(TM) i7-4770K CPU @ 4.50GHz DDR3 @ 2800MHz
         2119.5		Intel(R) Core(TM) i7-4770K CPU @ 4.40GHz DDR3 @ 2800MHz
         2115.9		Intel(R) Core(TM) i7-4770K CPU @ 4.50GHz DDR3 @ 2933MHz
@@ -34,7 +33,6 @@ SIMD Arithmetic Instructions Multi-Thread Benchmark Intercomparison
         9210.3		Intel(R) Core(TM) i7-4770K CPU @ 4.50GHz DDR3 @ 2933MHz
         9101.9		Intel(R) Core(TM) i7-4770K CPU @ 4.40GHz DDR3 @ 2800MHz
         8645.6		Intel(R) Core(TM) i7-4770K CPU @ 4.20GHz DDR3 @ 2800MHz
-        8590.7		Intel(R) Core(TM) i7-8700K CPU @ 5.00GHz DDR4 @ 3600MHz
         8493.1		Intel(R) Core(TM) i7-4770K CPU @ 4.20GHz DDR3 @ 2400MHz
         8037.1		Intel(R) Core(TM) i7-4770K CPU @ 4.20GHz DDR3 @ 2666MHz
         7741.2		Intel(R) Core(TM) i7-4770K CPU @ 4.00GHz DDR3 @ 2400MHz
