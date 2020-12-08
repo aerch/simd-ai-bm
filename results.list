@@ -4,6 +4,7 @@ SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
         3262.2		AMD Ryzen 5 3600 6-Core Processor @ 3.60GHz DDR4 @ 3200MHz
         3129.4		AMD Ryzen 5 3600X 6-Core Processor @ 4.10GHz DDR4 @ 3200MHz
         2872.8		AMD Ryzen 5 3600X 6-Core Processor @ 4.00GHz DDR4 @ 3200MHz
+        2861.1		AMD Ryzen 5 3600X 6-Core Processor             
         2554.2		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3400MHz
         2549.0		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3600MHz
         2497.9		AMD Ryzen Threadripper 2990WX 32-Core Processor @ 3.00GHz DDR4 @ 2133MHz
@@ -20,6 +21,7 @@ SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
         1472.9		Intel(R) Core(TM) i5-6200U CPU @ 2.80GHz LPDDR3 @ 1866MHz
         1414.8		Intel(R) Core(TM) i7-4750HQ CPU @ 3.20GHz DDR3 @ 1600MHz
         1411.3		Intel(R) Core(TM) i7-6500U CPU @ 3.10GHz DDR3 @ 1600MHz
+        1368.5		AMD EPYC 7401P 24-Core Processor               
          975.0		AMD EPYC 7401P 24-Core Processor
          892.2		AMD FX(tm)-8350 Eight-Core Processor @ 4.00GHz DDR3 @ 1600MHz
          438.2		Intel(R) Core(TM)2 Duo CPU T8100 @ 2.10GHz DDR2 @ 666MHz
@@ -33,9 +35,11 @@ SIMD Arithmetic Instructions Multi-Thread Benchmark Intercomparison
        18852.4		AMD Ryzen 5 3600X 6-Core Processor @ 4.10GHz DDR4 @ 3200MHz
        17741.2		AMD Ryzen 5 3600 6-Core Processor @ 3.60GHz DDR4 @ 3200MHz
        17648.5		AMD Ryzen 5 3600X 6-Core Processor @ 4.00GHz DDR4 @ 3200MHz
+       16601.0		AMD Ryzen 5 3600X 6-Core Processor             
        14110.5		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3600MHz
        13289.6		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3400MHz
        13284.2		Intel(R) Core(TM) i7-8700K CPU @ 4.70GHz DDR4 @ 3600MHz
+       12621.6		AMD EPYC 7401P 24-Core Processor               
         9258.6		Intel(R) Core(TM) i7-4770K CPU @ 4.50GHz DDR3 @ 2800MHz
         9210.3		Intel(R) Core(TM) i7-4770K CPU @ 4.50GHz DDR3 @ 2933MHz
         9101.9		Intel(R) Core(TM) i7-4770K CPU @ 4.40GHz DDR3 @ 2800MHz
