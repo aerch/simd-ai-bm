@@ -5,6 +5,7 @@ SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
         3129.4		AMD Ryzen 5 3600X 6-Core Processor @ 4.10GHz DDR4 @ 3200MHz
         2872.8		AMD Ryzen 5 3600X 6-Core Processor @ 4.00GHz DDR4 @ 3200MHz
         2554.2		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3400MHz
+        2554.0		AMD EPYC 7532 32-Core Processor @ 3.30GHz DDR4 @ 3200MHz
         2549.0		Intel(R) Core(TM) i7-8700K CPU @ 4.90GHz DDR4 @ 3600MHz
         2497.9		AMD Ryzen Threadripper 2990WX 32-Core Processor @ 3.00GHz DDR4 @ 2133MHz
         2464.0		Intel(R) Core(TM) i7-8700K CPU @ 4.70GHz DDR4 @ 3600MHz
@@ -28,6 +29,7 @@ SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
 
 SIMD Arithmetic Instructions Multi-Thread Benchmark Intercomparison
 -------------------------------------------------------------------
+       28658.4		AMD EPYC 7532 32-Core Processor @ 3.30GHz DDR4 @ 3200MHz
        23032.1		AMD Ryzen Threadripper 2990WX 32-Core Processor @ 3.00GHz DDR4 @ 2133MHz
        20160.3		AMD EPYC 7401P 24-Core Processor @ 2.80GHz DDR4 @ 2666MHz
        18852.4		AMD Ryzen 5 3600X 6-Core Processor @ 4.10GHz DDR4 @ 3200MHz
