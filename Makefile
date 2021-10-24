@@ -15,6 +15,7 @@ RM              = /bin/rm -rf
 CP              = /bin/cp -f
 MV              = /bin/mv -f
 ECHO            = /bin/echo
+STRIP           = /usr/bin/strip
 
 PWD             := $(shell pwd)
 MAKE            = make
@@ -23,7 +24,7 @@ MAKE            = make
 
 DFLAGS          = -D VERSION='"$(VERSION)"' -D CYCLESCOUNT=1000000000 -D THREADSCOUNT=$(NPROC) -D NO_CPU_TIME_MEASURE #-D PTHREAD_STACK_SIZE=20000000 #-D PTHREAD_SCHED_FIFO # $(NPROC)
 
-CXXFLAGS        = -O3 -MMD -march=native -mtune=native -ffast-math -std=c++11 $(CPUFLAGS) $(DFLAGS) -Wall -faligned-new
+CXXFLAGS        = -O3 -MMD -march=native -mtune=native -std=c++11 -ffast-math -faligned-new -ffunction-sections -fdata-sections -Wl,--gc-sections $(CPUFLAGS) $(DFLAGS) -Wall
 LDFLAGS         = $(CXXFLAGS)
 
 LIBS            = -lm -lpthread
@@ -56,6 +57,8 @@ OFF             = '\033[0m'
 $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' ld  '$(TARGET)$(OFF)'\n'
 	@$(LD) $(LDFLAGS) $(OBJECTS) -o $@ $(LDOPTIONS)
+	@echo -en $(WHITE)' strip executable'$(OFF)'\n'
+	@$(STRIP) $(TARGET)
 	@$(ECHO) -en $(GREEN)$(PROJECT)' successfully built.'$(OFF)'\n'
 # 	@file $(TARGET)
 
@@ -64,8 +67,9 @@ simd-ai-bm.o: simd-ai-bm.c
 	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 
 clean:
-	@echo -en $(WHITE)' cleaning project folder ...'$<$(OFF)'\n'
+	@echo -en $(WHITE)' cleaning project folder ...'$(OFF)
 	@$(RM) $(TARGET) *.o *.d *.~ gmon.out
+	@echo -en $(WHITE)' done.'$(OFF)'\n'
 
 git-push-%: clean
 	@$(ECHO) -en "\n > "

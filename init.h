@@ -20,7 +20,7 @@ inline void make_inits() {
 	available_processors = get_nprocs();
 	printf( BLUE "Threads:   " OFF WHITE "This system has got " BLUE "%d" OFF WHITE " processors configured and " BLUE "%d" OFF WHITE " processors available" OFF "\n\n", get_nprocs_conf(), available_processors );
 
-	// writing machine config and cpu info to resulting file
+	// writing machine config and cpu info into resulting file
 	sprintf( _str_, "lscpu > \"%s\"; echo '' >> \"%s\"", current_path, current_path );
 	if ( system( _str_ ) != 0 ) perror( "error due system call 0" );
 
@@ -30,9 +30,9 @@ inline void make_inits() {
 
 	// open resulting file
 	stream = fopen( current_path, "a+" );
-	if (stream == NULL) {
+	if ( stream == NULL ) {
 		perror("fopen: while reading the brand name of the current processor");
-		exit(EXIT_FAILURE);
+		exit( EXIT_FAILURE );
 	}
 
 	fprintf( stream, "Measure:   by %i megacycles\n\n", (int32_t)(cycles_count / 1000000) );
@@ -47,7 +47,7 @@ inline void make_finits() {
 	make_finit_title();
 
 	// close resulting file
-	fclose(stream);
+	fclose( stream );
 
 	return;
 }

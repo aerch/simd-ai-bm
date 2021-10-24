@@ -2,7 +2,6 @@
 #define __BENCHMARKS_H__
 
 #include "bmuthreads.h"
-
 #include "cpuwarmup.h"
 
 #ifdef __MMX__

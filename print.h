@@ -14,7 +14,6 @@ inline void make_message( uint8_t id ) {
 		case _ST_BM_START_MSG_:
 			total_tps = 0.0;
 			fprintf( stream, "SIMD Arithmetic Instructions Single-Thread Benchmark start ...\n" );
-
 			printf( BLUE "SIMD Arithmetic Instructions Single-Thread Benchmark start ..." OFF "\n" );
 			break;
 
@@ -71,10 +70,8 @@ inline void make_finit_title() {
 }
 
 inline void make_simd_title( const char *simd_title ) {
-
 	fprintf( stream, "      %s\n", simd_title );
 	printf( BLUE "      %s\n" OFF, simd_title );
-
 	return;
 }
 
