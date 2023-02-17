@@ -2,7 +2,7 @@
 # Makefile for the Linux SIMD Arithmetic Instructions Benchmark (simd-ai-bm) project
 
 TARGET          = simd-ai-bm
-VERSION         = 0.9.23a
+VERSION         = 0.9.24a
 DATE            = $(shell date +%d.%m.%y)
 PROJECT         = 'SIMD Arithmetic Instructions Benchmark ('$(TARGET)') v'$(VERSION)
 BACKUP          = ../$(TARGET)
@@ -52,7 +52,7 @@ WHITE           = '\033[37;1m'
 GRAY            = '\033[30;1m'
 OFF             = '\033[0m'
 
-.PHONY: $(TARGET) clean git-push-"update" backup
+.PHONY: $(TARGET) git-push-"update" backup help docs html pdf clean
 
 $(TARGET): clean $(OBJECTS)
 	@$(ECHO) -en $(GREEN)' ld  '$(TARGET)$(OFF)'\n'
@@ -66,9 +66,9 @@ simd-ai-bm.o: simd-ai-bm.c
 	@echo -en $(WHITE)' cc  '$<$(OFF)'\n'
 	@$(CXX) $(CXXFLAGS) -c $< -o $@ $(CXXOPTIONS)
 
-clean:
+clean: clean-docs
 	@echo -en $(WHITE)' cleaning project folder ...'$(OFF)
-	@$(RM) $(TARGET) *.o *.d *.~ gmon.out
+	@$(RM) $(TARGET) *.o *.d gmon.out *.log *~
 	@echo -en $(WHITE)' done.'$(OFF)'\n'
 
 git-push-%: clean
@@ -86,5 +86,45 @@ backup: clean
 	@tar cfv ./$(TARGET)-$(VERSION)-`date +%d.%m.%y`.tar --exclude=$(TARGET)'-*.tar.gz' $(BACKUP)
 	@$(ECHO) '> > > > zip compressing ...'
 	@gzip -v9 -f -S .gz ./$(TARGET)-$(VERSION)-`date +%d.%m.%y`.tar
+
+# Makefile part for Sphinx documentation
+# You can set these variables from the command line, and also from the environment for the first two.
+SPHINXOPTS    ?=
+SPHINXBUILD   ?= sphinx-build
+SOURCEDIR     = docs/source
+BUILDDIR      = docs/build
+DOXYFILE      = docs/doxygen/doxyfile
+
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+doxygen:
+	mkdir -p $(BUILDDIR)
+	doxygen $(DOXYFILE)
+
+docs: doxygen
+# 	cd docs/build/doxylatex && make
+# 	/bin/ln -sf $(BUILDDIR)/doxylatex/refman.pdf simd-ai-bm-api.pdf
+	/bin/ln -sf $(BUILDDIR)/doxyhtml/index.html simd-ai-bm-api.html
+	$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	/bin/ln -sf $(BUILDDIR)/html/index.html simd-ai-bm.html
+	$(SPHINXBUILD) -M latexpdf "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	/bin/ln -sf $(BUILDDIR)/latex/simd-ai-bm.pdf simd-ai-bm.pdf
+
+html-local: doxygen
+	/bin/ln -sf $(BUILDDIR)/doxyhtml/index.html simd-ai-bm-api.html
+	$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	/bin/ln -sf $(BUILDDIR)/html/index.html simd-ai-bm.html
+
+pdf-local: doxygen
+# 	cd docs/build/doxylatex && make
+# 	/bin/ln -sf $(BUILDDIR)/doxylatex/refman.pdf simd-ai-bm-api.pdf
+	$(SPHINXBUILD) -M latexpdf "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	/bin/ln -sf $(BUILDDIR)/latex/simd-ai-bm.pdf simd-ai-bm.pdf
+
+clean-docs:
+	@rm -rf $(BUILDDIR) simd-ai-bm-api.html simd-ai-bm.html simd-ai-bm-api.pdf simd-ai-bm.pdf
+
+clean-local: clean-docs
 
 include $(DFILES)
