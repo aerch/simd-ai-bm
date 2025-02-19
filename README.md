@@ -11,8 +11,10 @@ start:
 results:
 	./results.sh
 
+
 SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
 -------------------------------------------------------------------
+        6088.9		AMD Ryzen 5 9600X 6-Core Processor @ 3.90GHz DDR5 @ 5600MHz
         4018.2		AMD Ryzen 7 7735HS with Radeon Graphics @ 4.83GHz DDR5 @ 4800MHz
         3262.2		AMD Ryzen 5 3600 6-Core Processor @ 3.60GHz DDR4 @ 3200MHz
         3129.4		AMD Ryzen 5 3600X 6-Core Processor @ 4.10GHz DDR4 @ 3200MHz
@@ -42,6 +44,7 @@ SIMD Arithmetic Instructions Single-Thread Benchmark Intercomparison
 
 SIMD Arithmetic Instructions Multi-Thread Benchmark Intercomparison
 -------------------------------------------------------------------
+       35348.3		AMD Ryzen 5 9600X 6-Core Processor @ 3.90GHz DDR5 @ 5600MHz
        28658.4		AMD EPYC 7532 32-Core Processor @ 3.30GHz DDR4 @ 3200MHz
        23032.1		AMD Ryzen Threadripper 2990WX 32-Core Processor @ 3.00GHz DDR4 @ 2133MHz
        22449.1		AMD Ryzen 7 7735HS with Radeon Graphics @ 4.83GHz DDR5 @ 4800MHz
